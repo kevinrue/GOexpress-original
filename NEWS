@@ -1,6 +1,6 @@
 INITIAL RELEASE 0.1:
   
-  FEATURES:
+  OVERVIEW:
 
 This package was designed for the analysis of bioinformatics-related
 data based on gene expression measurements. It requires 3 input
@@ -30,7 +30,7 @@ accompanied by hierarchical clustering of samples and genes can be
 drawn and customised.
 
 
-Following the above analysis, summary stasti
+  FEATURES:
 
   * GO_anova() scores all Gene Ontology (GO) terms represented in
 the dataset based on the ability of their associated genes to cluster
