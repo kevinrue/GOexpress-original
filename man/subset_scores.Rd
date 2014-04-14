@@ -9,7 +9,7 @@ Given an output variable from a GO_anova analysis and a set of valid filters and
 returns an identically formatted list keeping only the rows of the score table passing the filters.
 }
 \usage{
-subset_scores(result, gene_count=5, sig_count=1)
+subset_scores(result, gene_count=5, sig_count=1, ...)
 }
 
 \arguments{

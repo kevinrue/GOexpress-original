@@ -9,10 +9,11 @@ Clusters the samples using the expression levels of genes related to a
 given go_id.
 }
 \usage{
-cluster_GO(go_id, result, expr_data, phenodata, f = result$factor,
-method_dist = "euclidean", method_hclust = "average", cex = 0.5,
-main = paste(go_id, result$scores[result$scores$go_id == go_id, ]$name_1006),
-...)
+cluster_GO(go_id, result, expr_data, phenodata, f=result$factor, 
+                      method_dist="euclidean", method_hclust="average", cex=0.8,
+                      main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
+                      xlab="Distance", ...)
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -45,6 +46,9 @@ A numeric value defining the character expansion of text in the plot.
 }
   \item{main}{
 A character string for the main title of the plot.
+}
+  \item{xlab}{
+A label for the x axis, defaults to "Distance".
 }
   \item{\dots}{
 Additional parameters passed on to \code{dist()}, \code{hclust()}

@@ -88,7 +88,7 @@ heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
 }
 
 cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor, 
-                      method_dist="euclidean", method_hclust="average", cex=0.5,
+                      method_dist="euclidean", method_hclust="average", cex=0.8,
                       main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
                       xlab="Distance",
                       ...){

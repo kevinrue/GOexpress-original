@@ -11,6 +11,6 @@ Description: The package contains functions to perform a clustering analysis
   evaluated the ability of each gene to cluster samples according to the 
   factor under scrutiny. Finally, GO terms are scored by averaging the power
   of their respective gene sets to cluster the samples.
-Depends: R (>= 3.1.0), Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2)
+Depends: R (>= 3.0.2), Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2)
 License: GPL-2
 LazyData: true

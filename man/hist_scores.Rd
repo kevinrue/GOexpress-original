@@ -8,12 +8,18 @@ Plots the distribution of scores in a GO_anova analysis.
 An histogram of score frequencies following a GO_anova analysis.
 }
 \usage{
-hist_scores(result, ...)
+hist_scores(result,
+            main=paste("Distribution of average F scores in",
+                       deparse(substitute(result))),
+            xlab="Average F score", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of the \code{GO_anova()} function.
+}
+  \item{main, xlab}{
+These arguments to title have useful defaults here.
 }
   \item{\dots}{
 Additional arguments passed on to \code{hist()}.

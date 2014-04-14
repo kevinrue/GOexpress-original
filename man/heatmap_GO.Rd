@@ -10,7 +10,10 @@ levels of genes related to a given go_id. Represents expression levels of those 
 in a heatmap.
 }
 \usage{
-heatmap_GO(go_id, result, expr_data, phenodata, gene_names = TRUE, f = result$factor, scale = "none", cexCol = 1.2, cexRow = 1, main = paste(go_id, result$scores[result$scores$go_id == go_id, ]$name_1006), ...)
+heatmap_GO(go_id, result, expr_data, phenodata, gene_names = TRUE, f = result$factor,
+           scale = "none", cexCol = 1.2, cexRow = 0.5,
+           main = paste(go_id, result$scores[result$scores$go_id == go_id, ]$name_1006),
+           ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
