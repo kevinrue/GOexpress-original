@@ -72,6 +72,20 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
                  uniqueRows=TRUE)
   # Remove one of the GO terms which is ""
   all_GO = all_GO[all_GO$go_id != "",]
+  # Appends gene annotations to rows of res_anova
+  cat("Fetching gene description from BioMart ...", fill=TRUE)
+  genes_anova = merge(x=res_anova,
+                      y=getBM(attributes=c("ensembl_gene_id", "external_gene_id", "description"),
+                              filters="ensembl_gene_id",
+                              values=rownames(res_anova),
+                              mart=mart),
+                      by.x="row.names",
+                      by.y="ensembl_gene_id")
+  # Rank the genes by increasing FDR (should match increasing F.value)
+  genes_anova = genes_anova[order(genes_anova$FDR),]
+  # Put the ensembl identifier back as the row name
+  rownames(genes_anova) = genes_anova$Row.names
+  genes_anova$Row.names = NULL
   cat("Merging score into result table ...", fill=TRUE)
   ## Average F value (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
   GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova, FUN=mean), y=all_GO, by="go_id")
@@ -89,19 +103,6 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   colnames(GO_scores)[2] = "gene_count"
   # Rank the GO terms by decreasing average F value
   GO_scores = GO_scores[order(GO_scores$ave.F.score, decreasing=TRUE),]
-  # Appends gene annotations to rows of res_anova
-  genes_anova = merge(x=res_anova,
-        y=getBM(attributes=c("ensembl_gene_id", "external_gene_id", "description"),
-                             filters="ensembl_gene_id",
-                             values=rownames(res_anova),
-                             mart=mart),
-        by.x="row.names",
-        by.y="ensembl_gene_id")
-  # Rank the genes by increasing FDR (should match increasing F.value)
-  genes_anova = genes_anova[order(genes_anova$FDR),]
-  # Put the ensembl identifier back as the row name
-  rownames(genes_anova) = genes_anova$Row.names
-  genes_anova$Row.names = NULL
   # Return the results of the analysis
   return(list(scores=GO_scores, mapping=GO_genes, anova=genes_anova, factor=f))
 }
@@ -123,8 +124,6 @@ get_mart_dataset = function(expr_data, biomart_dataset){
     if (length(grep(pattern="^ENS", x=sample_gene))){
       # Extract the full prefix
       prefix = str_extract(sample_gene, "ENS[[:upper:]]+")
-      # load the precomputed table mapping prefix to biomart database
-      load("prefix2dataset.RData")
       # If the prefix is in the table 
       if (prefix %in% prefix2dataset$prefix){
         # load the corresponding biomart dataset

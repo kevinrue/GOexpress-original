@@ -1,29 +1,32 @@
-\name{hist_scores}
-\alias{hist_scores}
+\name{table_genes}
+\alias{table_genes}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Plots the distribution of scores in a GO_anova analysis.
+Returns a table listing the genes associated with a given Gene Ontology
 }
 \description{
-An histogram of score frequencies following a GO_anova analysis.
+Given a Gene Ontology (GO) identifier \code{go_id} and a result from an anovaGO analysis,
+return an annotated table listing the genes associated with that go_id, their 
+associated gene name and description.
 }
 \usage{
-hist_scores(result, ...)
+table_genes(result, go_id)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of the \code{GO_anova()} function.
 }
-  \item{\dots}{
-Additional arguments passed on to \code{hist()}.
+  \item{go_id}{
+A Gene Ontology (GO) identifier.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-Same as a call to hist(...)
+A data frame with three columns for ensembl_gene_id, associated_gene_name,
+and description.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -38,7 +41,7 @@ Kevin Rue-Albrecht
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-See also \code{\link{hist}}.
+\code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}
 }
 \examples{
 

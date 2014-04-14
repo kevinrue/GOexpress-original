@@ -1,5 +1,8 @@
-hist_scores = function(result, ...){
-  hist(result$scores$ave.F.score, ...)
+hist_scores = function(result,
+                       main=paste("Distribution of average F scores in",
+                                  deparse(substitute(result))),
+                       xlab="Average F score", ...){
+  hist(result$scores$ave.F.score, main=main, xlab=xlab, ...)
 }
 
 quantiles_scores = function(result, quartiles=c(FALSE, TRUE)){
@@ -34,21 +37,36 @@ subset_scores = function(result, ...){
   #
   filtered$merge = apply(X=filtered, MARGIN=1, FUN=all)
   #
-  list(scores=subset(result$score, filtered$merge), mapping=result$mapping)
+  list(scores=subset(result$score, filtered$merge),
+       mapping=result$mapping,
+       anova=result$anova,
+       factor=result$factor)
 }
 
 list_genes = function(result, go_id){
-  # If the GO term requested is not present in the dataset
+  # If the go_id requested is not present in the dataset
   if (!go_id %in% result$mapping$go_id){
     # return an error and stop
-    stop(go_id, "is not present in the dataset.")
+    stop(go_id, "is not a valid go_id in the dataset.")
   }
   # Otherwise return the list of ensembl_ids associated with it
   return(result$mapping[result$mapping$go_id == go_id,]$ensembl_gene_id)
 }
 
+table_genes = function(result, go_id){
+  # If the go_id requested is not present in the dataset
+  if (!go_id %in% result$mapping$go_id){
+    # return an error and stop
+    stop(go_id, "is not a valid go_id in the dataset.")
+  }
+  # Otherwise fetch the list of ensembl_ids associated with it
+  ensembls = result$mapping[result$mapping$go_id == go_id,]$ensembl_gene_id
+  # Return the information for those genes
+  return(result$anova[ensembls,])
+}
+
 heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
-                      f=result$factor, scale="none", cexCol=1.2, cexRow=1, 
+                      f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
                       main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
                       ...){
   # Fetch the list of genes associated with the go_id
@@ -72,6 +90,7 @@ heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
 cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor, 
                       method_dist="euclidean", method_hclust="average", cex=0.5,
                       main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
+                      xlab="Distance",
                       ...){
   # Fetch the list of genes associated with the go_id
   ensembl_ids = list_genes(result, go_id)
@@ -83,5 +102,5 @@ cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor,
   cl <- hclust(di, method=method_hclust, ...)
   # Rows are samples, label them according to the user's choice
   sample_labels = pData(phenodata)[,f]
-  plot(cl, hang=-1, label=sample_labels, cex=cex, main=main, ...)
+  plot(cl, hang=-1, label=sample_labels, cex=cex, main=main, xlab=xlab, ...)
 }

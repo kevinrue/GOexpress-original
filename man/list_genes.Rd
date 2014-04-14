@@ -14,7 +14,7 @@ list_genes(result, go_id)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
-The output of GO_anova or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{go_id}{
 A Gene Ontology (GO) identifier represented in the dataset.
