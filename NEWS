@@ -40,7 +40,6 @@ one-way ANOVA results for each gene, and finally the predefined
 grouping factor used for ANOVA. Genes annotated to a GO term but
 absent from the expression dataset are ignored.
 
-
   * get_mart_dataset() returns a connection to the appropriate BioMart
 dataset based on the gene name of the first gene in the expression
 dataset. The choice of the dataset can be overriden by the user
