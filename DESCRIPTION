@@ -1,7 +1,7 @@
 Package: anovaGO
 Title: Identifies gene ontologies clustering samples according to a given factor
 Version: 0.1
-Authors@R: "Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie> [aut, cre]"
+Authors@R: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie> [aut, cre]
 Description: The package contains functions to perform a clustering analysis
   and subsequently visualise the results. It combines gene expression data
   and Gene Ontology (GO) annotations to identify GO terms enriched in genes with
