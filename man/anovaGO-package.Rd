@@ -8,7 +8,7 @@ Identifies gene ontologies clustering samples according to predefined factor.
 \description{
 Combines gene expression data and Gene Ontology (GO) annotations to identify ontologies 
 enriched for genes best clustering predefined groups of samples base on expression levels.
-Genes annotated to an ontology (Biological Pathway) are obtained from the BioMart database.
+Genes annotated to an ontology (Biological Process) are obtained from the BioMart database.
 A one-way ANOVA is performed to evaluate the ability of each gene to cluster samples according 
 to a predefined grouping factor.
 Each GO term is scored and ranked according to the average power of all related genes to
