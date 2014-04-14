@@ -5,7 +5,7 @@ INITIAL RELEASE 0.1:
 This package was designed for the analysis of bioinformatics-related
 data based on gene expression measurements. It requires 3 input
 values: (1) a sample-by-gene table providing the expression level
-of genes (row) in each sample (columns), (2) an AnnotatedDataFrame
+of genes (rows) in each sample (columns), (2) an AnnotatedDataFrame
 from the Biobase package providing phenotypic information about the
 samples grouping them by levels of the factor, (3) the name of the
 grouping factor to investigate, which must be a valid column name
