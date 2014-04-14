@@ -3,12 +3,18 @@
 \alias{anovaGO}
 \docType{package}
 \title{
-What the package does (short line)
-~~ package title ~~
+Identifies gene ontologies clustering samples according to predefined factor.
 }
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+Combines gene expression data and Gene Ontology (GO) annotations to identify ontologies 
+enriched for genes best clustering predefined groups of samples base on expression levels.
+Genes annotated to an ontology (Biological Pathway) are obtained from the BioMart database.
+A one-way ANOVA is performed to evaluate the ability of each gene to cluster samples according 
+to a predefined grouping factor.
+Each GO term is scored and ranked according to the average power of all related genes to
+cluster the samples according to the factor.
+The ranked list of GO terms is returned, with tools allowing to visualise the statistics
+on a gene- and ontology-bases.
 }
 \details{
 \tabular{ll}{
@@ -16,25 +22,23 @@ Package: \tab anovaGO\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2014-04-13\cr
-License: \tab What license is it under?\cr
+License: \tab GPL-v2\cr
 }
-~~ An overview of how to use the package, including the most important functions ~~
+An overview of how to use the package, including the most important functions
 }
 \author{
-Who wrote it
+Kevin Rue-Albrecht
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
 }
 \references{
-~~ Literature or other references for background information ~~
+
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
+
 \keyword{ package }
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+See also:\code{\link[biomaRt:getBM]{biomaRt:getBM}}
 }
 \examples{
-~~ simple examples of the most important functions ~~
+
 }

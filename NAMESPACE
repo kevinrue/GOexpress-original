@@ -1,1 +1,12 @@
-exportPattern("^[[:alpha:]]+")
+#exportPattern("^[[:alpha:]]+")
+exportPattern("GO_anova")
+exportPattern("hist_scores")
+exportPattern("quantiles_scores")
+exportPattern("subset_scores")
+exportPattern("list_genes")
+exportPattern("heatmap_GO")
+exportPattern("cluster_GO")
+
+import(Biobase)
+import(biomaRt)
+import(stringr)

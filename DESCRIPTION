@@ -1,9 +1,16 @@
 Package: anovaGO
-Type: Package
-Title: What the package does (short line)
-Version: 1.0
-Date: 2014-04-13
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Identifies gene ontologies clustering samples according to a given factor
+Version: 0.1
+Authors@R: "Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie> [aut, cre]"
+Description: The package contains functions to perform a clustering analysis
+  and subsequently visualise the results. It combines gene expression data
+  and Gene Ontology (GO) annotations to identify GO terms enriched in genes with
+  expression levels best clustering predefined groups of samples.
+  The BioMart database is used to obtained Biological Pathway (BP) annotation of
+  the genes present in the expression dataset. A one-way ANOVA is performed to
+  evaluated the ability of each gene to cluster samples according to the 
+  factor under scrutiny. Finally, GO terms are scored by averaging the power
+  of their respective gene sets to cluster the samples.
+Depends: R (>= 3.1.0), Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2)
+License: GPL-2
+LazyData: true
