@@ -8,12 +8,17 @@ Plots the quantiles of scores in a GO_anova analysis.
 Percentiles indicating the scores reached by a proportion of the GO terms tested.
 }
 \usage{
-quantiles_scores(result, quartiles = FALSE)
+quantiles_scores(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=c(FALSE, TRUE))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
+}
+  \item{probs}{
+numeric vector of probabilities with values in [0,1]. (Values up
+to 2e-14 outside that range are accepted and moved to the nearby endpoint.)
+See \code{quantile}
 }
   \item{quartiles}{
 A numeric vector of the percentiles for which the scores are desired. 

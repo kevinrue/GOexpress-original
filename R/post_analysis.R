@@ -5,14 +5,14 @@ hist_scores = function(result,
   hist(result$scores$ave.F.score, main=main, xlab=xlab, ...)
 }
 
-quantiles_scores = function(result, quartiles=c(FALSE, TRUE)){
+quantiles_scores = function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=c(FALSE, TRUE)){
   # If user changes to "quartiles=TRUE" then the following will be true
   if (quartiles[1]){
     quantile(x=result$scores$ave.F.score)
   }
   # Default is to give range of top 10%, 5%, 1%, 0.1% and 0.01%
   else{
-    quantile(x=result$scores$ave.F.score, c(0.9, 0.95, 0.99, 0.999, 0.9999))
+    quantile(x=result$scores$ave.F.score, probs=probs)
   }
 }
 
