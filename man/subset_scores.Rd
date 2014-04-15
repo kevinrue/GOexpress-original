@@ -9,7 +9,7 @@ Given an output variable from a GO_anova analysis and a set of valid filters and
 returns an identically formatted list keeping only the rows of the score table passing the filters.
 }
 \usage{
-subset_scores(result, gene_count=5, sig_count=1, ...)
+subset_scores(result, gene_count=5, namespace_1003="BP", ...)
 }
 
 \arguments{
@@ -19,8 +19,10 @@ The output of the \code{GO_anova()} function.
   \item{gene_count}{
 Filter on the number of genes annotated to the GO term.
 }
-  \item{sig_count}{
-Filter on the number of significant genes (FDR < 0.05) annotated to the GO term.
+  \item{namespace_1003}{
+Keep only the GO terms of a given type. Valid values are "biological_process",
+"molecular_function", and "cellular_component". Abbreviations "BP", "MF",
+and "CC" are also recognised.
 }
   \item{\dots}{
 Pairs of filter and threshold values in the format "filter=threshold". 

@@ -33,6 +33,28 @@ subset_scores = function(result, ...){
       #cat(filter, "equal or more than", filters[[filter]], fill=TRUE)
       filtered[,filter] = result$scores[,filter] >= filters[filter]
     }
+    ## Filters where the value should be equal to the given threshold
+    else if (filter %in% c("namespace_1003")){
+      #cat(filter, "equal to", filters[[filter]], fill=TRUE)
+      # GO namespace filtering should offer shortcuts
+      if (filters[filter] %in% c("biological_process", "BP")){
+        filtered[,filter] = result$scores$namespace_1003 == "biological_process"
+      }
+      else if (filters[filter] %in% c("molecular_function", "MF")){
+        filtered[,filter] = result$scores$namespace_1003 == "molecular_function"
+      }
+      else if (filters[filter] %in% c("cellular_component", "CC")){
+        filtered[,filter] = result$scores$namespace_1003 == "cellular_component"
+      }
+      else{
+        stop("Valid values for namespace_1003= are \"biological_process\", \"BP\", 
+             \"molecular_function\", \"MF\", \"cellular_component\", and\"CC\".")
+      }
+    }
+    ## Unindentified filters cause an error
+    else{
+      stop(filter, " is not a valid filter in colames(scores)")
+    }
   }
   #
   filtered$merge = apply(X=filtered, MARGIN=1, FUN=all)
