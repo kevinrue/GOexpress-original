@@ -8,6 +8,8 @@ export("list_genes")
 export("quantiles_scores")
 export("subset_scores")
 export("table_genes")
+export("expression_plot")
+export("expression_plot_symbol")
 
 import(Biobase)
 import(biomaRt)

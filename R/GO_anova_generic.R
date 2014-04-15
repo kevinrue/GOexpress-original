@@ -44,7 +44,7 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
                    mart=mart,
                    uniqueRows=TRUE)
   # Remove over 1,000 rows where the go_id is ""
-  GO_genes = subset(GO_genes, go_id != "")
+  GO_genes = GO_genes[GO_genes$go_id != "",]
   # Calculate the F.value and p.value of ANOVA for each ensembl id in the expression dataset
   cat("Calculating one-way ANOVA for", nrow(expr_data), "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)
   res_anova = data.frame("F.value"= apply(X=expr_data,
