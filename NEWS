@@ -1,3 +1,12 @@
+NEW RELEASE 0.1:
+
+  UPDATED FEATURES:
+  
+  * subset_scores() can now filter and keep only GO terms of a given
+type, i.e. "Biological process", "Molecular function", or "Cellular
+Component".
+
+
 INITIAL RELEASE 0.1:
   
   OVERVIEW:
