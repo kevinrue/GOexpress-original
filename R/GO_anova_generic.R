@@ -36,15 +36,19 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   mart = get_mart_dataset(expr_data, biomart_dataset)
   # Information for the user
   print(mart)
-  # Prepare a table mapping the ensembl ids in the expression dataset to GO terms (biological processes)
+  # Prepare a table mapping all ensembl ids in the BioMart dataset to GO terms (biological processes)
+  # Not just the ensembl ids in the data, but all in BioMart (will affect the GO term average score)
   cat("Fetching ensembl_gene/GO_term mapping from BioMart ...", fill=TRUE)
   GO_genes = getBM(attributes=c("ensembl_gene_id", "go_id"),
-                   filters="ensembl_gene_id",
-                   values=rownames(expr_data),
-                   mart=mart,
-                   uniqueRows=TRUE)
+                   mart=mart)
   # Remove over 1,000 rows where the go_id is ""
   GO_genes = GO_genes[GO_genes$go_id != "",]
+  # Prepare a table of all the GO termsin BioMart (even if no gene is annotated to it)
+  cat("Fetching GO_terms description from BioMart ...", fill=TRUE)
+  all_GO = getBM(attributes=c("go_id", "name_1006", "namespace_1003"),
+                 mart=mart)
+  # Remove one of the GO terms which is ""
+  all_GO = all_GO[all_GO$go_id != "",]
   # Calculate the F.value and p.value of ANOVA for each ensembl id in the expression dataset
   cat("Calculating one-way ANOVA for", nrow(expr_data), "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)
   res_anova = data.frame("F.value"= apply(X=expr_data,
@@ -60,18 +64,18 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   # Set to 0 the F.value of non-significant genes
   res_anova$F.value[res_anova$FDR > FDR] = 0
   # Summary statistics by GO term
-  ## Merge the table mapping GOterm to genes with the ANOVA results of each gene
-  GO_gene_anova = merge(x=GO_genes, y=res_anova, by.x="ensembl_gene_id", by.y="row.names")
+  ## Merge the table mapping GOterm to genes with the ANOVA results of each gene (twice)
+  # First merge the tables while keeping all gene/GO mappings, even for genes absent of the dataset
+  # This will allow average F values to be calculated on the basis of all ensembl genes annotated to 
+  # the GO term, even if not in the dataset (genes absent are considered non-significant)
+  GO_gene_anova_all = merge(x=GO_genes, y=res_anova, by.x="ensembl_gene_id", by.y="row.names", all.x=TRUE)
+  # The merge will leave genes absent from the dataset with NA as F.value and p.value. 
+  # For the statistics to work, we only need to replace F.value by 0 where there are NAs
+  GO_gene_anova_all[is.na(GO_gene_anova_all$F.value),]$F.value = 0
+  # Second, merge the tables keeping only the genes present in the dataset, this value is not used elsewhere
+  # in the program, but can be valued by the user
+  GO_gene_anova_data = merge(x=GO_genes, y=res_anova, by.x="ensembl_gene_id", by.y="row.names")
   # Results can now be summarised by aggregating rows with same GOterm
-  ## Prepare a table of all the GO terms linked to at least a gene in the expression data
-  cat("Fetching GO_terms description from BioMart ...", fill=TRUE)
-  all_GO = getBM(attributes=c("go_id", "name_1006", "namespace_1003"),
-                 filters="ensembl_gene_id",
-                 values=rownames(expr_data),
-                 mart=mart,
-                 uniqueRows=TRUE)
-  # Remove one of the GO terms which is ""
-  all_GO = all_GO[all_GO$go_id != "",]
   # Appends gene annotations to rows of res_anova
   cat("Fetching gene description from BioMart ...", fill=TRUE)
   genes_anova = merge(x=res_anova,
@@ -87,22 +91,31 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   rownames(genes_anova) = genes_anova$Row.names
   genes_anova$Row.names = NULL
   cat("Merging score into result table ...", fill=TRUE)
-  ## Average F value (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova, FUN=mean), y=all_GO, by="go_id")
-  colnames(GO_scores)[2] = "ave.F.score"
+  # Number of significant genes in dataset to each GO term
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=function(x){sum(x != 0)}), y=all_GO, by="go_id")
+  colnames(GO_scores)[2] = "sig_count"
+  # Total number of genes in the dataset annotated to each GO term
+  GO_scores = merge(x=aggregate(ensembl_gene_id~go_id, data=GO_gene_anova_data, FUN=length), y=GO_scores, by="go_id")
+  colnames(GO_scores)[2] = "data_count"
+  # Total number of genes annotated to each GO term in BioMart (not necessarily in dataset)
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=length), y=GO_scores, by="go_id")
+  colnames(GO_scores)[2] = "total_count"
+  ## Average F value (denominator being the total of genes by GO term in the dataset) found to be the best scoring function
+  # (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=mean), y=GO_scores, by="go_id")
+  colnames(GO_scores)[2] = "ave.F.score.data"
+  ## Average F value (denominator being the total of genes by GO term in BioMart) being tested
+  # (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=mean), y=GO_scores, by="go_id")
+  colnames(GO_scores)[2] = "ave.F.score.total"  
   # Notes of other metrics tested:
   ## Sum.F.values: (-) biased toward general GO terms annotated for many thousands of genes (e.g. "protein binding")
-  ## Max.F.values: (+) insensitive to number of genes annotated for GO term (-) many GO terms sharing the same gene are tied (-) not a robust metric of GO term
-  # Most top ranked GO terms contain a single gene
-  # The 
-  # Number of significant genes by GO term
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova, FUN=function(x){sum(x != 0)}), y=GO_scores, by="go_id")
-  colnames(GO_scores)[2] = "sig_count"
-  # Total number of genes annotated by GO term
-  GO_scores = merge(x=aggregate(ensembl_gene_id~go_id, data=GO_gene_anova, FUN=length), y=GO_scores, by="go_id")
-  colnames(GO_scores)[2] = "gene_count"
+  ## Max.F.values: (+) insensitive to number of genes annotated for GO term
+  #                (-) many GO terms sharing the same gene are tied (-) not a robust metric of GO term
+  # Most top ranked GO terms according to the average F value contain a single gene
+  # But this bias can easily be attenuated by filtering for GO terms with a minimal number of genes
   # Rank the GO terms by decreasing average F value
-  GO_scores = GO_scores[order(GO_scores$ave.F.score, decreasing=TRUE),]
+  GO_scores = GO_scores[order(GO_scores$ave.F.score.total, decreasing=TRUE),]
   # Return the results of the analysis
   return(list(scores=GO_scores, mapping=GO_genes, anova=genes_anova, factor=f))
 }

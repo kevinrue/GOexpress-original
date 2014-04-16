@@ -2,17 +2,17 @@ hist_scores = function(result,
                        main=paste("Distribution of average F scores in",
                                   deparse(substitute(result))),
                        xlab="Average F score", ...){
-  hist(result$scores$ave.F.score, main=main, xlab=xlab, ...)
+  hist(result$scores$ave.F.score.total, main=main, xlab=xlab, ...)
 }
 
 quantiles_scores = function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=c(FALSE, TRUE)){
   # If user changes to "quartiles=TRUE" then the following will be true
   if (quartiles[1]){
-    quantile(x=result$scores$ave.F.score)
+    quantile(x=result$scores$ave.F.score.total)
   }
   # Default is to give range of top 10%, 5%, 1%, 0.1% and 0.01%
   else{
-    quantile(x=result$scores$ave.F.score, probs=probs)
+    quantile(x=result$scores$ave.F.score.total, probs=probs)
   }
 }
 
@@ -29,11 +29,12 @@ subset_scores = function(result, ...){
     }
     # Save the filter status of each row for this filter
     ## Filters where the value should be higher than the given threshold
-    if (filter %in% c("gene_count", "gene_count", "ave.F.score")){
+    if (filter %in% c("total_count", "data_count", "sig_count",
+                      "ave.F.score.total", "ave.F.score.data")){
       #cat(filter, "equal or more than", filters[[filter]], fill=TRUE)
       filtered[,filter] = result$scores[,filter] >= filters[filter]
     }
-    ## Filters where the value should be equal to the given threshold
+    ## Filters where the value should be equal to the given value
     else if (filter %in% c("namespace_1003")){
       #cat(filter, "equal to", filters[[filter]], fill=TRUE)
       # GO namespace filtering should offer shortcuts
@@ -51,9 +52,9 @@ subset_scores = function(result, ...){
              \"molecular_function\", \"MF\", \"cellular_component\", and\"CC\".")
       }
     }
-    ## Unindentified filters cause an error
+    ## other filters cause an error
     else{
-      stop(filter, " is not a valid filter in colames(scores)")
+      stop(filter, " is not a valid filter.")
     }
   }
   #
