@@ -57,13 +57,20 @@ subset_scores = function(result, ...){
       stop(filter, " is not a valid filter.")
     }
   }
-  #
+  # Only the rows passing all filters will be kept
   filtered$merge = apply(X=filtered, MARGIN=1, FUN=all)
-  #
-  list(scores=subset(result$score, filtered$merge),
-       mapping=result$mapping,
-       anova=result$anova,
-       factor=result$factor)
+  # Filter the different slots of results to remain consistent between them
+  ## Subset the score table according to the above filters
+  new_scores = subset(result$score, filtered$merge)
+  ## Subset the gene/GO mapping to keep only the GO terms left in the score table
+  new_mapping = subset(result$mapping, result$mapping$go_id %in% new_scores$go_id)
+  ## Subset the anova table to keep only the genes annotated to the genes left in the mapping table
+  new_anova = subset(result$anova, rownames(result$anova) %in% new_mapping$ensembl_gene_id)
+  ## Return the filtered slots in a new list
+  list(scores = new_scores,
+       mapping = new_mapping,
+       anova = new_anova,
+       factor = result$factor)
 }
 
 list_genes = function(result, go_id){

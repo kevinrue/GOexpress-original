@@ -32,10 +32,7 @@
 
 GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = "BH", FDR=0.05){
   # Connect to the appropriate biomaRt for the expression data or the user specified dataset
-  cat("Connecting to appropriate BioMart dataset ...", fill=TRUE)
   mart = get_mart_dataset(expr_data, biomart_dataset)
-  # Information for the user
-  print(mart)
   # Prepare a table mapping all ensembl ids in the BioMart dataset to GO terms (biological processes)
   # Not just the ensembl ids in the data, but all in BioMart (will affect the GO term average score)
   cat("Fetching ensembl_gene/GO_term mapping from BioMart ...", fill=TRUE)
@@ -47,8 +44,8 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   cat("Fetching GO_terms description from BioMart ...", fill=TRUE)
   all_GO = getBM(attributes=c("go_id", "name_1006", "namespace_1003"),
                  mart=mart)
-  # Remove one of the GO terms which is ""
-  all_GO = all_GO[all_GO$go_id != "",]
+  # Remove the GO terms which is ""
+  all_GO = subset(x=all_GO, subset=go_id != "")
   # Calculate the F.value and p.value of ANOVA for each ensembl id in the expression dataset
   cat("Calculating one-way ANOVA for", nrow(expr_data), "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)
   res_anova = data.frame("F.value"= apply(X=expr_data,
@@ -92,21 +89,21 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   genes_anova$Row.names = NULL
   cat("Merging score into result table ...", fill=TRUE)
   # Number of significant genes in dataset to each GO term
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=function(x){sum(x != 0)}), y=all_GO, by="go_id")
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=function(x){sum(x != 0)}), y=all_GO, by="go_id", all.y=TRUE)
   colnames(GO_scores)[2] = "sig_count"
   # Total number of genes in the dataset annotated to each GO term
-  GO_scores = merge(x=aggregate(ensembl_gene_id~go_id, data=GO_gene_anova_data, FUN=length), y=GO_scores, by="go_id")
+  GO_scores = merge(x=aggregate(ensembl_gene_id~go_id, data=GO_gene_anova_data, FUN=length), y=GO_scores, by="go_id", all.y=TRUE)
   colnames(GO_scores)[2] = "data_count"
   # Total number of genes annotated to each GO term in BioMart (not necessarily in dataset)
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=length), y=GO_scores, by="go_id")
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=length), y=GO_scores, by="go_id", all.y=TRUE)
   colnames(GO_scores)[2] = "total_count"
   ## Average F value (denominator being the total of genes by GO term in the dataset) found to be the best scoring function
   # (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=mean), y=GO_scores, by="go_id")
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=mean), y=GO_scores, by="go_id", all.y=TRUE)
   colnames(GO_scores)[2] = "ave.F.score.data"
   ## Average F value (denominator being the total of genes by GO term in BioMart) being tested
   # (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=mean), y=GO_scores, by="go_id")
+  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=mean), y=GO_scores, by="go_id", all.y=TRUE)
   colnames(GO_scores)[2] = "ave.F.score.total"  
   # Notes of other metrics tested:
   ## Sum.F.values: (-) biased toward general GO terms annotated for many thousands of genes (e.g. "protein binding")
@@ -126,21 +123,27 @@ get_mart_dataset = function(expr_data, biomart_dataset){
   ## or the dataset corresponding to the species guessed from an gene id in the expression data
   # If the biomart dataset is specified by user
   if (biomart_dataset != ""){
+    cat("Connecting to requested ensembl dataset ...", biomart_dataset, fill=TRUE)
     # load the biomart dataset requested by the user (let it crash if incorrect dataset specified)
     return(useMart(biomart="ensembl", biomart_dataset))
   }
   # Otherwise, guess species from the expression data
   else {
+    cat("Guessing appropriate BioMart dataset ...", fill=TRUE)
     # Take the first gene id
     sample_gene = rownames(expr_data)[1]
+    cat("First gene identifier in expression dataset:", sample_gene, fill=TRUE)
     # If the gene id starts by "ENS" (most cases)
     if (length(grep(pattern="^ENS", x=sample_gene))){
       # Extract the full prefix
       prefix = str_extract(sample_gene, "ENS[[:upper:]]+")
       # If the prefix is in the table 
       if (prefix %in% prefix2dataset$prefix){
+        cat("Looks like you need ensembl dataset:", 
+            prefix2dataset[prefix2dataset$prefix == prefix,]$dataset, fill=TRUE)
         # load the corresponding biomart dataset
-        return(useMart(biomart="ensembl", dataset=prefix2dataset[prefix2dataset$prefix == prefix,]$dataset))
+        return(useMart(biomart="ensembl",
+                       dataset=prefix2dataset[prefix2dataset$prefix == prefix,]$dataset))
       }
       # Otherwise return an error and stop
       else{
@@ -149,22 +152,25 @@ get_mart_dataset = function(expr_data, biomart_dataset){
     }
     # If the gene id starts with "WBgene"
     else if (length(grep(pattern="^WBGene", x=sample_gene))) {
+      cat("Looks like you need ensembl dataset: celegans_gene_ensembl", fill=TRUE)
       # load the corresponding biomart dataset
       return(useMart(biomart="ensembl", dataset="celegans_gene_ensembl"))
     }
     # If the gene id starts with "FBgn"
     else if (length(grep(pattern="^FBgn", x=sample_gene))) {
+      cat("Looks like you need ensembl dataset: dmelanogaster_gene_ensembl", fill=TRUE)
       # load the corresponding biomart dataset
       return(useMart(biomart="ensembl", dataset="dmelanogaster_gene_ensembl"))
     }
     # If the gene id starts with "Y"
     else if (length(grep(pattern="^Y", x=sample_gene))) {
+      cat("Looks like you need ensembl dataset: scerevisiae_gene_ensembl", fill=TRUE)
       # load the corresponding biomart dataset
       return(useMart(biomart="ensembl", dataset="scerevisiae_gene_ensembl"))
     }
     # If the gene id does not match any known ensembl gene id prefix, return an error and stop
     else{
-      stop(sample_gene, " is not recognised as an ensembl gene id.")
+      stop(sample_gene, " is not recognised as an ensembl gene id. Cannot guess the species.")
     }
   }
 }
