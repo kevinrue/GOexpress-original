@@ -161,6 +161,7 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
   gg = ggplot(df) +
     geom_smooth(aes(x=X, y=Expression, group = Factor, color = Factor, fill=Factor), level=level) +
     labs(title = title) +
+    xlab(x_var) +
     theme(plot.title = element_text(size = rel(title.size))) +
     scale_colour_manual(values=cbPalette) + 
     scale_fill_manual(values=cbPalette)
