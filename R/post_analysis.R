@@ -129,7 +129,7 @@ cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor,
 }
 
 expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=result$factor, 
-                           cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.99,
+                           ylab = "log2(cpm)", cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.99,
                            title=paste(ensembl, " = ", result$anova[ensembl,]$external_gene_id),
                            title.size=2){
   # if the gene identifier is absent from the dataset
@@ -162,6 +162,7 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
     geom_smooth(aes(x=X, y=Expression, group = Factor, color = Factor, fill=Factor), level=level) +
     labs(title = title) +
     xlab(x_var) +
+    ylab(ylab) +
     theme(plot.title = element_text(size = rel(title.size))) +
     scale_colour_manual(values=cbPalette) + 
     scale_fill_manual(values=cbPalette)
