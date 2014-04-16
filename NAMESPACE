@@ -10,6 +10,7 @@ export("subset_scores")
 export("table_genes")
 export("expression_plot")
 export("expression_plot_symbol")
+export("plot_design")
 
 import(Biobase)
 import(biomaRt)

@@ -5,7 +5,8 @@ hist_scores = function(result,
   hist(result$scores$ave.F.score.total, main=main, xlab=xlab, ...)
 }
 
-quantiles_scores = function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=c(FALSE, TRUE)){
+quantiles_scores = function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
+                            quartiles=c(FALSE, TRUE)){
   # If user changes to "quartiles=TRUE" then the following will be true
   if (quartiles[1]){
     quantile(x=result$scores$ave.F.score.total)
@@ -104,7 +105,7 @@ heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
   # Fetch and transform the expression data for those genes
   genes_expr = t(expr_data[ensembl_ids,])
   # Rows are samples, label them according to the user's choice
-  sample_labels = pData(phenodata)[,f]
+  sample_labels = Biobase::pData(phenodata)[,f]
   # Columns are genes, label them by identifier or name
   if (gene_names){
     gene_labels = result$anova[ensembl_ids,]$external_gene_id
@@ -131,12 +132,13 @@ cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor,
   di <- dist(genes_expr, method=method_dist, ...) # euclidean distances between the rows
   cl <- hclust(di, method=method_hclust, ...)
   # Rows are samples, label them according to the user's choice
-  sample_labels = pData(phenodata)[,f]
+  sample_labels = Biobase::pData(phenodata)[,f]
   plot(cl, hang=-1, label=sample_labels, cex=cex, main=main, xlab=xlab, ...)
 }
 
 expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=result$factor, 
-                           ylab = "log2(cpm)", cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.99,
+                           ylab = "log2(cpm)", cbPalette = c("#56B4E9", "#D55E00", "#F0E442"),
+                           level=0.99,
                            title=paste(ensembl, " = ", result$anova[ensembl,]$external_gene_id),
                            title.size=2){
   # if the gene identifier is absent from the dataset
@@ -158,9 +160,9 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
   }
   # Assemble a data frame containing the necessary information
   df = data.frame(Expression=expr_data[ensembl,],
-                  Factor=pData(phenodata)[,f],
+                  Factor=Biobase::pData(phenodata)[,f],
                   # The factor
-                  X=pData(phenodata)[,x_var]) # targets data loaded above, Animal field in it
+                  X=Biobase::pData(phenodata)[,x_var]) # targets data loaded above, Animal field in it
 
   # This a color-blind-friendly palette with gray, 
   cbPalette <- cbPalette
@@ -178,8 +180,8 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
 }
 
 
-expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, result=NULL, f=result$factor, 
-                                  index=0, biomart_dataset = "",
+expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, result=NULL,
+                                  f=result$factor, index=0, biomart_dataset = "",
                                   cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.99,
                                   titles=c(), title.size=2){
   # if no GO_anova result was provided we will need to use BioMart to fetch the ensembl identifiers
@@ -351,4 +353,49 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
                                       layout.pos.col = matchidx$col))
     }
   }
+}
+
+
+plot_design = function(go_id, expr_data, phenodata, result=NULL,
+                       factors=colnames(Biobase::pData(phenodata)),
+                       main="", biomart_dataset="", ...){
+  # if the user changed the default value
+  # check that all given factors exist in colnames(phenodata)
+  if (all(factors != colnames(Biobase::pData(phenodata)))){
+    for(f in factors){
+      if (!f %in% colnames(Biobase::pData(phenodata))){
+        # Otherwise, stop and return which of them is not a valid factor name
+        stop(f, " is not a valid factor name in colnames(phenodata).")
+      }
+    } 
+  }
+  # Fetch the list of genes associated with the go_id
+  ## If the user left the result argument NULL
+  if (is.null(result)){
+    # we need to connect to BioMart
+    mart = get_mart_dataset(expr_data=expr_data, biomart_dataset=biomart_dataset)
+    # to obtain the genes annotated for the go_id
+    query = getBM(attributes=c("ensembl_gene_id", "name_1006"), filters="go_id", values=go_id, mart=mart)
+    ensembls = query$ensembl_gene_id
+    # to obtain the genes annotated for the go_id (for the title of the plots)
+    GO_name = query$name_1006[1]
+    # And then we need to refine that list of genes to those in the dataset
+    ensembls_present = ensembls[ensembls %in% rownames(expr_data)]
+  }
+  # If the user gave the output of a GO_anova command as result=
+  else{
+    # that list contains the mapping between ensembl genes and GO_id
+    ensembls_present = list_genes(result, go_id)
+    GO_name = result$scores[result$scores$go_id == go_id,]$name_1006
+  }
+  # Prepare a temporary data frame plot.design-friendly
+  df = data.frame(t(expr_data[ensembls_present,]), Biobase::pData(phenodata[,factors]))
+  # If no custom title was given
+  if (main == ""){
+    # Generate a smart one (careful: the same title will be used for all genes in the GO term)
+    # Smart title is the name of the GO term
+    main=GO_name
+  }
+  # Perform a plot.design of all the genes in the data frame (= in the GO term and in the dataset)
+  plot.design(df, main=main, ...)
 }

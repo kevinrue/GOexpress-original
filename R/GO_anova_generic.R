@@ -140,7 +140,8 @@ get_mart_dataset = function(expr_data, biomart_dataset){
       # If the prefix is in the table 
       if (prefix %in% prefix2dataset$prefix){
         cat("Looks like you need ensembl dataset:", 
-            prefix2dataset[prefix2dataset$prefix == prefix,]$dataset, fill=TRUE)
+            prefix2dataset[prefix2dataset$prefix == prefix,]$dataset,
+            "...", fill=TRUE)
         # load the corresponding biomart dataset
         return(useMart(biomart="ensembl",
                        dataset=prefix2dataset[prefix2dataset$prefix == prefix,]$dataset))
@@ -152,19 +153,19 @@ get_mart_dataset = function(expr_data, biomart_dataset){
     }
     # If the gene id starts with "WBgene"
     else if (length(grep(pattern="^WBGene", x=sample_gene))) {
-      cat("Looks like you need ensembl dataset: celegans_gene_ensembl", fill=TRUE)
+      cat("Looks like you need ensembl dataset: celegans_gene_ensembl ...", fill=TRUE)
       # load the corresponding biomart dataset
       return(useMart(biomart="ensembl", dataset="celegans_gene_ensembl"))
     }
     # If the gene id starts with "FBgn"
     else if (length(grep(pattern="^FBgn", x=sample_gene))) {
-      cat("Looks like you need ensembl dataset: dmelanogaster_gene_ensembl", fill=TRUE)
+      cat("Looks like you need ensembl dataset: dmelanogaster_gene_ensembl ...", fill=TRUE)
       # load the corresponding biomart dataset
       return(useMart(biomart="ensembl", dataset="dmelanogaster_gene_ensembl"))
     }
     # If the gene id starts with "Y"
     else if (length(grep(pattern="^Y", x=sample_gene))) {
-      cat("Looks like you need ensembl dataset: scerevisiae_gene_ensembl", fill=TRUE)
+      cat("Looks like you need ensembl dataset: scerevisiae_gene_ensembl ...", fill=TRUE)
       # load the corresponding biomart dataset
       return(useMart(biomart="ensembl", dataset="scerevisiae_gene_ensembl"))
     }
