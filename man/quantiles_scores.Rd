@@ -2,15 +2,19 @@
 \alias{quantiles_scores}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Plots the quantiles of scores in a GO_anova analysis.
+Returns the quantiles of scores following an anovaGO analysis.
 }
 \description{
-Percentiles indicating the scores reached by a proportion of the GO terms tested.
+Returns a set of quantiles in indicating the scores reached by given proportions
+of the GO terms.
+
+This function can also be used on the output of \code{subset_scores()}
+function as it returns a value formatted identically to the output of the
+\code{GO_anova()} function.
 }
 \usage{
 quantiles_scores(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=c(FALSE, TRUE))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
@@ -28,7 +32,7 @@ A numeric vector of the percentiles for which the scores are desired.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A named vector showing the percentiles and corresponding scores.
+A named vector of percentiles and corresponding scores.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -43,14 +47,15 @@ Kevin Rue-Albrecht
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Method \code{\link[stats:quantile]{stats::quantile}}.
 }
 \examples{
-
+%%##---- Should be DIRECTLY executable !! ----
+%%##-- ==>  Define data, use random,
+%%##--  or do  help(data=index)  for the standard data sets.
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ GO }
 \keyword{ gene }
 \keyword{ ontology }
-%%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{expression}

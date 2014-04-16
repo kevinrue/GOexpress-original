@@ -22,7 +22,7 @@ C. elegans, D. melanogaster, and S. cerevisiae have atypical identifier pattern 
 Prefixes for those are included in the table, but checked independently of the other species.
 }
 \source{
-Based on BioMart data.
+A separate script was used to query the BioMart database and build this table.
 }
 \references{
 %%  ~~ possibly secondary sources and usages ~~

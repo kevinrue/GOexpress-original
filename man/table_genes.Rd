@@ -5,14 +5,14 @@
 Returns a table listing the genes associated with a given Gene Ontology
 }
 \description{
-Given a Gene Ontology (GO) identifier \code{go_id} and a result from an anovaGO analysis,
-return an annotated table listing the genes associated with that go_id, their 
-associated gene name and description.
+Given a Gene Ontology (GO) identifier represented in the dataset and the output
+variable of a \code{GO_anova()} function, \code{table_genes()} returns a table
+listing the genes associated with that go_id, their associated gene name,
+and description.
 }
 \usage{
 table_genes(result, go_id)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of the \code{GO_anova()} function.
@@ -41,14 +41,15 @@ Kevin Rue-Albrecht
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}
+  Method \code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}.
 }
 \examples{
-
+%%##---- Should be DIRECTLY executable !! ----
+%%##-- ==>  Define data, use random,
+%%##--  or do  help(data=index)  for the standard data sets.
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ GO }
 \keyword{ gene }
 \keyword{ ontology }
-%%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{expression}

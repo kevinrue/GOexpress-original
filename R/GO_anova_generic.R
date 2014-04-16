@@ -97,14 +97,10 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   # Total number of genes annotated to each GO term in BioMart (not necessarily in dataset)
   GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=length), y=GO_scores, by="go_id", all.y=TRUE)
   colnames(GO_scores)[2] = "total_count"
-  ## Average F value (denominator being the total of genes by GO term in the dataset) found to be the best scoring function
-  # (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
-  GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_data, FUN=mean), y=GO_scores, by="go_id", all.y=TRUE)
-  colnames(GO_scores)[2] = "ave.F.score.data"
   ## Average F value (denominator being the total of genes by GO term in BioMart) being tested
   # (+) robust for GO terms with several genes (5 minimum advised, 10 was found robust, gene counts per GO term below)
   GO_scores = merge(x=aggregate(F.value~go_id, data=GO_gene_anova_all, FUN=mean), y=GO_scores, by="go_id", all.y=TRUE)
-  colnames(GO_scores)[2] = "ave.F.score.total"  
+  colnames(GO_scores)[2] = "ave.F.score"  
   # Notes of other metrics tested:
   ## Sum.F.values: (-) biased toward general GO terms annotated for many thousands of genes (e.g. "protein binding")
   ## Max.F.values: (+) insensitive to number of genes annotated for GO term
@@ -112,7 +108,7 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   # Most top ranked GO terms according to the average F value contain a single gene
   # But this bias can easily be attenuated by filtering for GO terms with a minimal number of genes
   # Rank the GO terms by decreasing average F value
-  GO_scores = GO_scores[order(GO_scores$ave.F.score.total, decreasing=TRUE),]
+  GO_scores = GO_scores[order(GO_scores$ave.F.score, decreasing=TRUE),]
   # Return the results of the analysis
   return(list(scores=GO_scores, mapping=GO_genes, anova=genes_anova, factor=f))
 }

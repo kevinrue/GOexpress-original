@@ -24,7 +24,7 @@ A Gene Ontology (GO) identifier.
 The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{expr_data}{
-Gene expression matrix. Row names are ensembl gene identifiers. Column names are sample identifiers.
+Sample-by-gene expression matrix. Row names are ensembl gene identifiers. Column names are sample identifiers.
 }
   \item{phenodata}{
 An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in the expression dataset.
@@ -59,11 +59,7 @@ and \code{plot()}.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  Returns the output of the \code{plot()} function.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -71,22 +67,21 @@ and \code{plot()}.
 \author{
 Kevin Rue-Albrecht
 }
+
 \note{
 %%  ~~further notes~~
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-\code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}
+  Method \code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}.
 }
 \examples{
-
+%%##---- Should be DIRECTLY executable !! ----
+%%##-- ==>  Define data, use random,
+%%##--  or do  help(data=index)  for the standard data sets.
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ GO }
 \keyword{ gene }
 \keyword{ ontology }
-%%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{expression}
+
+

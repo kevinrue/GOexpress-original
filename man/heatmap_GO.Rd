@@ -6,7 +6,7 @@ Generates a heatmap and hierarchical clustering of the samples and the genes
 }
 \description{
 Clusters the samples and the genes associated with a GO term using the expression 
-levels of genes related to a given go_id. Represents expression levels of those genes
+levels of genes related to a given ontology. Represents expression levels of those genes
 in a heatmap.
 }
 \usage{
@@ -15,7 +15,6 @@ heatmap_GO(go_id, result, expr_data, phenodata, gene_names = TRUE, f = result$fa
            main = paste(go_id, result$scores[result$scores$go_id == go_id, ]$name_1006),
            ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{go_id}{
 A Gene Ontology (GO) identifier.
@@ -55,11 +54,7 @@ Additional arguments passed on to \code{heatmap()}.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  Returns the output of the \code{stats::heatmap()} function.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -70,18 +65,16 @@ Kevin Rue-Albrecht
 \note{
 %%  ~~further notes~~
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Method \code{\link[stats:heatmap]{stats::heatmap}}.
 }
 \examples{
-
+%%##---- Should be DIRECTLY executable !! ----
+%%##-- ==>  Define data, use random,
+%%##--  or do  help(data=index)  for the standard data sets.
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ GO }
 \keyword{ gene }
 \keyword{ ontology }
-%%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{expression}

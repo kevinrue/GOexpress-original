@@ -2,18 +2,18 @@ hist_scores = function(result,
                        main=paste("Distribution of average F scores in",
                                   deparse(substitute(result))),
                        xlab="Average F score", ...){
-  hist(result$scores$ave.F.score.total, main=main, xlab=xlab, ...)
+  hist(result$scores$ave.F.score, main=main, xlab=xlab, ...)
 }
 
 quantiles_scores = function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
                             quartiles=c(FALSE, TRUE)){
   # If user changes to "quartiles=TRUE" then the following will be true
   if (quartiles[1]){
-    quantile(x=result$scores$ave.F.score.total)
+    quantile(x=result$scores$ave.F.score)
   }
   # Default is to give range of top 10%, 5%, 1%, 0.1% and 0.01%
   else{
-    quantile(x=result$scores$ave.F.score.total, probs=probs)
+    quantile(x=result$scores$ave.F.score, probs=probs)
   }
 }
 
@@ -31,7 +31,7 @@ subset_scores = function(result, ...){
     # Save the filter status of each row for this filter
     ## Filters where the value should be higher than the given threshold
     if (filter %in% c("total_count", "data_count", "sig_count",
-                      "ave.F.score.total", "ave.F.score.data")){
+                      "ave.F.score")){
       #cat(filter, "equal or more than", filters[[filter]], fill=TRUE)
       filtered[,filter] = result$scores[,filter] >= filters[filter]
     }
@@ -138,8 +138,8 @@ cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor,
 
 expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=result$factor, 
                            ylab = "log2(cpm)", cbPalette = c("#56B4E9", "#D55E00", "#F0E442"),
-                           level=0.99,
-                           title=paste(ensembl, " = ", result$anova[ensembl,]$external_gene_id),
+                           level=0.95, biomart_dataset="",
+                           title=NULL,
                            title.size=2){
   # if the gene identifier is absent from the dataset
   if (!ensembl %in% rownames(expr_data)){
@@ -154,9 +154,45 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
       return()
     }
   }
-  # Only continue if the ggplot2 package can be loaded successfully
-  if(!require(ggplot2, quietly=T)){
-    stop("Cannot load package \"ggplot2\" Please make sure the package is installed.")
+  # If result= was not provided
+  if (is.null(result)){
+    # then we don't have a default factor
+    # if no factor was specified
+    if (is.null(f)){
+      stop("Arguments \"result=\" and \"f=\" cannot be simultaneously left to default.")
+    }
+    # if a factor was specified, we can go on
+    else{
+      # If title was left to default
+      if (is.null(title)){
+        # we need to query BioMart to fetch the potential gene name associated
+        # with the ensembl identifier for a smart plot title
+        cat("Connecting to appropriate BioMart dataset ...", fill=TRUE)
+        # Just like GO_anova() the user can override the BioMart dataset to use
+        mart = get_mart_dataset(expr_data=expr_data, biomart_dataset=biomart_dataset)
+        print(mart)
+        cat("Fetching gene name annotation of",  ensembl, "...", fill=TRUE)
+        # Actually get all the pairs of identifiers/symbols (including the gene_symbol specified).
+        # This will allow the script to suggest close matches if the gene_symbol requested does not
+        # exist at all in BioMart.
+        gene_name = getBM(attributes="external_gene_id", filters="ensembl_gene_id",
+                          values=ensembl, mart=mart)$external_gene_id
+        # if the gene name is empty (no annotated gene name)
+        if (gene_name != ""){
+          # only use the ensembl identifier as the title
+          title = ensembl
+        }
+        # if there is a proper gene name annotated to the ensembl identifier
+        else{
+          # the title should be the combination of ensembl id and gene name
+          title = paste(ensembl, " = ", gene_name)
+        }
+      }
+      # If a title was specified, leave it be
+    }
+  }
+  else{
+    title = paste(ensembl, " = ", result$anova[ensembl,]$external_gene_id)
   }
   # Assemble a data frame containing the necessary information
   df = data.frame(Expression=expr_data[ensembl,],
@@ -182,7 +218,7 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
 
 expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, result=NULL,
                                   f=result$factor, index=0, biomart_dataset = "",
-                                  cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.99,
+                                  cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.95,
                                   titles=c(), title.size=2){
   # if no GO_anova result was provided we will need to use BioMart to fetch the ensembl identifiers
   # corresponding to the gene symbol
@@ -258,7 +294,7 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
     # if the number of titles does not match the number of plots
     if(length(titles) != length(ensembls_present)){
       # return an error and stop
-      stop("The number of titles (", lengt(titles), ") does not match the number of plots (",
+      stop("The number of titles (", length(titles), ") does not match the number of plots (",
            length(ensembls_present), ").")
     }
   }
@@ -320,8 +356,6 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
 
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   # from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
-  require(grid)
-  
   # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)
   

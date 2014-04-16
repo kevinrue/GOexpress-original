@@ -1,6 +1,6 @@
 Package: anovaGO
 Title: Identifies gene ontologies clustering samples according to a given factor
-Version: 0.2
+Version: 0.3.1
 Authors@R: c(person("Kevin", "Rue-Albrecht", role = c("aut", "cre"),
   	     email = "kevin.rue@ucdconnect.ie"))
 Description: The package contains functions to perform a clustering analysis
@@ -13,8 +13,8 @@ Description: The package contains functions to perform a clustering analysis
   factor under scrutiny. Finally, GO terms are scored by averaging the power
   of their respective gene sets to cluster the samples.
 Depends: R (>= 3.0.2)
-Imports: Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2)
-Suggests: ggplot2 (>= 0.9.0)
+Imports: Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2), 
+  ggplot2 (>= 0.9.0), grid
 License: GPL-2
 URL: https://github.com/kevinrue/anovaGO
 LazyData: true

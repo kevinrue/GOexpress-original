@@ -2,41 +2,63 @@
 \alias{subset_scores}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Returns a filtered GO_anova result object.
+Returns a filtered list of GO_anova results.
 }
 \description{
-Given an output variable from a GO_anova analysis and a set of valid filters and thresholds,
-returns an identically formatted list keeping only the rows of the score table passing the filters.
+Given an output variable from a GO_anova analysis and a set of valid filters
+and thresholds, returns an identically formatted list keeping only the rows
+of the score table passing all the filters.
 }
 \usage{
-subset_scores(result, gene_count=5, namespace_1003="BP", ...)
-}
+subset_scores(result, ...)
 
+# Suggested use:
+# subset_scores(result, total_count=5, namespace_1003="BP")
+}
 \arguments{
   \item{result}{
 The output of the \code{GO_anova()} function.
 }
-  \item{gene_count}{
-Filter on the number of genes annotated to the GO term.
-}
-  \item{namespace_1003}{
-Keep only the GO terms of a given type. Valid values are "biological_process",
-"molecular_function", and "cellular_component". Abbreviations "BP", "MF",
-and "CC" are also recognised.
-}
   \item{\dots}{
-Pairs of filter and threshold values in the format "filter=threshold". 
+Additional pairs of filter and threshold values in the format "filter=threshold". 
 Filters must be valid names from colnames(result$scores).
 }
 }
 \details{
-Currently, threshold are all considered as the minimal value allowed in the filtered table
-for the corresponding filter. No maximal threshold has been implemented yet.
+It is critical to filter out GO terms with very few genes (e.g. less than 5 genes),
+as the scoring function is biased for those GO terms (see Wiki and FAQ). 
+
+In addition, it is useful to retain only GO terms of one type (i.e. namespace) among 
+the three possible: "biological process", "molecular function", and "cellular
+component".
+
+Suggested filters:
+ \tabular{ll}{
+ total_count: \tab Filter on the number of genes annotated to the GO term.\cr
+ namespace_1003: \tab Filter keeping only the GO terms of a given type. Valid values are
+ "biological_process", "molecular_function", and "cellular_component".
+ Abbreviations "BP", "MF", and "CC" are also accepted.\cr
+ }
+ 
+Other filters:
+ \tabular{ll}{
+ data_count: \tab Filter on the number of genes in the dataset annotated to the GO term.\cr
+ sig_count: \tab Filter on the number of genes in the dataset, annotated to the GO terms,
+ and having a significant ANOVA result on the factor tested.\cr
+ ave.F.score: \tab Average of the F.scores of all genes annotated to the GO term. Genes
+ annotated to the GO term but absent from the dataset are assigned a F.value of 0, similarly
+ to the genes with a non-significant ANOVA result on the factor of interest.\cr
+ }
+
 }
 \value{
-A list of two elements containing the results of the analysis.
-  \item{scores }{A filtered table ranked in the same order as the original table.}
-  \item{mapping }{The table mapping genes present in the dataset to GO terms.}
+A list of four elements containing the results of the analysis.
+  \item{ scores }{A table ranking the remaining GO terms after filtering.}
+  \item{ mapping }{A table mapping the remaining GO terms to ensembl identifiers
+  in the dataset.}
+  \item{ anova }{The table ranking the remaining genes present in the dataset and
+  mapped to the remaining GO terms.}
+  \item{ factor }{The predefined grouping factor.}
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -47,18 +69,16 @@ Kevin Rue-Albrecht
 \note{
 %%  ~~further notes~~
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-
+%%##---- Should be DIRECTLY executable !! ----
+%%##-- ==>  Define data, use random,
+%%##--  or do  help(data=index)  for the standard data sets.
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ GO }
 \keyword{ gene }
 \keyword{ ontology }
-%%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{expression}

@@ -2,10 +2,15 @@
 \alias{hist_scores}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Plots the distribution of scores in a GO_anova analysis.
+Plots the distribution of scores following an anovaGO analysis.
 }
 \description{
-An histogram of score frequencies following a GO_anova analysis.
+Plots the an histogram representing the frequencies of scores in the output
+variable of the {GO_anova()} function.
+
+This function can also be used on the output of \code{subset_scores()}
+function as it returns a value formatted identically to the output of the
+\code{GO_anova()} function.
 }
 \usage{
 hist_scores(result,
@@ -13,7 +18,6 @@ hist_scores(result,
                        deparse(substitute(result))),
             xlab="Average F score", ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of the \code{GO_anova()} function.
@@ -29,7 +33,7 @@ Additional arguments passed on to \code{hist()}.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-Same as a call to hist(...)
+  Returns the output of the \code{graphics::hist()} function.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -41,17 +45,16 @@ Kevin Rue-Albrecht
 %%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-See also \code{\link{hist}}.
+  Method \code{\link[graphics:hist]{graphics::hist}}.
 }
 \examples{
-
+%%##---- Should be DIRECTLY executable !! ----
+%%##-- ==>  Define data, use random,
+%%##--  or do  help(data=index)  for the standard data sets.
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ GO }
 \keyword{ gene }
 \keyword{ ontology }
-%%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{expression}
