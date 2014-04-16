@@ -123,7 +123,7 @@ get_mart_dataset = function(expr_data, biomart_dataset){
   ## or the dataset corresponding to the species guessed from an gene id in the expression data
   # If the biomart dataset is specified by user
   if (biomart_dataset != ""){
-    cat("Connecting to requested ensembl dataset ...", biomart_dataset, fill=TRUE)
+    cat("Connecting to requested ensembl dataset", biomart_dataset, "...", fill=TRUE)
     # load the biomart dataset requested by the user (let it crash if incorrect dataset specified)
     return(useMart(biomart="ensembl", biomart_dataset))
   }
