@@ -1,19 +1,22 @@
 #export("^[[:alpha:]]+")
 
+# Functions available to the user (API)
 export("cluster_GO")
+export("expression_plot")
+export("expression_plot_symbol")
 export("GO_anova")
 export("heatmap_GO")
 export("hist_scores")
 export("list_genes")
+export("plot_design")
 export("quantiles_scores")
 export("subset_scores")
 export("table_genes")
-export("expression_plot")
-export("expression_plot_symbol")
-export("plot_design")
 
+# Package required for the features of anovaGO to work
 import(Biobase)
 import(biomaRt)
-import(stringr)
 import(ggplot2)
 import(grid)
+import(stringr)
+

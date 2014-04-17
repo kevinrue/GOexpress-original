@@ -1,3 +1,6 @@
 .Rproj.user
 .Rhistory
+.Rbuildignore
 .RData
+.gitignore
+anovaGO.Rproj
