@@ -42,7 +42,7 @@ drawn and customised.
 the dataset based on the ability of their associated genes to cluster
 samples according to a predefined grouping factor. It also returns
 the table used to map genes to GO terms, the table summarising the
-one-way ANOVA results for each gene, and finally the predefined
+one-way ANOVA results for each gene, and finally the specified
 grouping factor used for ANOVA. Genes annotated to a GO term but
 absent from the expression dataset are ignored.
 
@@ -51,9 +51,9 @@ dataset based on the gene name of the first gene in the expression
 dataset. The choice of the dataset can be overriden by the user
 if a valid BioMart ensembl dataset is specified.
   
-  * subset_scores() filters the table of scored GO terms in the
-output of GO_anova() and returns a list formatted identically to the 
-output of GO_anova() with the resulting filtered table of scores.
+  * subset_scores() filters output of GO_anova() for GO terms passing
+desired filters and returns a list formatted identically to the 
+output of GO_anova() with the filtered information.
 
   * hist_scores() plots the distribution of average F scores in the
 output of GO_anova() or subset_scores().
@@ -74,3 +74,16 @@ GO term.
   * heatmap_GO() plots a heatmap with hierarchical clustering of
 the samples and genes based on the expression levels of genes
 associated with a given GO term.
+
+  * expression_plot() plots the expression profile of the gene
+corresponding to an ensembl identifier, given valid variable name
+for the X-axis and a grouping factor for the Y-axis.
+
+  * expression_plot_symbol() plots the expression profile of the
+gene(s) with the ensembl identifier(s) corresponding to a gene
+symbol, given valid variable name for the X-axis and a grouping
+factor for the Y-axis.
+
+  * plot_design() plots the univariate effect of each level of each
+factor available in the AnnotatedDataFrame on the expression levels
+of genes associated with a GO term.
