@@ -1,3 +1,47 @@
+RELEASE 0.3.1:
+
+  NEW FEATURES:
+
+  * expression_plot() plots the expression profile of the gene
+corresponding to an ensembl identifier, given valid variable name
+for the X-axis and a grouping factor for the Y-axis.
+
+  * expression_plot_symbol() plots the expression profile of the
+gene(s) with the ensembl identifier(s) corresponding to a gene
+symbol, given valid variable name for the X-axis and a grouping
+factor for the Y-axis.
+
+  * plot_design() plots the univariate effect of each level of each
+factor available in the AnnotatedDataFrame on the expression levels
+of genes associated with a GO term.
+
+  UPDATED FEATURES:
+  
+  * The scoring function now uses the total count of genes associated
+with a GOterm instead of the count of genes in the dataset and 
+associated with the GO term. Genes absent from the expression dataset
+are assigned a F.value of 0, similarly to the genes with a non-
+significant ANOVA result. This was not found to significantly impact
+the ranking of GO terms, but is a more objective scoring of the
+GO terms if the expression data was generated through objective
+filtering (e.g. filtering out lowly expressed genes).
+
+  * subset_scores() now also filters the $mapping and $anova slots
+to retain only mappings and gene information related to the GO terms
+left in the $scores slot after filtering. This reduces significantly
+the memory space of the filtered variable, while the object containing
+the raw results of GO_anova() will still contain the full information
+fetched from BioMart if the user wants it.
+
+  * ggplot2 and grid are now required for the proper installation of 
+anovaGO, even though these packages are only required for a subset
+of non-essential features in anovaGO. This way, all features in 
+anovaGO will be available as soon as the package is installed.
+
+  * Messages printed to the user during the executing of the funcions
+were made as clear as possible, particularly when fetching information
+from the BioMart database.
+
 RELEASE 0.2:
 
   UPDATED FEATURES:
