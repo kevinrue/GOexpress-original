@@ -47,7 +47,7 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = 
   # Remove the GO terms which is ""
   all_GO = subset(x=all_GO, subset=go_id != "")
   # Calculate the F.value and p.value of ANOVA for each ensembl id in the expression dataset
-  cat("Calculating one-way ANOVA on factor \"", f,"\" for", nrow(expr_data), "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)
+  cat("Calculating one-way ANOVA on factor", f,"for", nrow(expr_data), "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)
   res_anova = data.frame("F.value"= apply(X=expr_data,
                                           MARGIN=1,
                                           FUN=function(x){oneway.test(formula=expr~group,
