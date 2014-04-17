@@ -9,7 +9,7 @@ This package was designed for the analysis of bioinformatics-related
 data based on gene expression measurements. It requires 3 input
 values:
 
-1. a sample-by-gene table providing the expression level
+1. a sample-by-gene matrix providing the expression level
 of genes (rows) in each sample (columns)
 2. an AnnotatedDataFrame from the Biobase package providing phenotypic
 information about the samples. Row names are samples, at least one of
@@ -17,13 +17,13 @@ the columns must be a grouping factor with two or more levels.
 3. the name of the grouping factor to investigate, which must be a valid column name
 in the AnnotatedDataFrame.
 
-The analysis will identify all Gene Ontology (GO) terms represented
-by at least one gene in the expression dataset. A one-way ANOVA
-will be performed on the grouping factor for each gene present in
-the expression dataset. Following multiple-testing correction, genes
-below the threshold for significance will be assigned a F.value of
-0. GO terms will be scored and ranked on the average F.value of
-associated genes.
+The analysis identifies all Gene Ontology (GO) terms represented
+in the BioMart database. A one-way ANOVA is performed on
+the grouping factor for each gene present in the expression dataset.
+Following multiple-testing correction, genes below the threshold for
+significance or absent from the dataset are assigned a F.value of
+0. GO terms are scored and ranked on the average F.value of
+associated genes according to BioMart annotations.
 
 Functions are provided to investigate and visualise the results of
 the above analysis. The score table can be filtered for rows over
@@ -33,7 +33,10 @@ given GO term can be listed, with or without descriptive information.
 Hierarchical clustering of the samples can be performed based on the
 expression levels of genes associated with a given GO term. Heatmaps
 accompanied by hierarchical clustering of samples and genes can be
-drawn and customised.
+drawn and customised. The expression profile of genes can be plotted
+against any factor while grouping samples on another factor. The 
+univariate effect of all factors can be visualised on the expression
+levell of genes associated with a GO term.
 
 
 # FEATURES
