@@ -217,7 +217,7 @@ expression_plot = function(ensembl, expr_data, phenodata, x_var, result=NULL, f=
 
 
 expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, result=NULL,
-                                  f=result$factor, index=0, biomart_dataset = "",
+                                  f=result$factor, index=0, biomart_dataset = "", ylab="log2cpm",
                                   cbPalette = c("#56B4E9", "#D55E00", "#F0E442"), level=0.95,
                                   titles=c(), title.size=2){
   # if no GO_anova result was provided we will need to use BioMart to fetch the ensembl identifiers
@@ -347,7 +347,7 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
     cat("Unique gene id found for", gene_symbol, fill=TRUE)
     cat("Plotting ", ensembls_present, fill=TRUE)
     expression_plot(ensembl=ensembls_present, expr_data=expr_data, phenodata=phenodata, x_var=x_var,
-                    result=result, f=f, 
+                    result=result, f=f, ylab = ylab,
                     cbPalette = cbPalette, level=level,
                     title=titles,
                     title.size=title.size)

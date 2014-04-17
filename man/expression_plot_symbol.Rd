@@ -17,7 +17,7 @@ lattice can be plotted separately using its associated index.
 \usage{
 expression_plot_symbol(gene_symbol, expr_data, phenodata, x_var,
                        result = NULL, f = result$factor, index = 0,
-                       biomart_dataset = "",
+                       biomart_dataset = "", ylab="log2cpm",
                        cbPalette = c("#56B4E9", "#D55E00", "#F0E442"),
                        level = 0.95, titles = c(), title.size = 2)
 }
@@ -61,6 +61,9 @@ identifier alone, for instance.
   \item{biomart_dataset}{
 Optional. The BioMart ensembl dataset corresponding to the species studied.
 Automatically detected if not specified.
+}
+  \item{ylab}{
+Change axis labels and legend titles.
 }
   \item{cbPalette}{
 Optional. A vector of color names or codes. The number of colors provided must match the 
