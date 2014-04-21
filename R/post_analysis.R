@@ -66,7 +66,7 @@ subset_scores = function(result, ...){
   ## Subset the gene/GO mapping to keep only the GO terms left in the score table
   new_mapping = subset(result$mapping, result$mapping$go_id %in% new_scores$go_id)
   ## Subset the anova table to keep only the genes annotated to the genes left in the mapping table
-  new_anova = subset(result$anova, rownames(result$anova) %in% new_mapping$ensembl_gene_id)
+  new_anova = subset(result$anova, rownames(result$anova) %in% new_mapping$gene_id)
   ## Return the filtered slots in a new list
   list(scores = new_scores,
        mapping = new_mapping,
@@ -80,8 +80,14 @@ list_genes = function(result, go_id){
     # return an error and stop
     stop(go_id, "is not a valid go_id in the dataset.")
   }
+  # List of gene_ids annotated to the GO term
+  gene_ids = result$mapping[result$mapping$go_id == go_id,"gene_id"]
+  # BioMart can have more genes associated with the GO term
+  # than the number actually present in the dataset
+  # Filter out those not in the dataset
+  gene_ids_present = gene_ids[gene_ids %in% rownames(result$anova)]
   # Otherwise return the list of ensembl_ids associated with it
-  return(result$mapping[result$mapping$go_id == go_id,]$ensembl_gene_id)
+  return(gene_ids_present)
 }
 
 table_genes = function(result, go_id){
@@ -91,9 +97,9 @@ table_genes = function(result, go_id){
     stop(go_id, "is not a valid go_id in the dataset.")
   }
   # Otherwise fetch the list of ensembl_ids associated with it
-  ensembls = result$mapping[result$mapping$go_id == go_id,]$ensembl_gene_id
+  gene_ids = list_genes(result=result, go_id=go_id)
   # Return the information for those genes
-  return(result$anova[ensembls,])
+  return(result$anova[gene_ids,])
 }
 
 heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
