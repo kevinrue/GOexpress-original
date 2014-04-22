@@ -55,8 +55,9 @@ GO_anova = function(expr_data, phenodata, f, biomart_dataset="", microarray="",
         if (!is.null(nrow(microarray_match))){
           # connect to biomart and set the microarray variable
           cat("Looks like microarray data.", fill=TRUE)
-          cat("Loading dataset", microarray_match$dataset, "for microarray",
-              microarray_match$microarray, "...", fill=TRUE)
+          cat("Loading detected dataset", microarray_match$dataset,
+              "for detected microarray", microarray_match$microarray,
+              "...", fill=TRUE)
           microarray = microarray_match$microarray
           biomart_dataset = microarray_match$dataset
           mart = useMart(biomart="ensembl", dataset=biomart_dataset)
@@ -118,7 +119,7 @@ Please use \"biomart_dataset=\" argument.")
         cat("Looks like microarray data.", fill=TRUE)
         # if the dataset/microarray pair exists
         if (microarray_match$dataset == biomart_dataset){
-          cat("Loading annotations for microarray",
+          cat("Loading annotations for detected microarray",
               microarray_match$microarray, "...", fill=TRUE)
           mart = useMart(biomart="ensembl", dataset=biomart_dataset)
           microarray = microarray_match$microarray
@@ -275,7 +276,7 @@ mart_from_ensembl = function(sample_gene){
     if (prefix %in% prefix2dataset$prefix){
       # load the corresponding biomart dataset
       cat("Looks like ensembl gene identifier.", fill=TRUE)
-      cat("Loading dataset", prefix2dataset[prefix2dataset$prefix == prefix,]$dataset,
+      cat("Loading detected dataset", prefix2dataset[prefix2dataset$prefix == prefix,]$dataset,
           "...", fill=TRUE)
       return(useMart(biomart="ensembl",
                      dataset=prefix2dataset[prefix2dataset$prefix == prefix,]$dataset))
@@ -290,21 +291,21 @@ mart_from_ensembl = function(sample_gene){
   else if (length(grep(pattern="^WBGene", x=sample_gene))) {
     # load the corresponding biomart dataset
     cat("Looks like ensembl gene identifier.", fill=TRUE)
-    cat("Loading dataset celegans_gene_ensembl ...", fill=TRUE)
+    cat("Loading detected dataset celegans_gene_ensembl ...", fill=TRUE)
     return(useMart(biomart="ensembl", dataset="celegans_gene_ensembl"))
   }
   # If the gene id starts with "FBgn"
   else if (length(grep(pattern="^FBgn", x=sample_gene))) {
     # load the corresponding biomart dataset
     cat("Looks like ensembl gene identifier.", fill=TRUE)
-    cat("Loading dataset dmelanogaster_gene_ensembl ...", fill=TRUE)
+    cat("Loading detected dataset dmelanogaster_gene_ensembl ...", fill=TRUE)
     return(useMart(biomart="ensembl", dataset="dmelanogaster_gene_ensembl"))
   }
   # If the gene id starts with "Y"
   else if (length(grep(pattern="^Y", x=sample_gene))) {
     # load the corresponding biomart dataset
     cat("Looks like ensembl gene identifier.", fill=TRUE)
-    cat("Loading dataset scerevisiae_gene_ensembl ...", fill=TRUE)
+    cat("Loading detected dataset scerevisiae_gene_ensembl ...", fill=TRUE)
     return(useMart(biomart="ensembl", dataset="scerevisiae_gene_ensembl"))
   }
   # If the gene id does not match any known ensembl gene id prefix, return an error and stop
