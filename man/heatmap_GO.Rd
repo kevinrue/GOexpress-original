@@ -23,21 +23,24 @@ A Gene Ontology (GO) identifier.
 The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{expr_data}{
-Gene expression matrix. Row names are ensembl gene identifiers. Column names are sample identifiers.
+Gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
+Column names are sample identifiers.
 }
   \item{phenodata}{
-An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in the expression dataset.
+An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in
+the expression dataset.
 Column names are grouping factors and phenotypic traits usable for the one-way ANOVA.  
 }
   \item{gene_names}{
 A boolean value. Default is TRUE, to label genes by their associated gene name.
-If FALSE, labels the genes by their ensembl_gene_id.
+If FALSE, labels the genes by their gene identifier in the expression dataset.
 }
   \item{f}{
 The predefined grouping factor.
 }
   \item{scale}{
-character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. Default is "none". See \code{heatmap()}.
+character indicating if the values should be centered and scaled in either the row
+direction or the column direction, or none. Default is "none". See \code{heatmap()}.
 }
   \item{cexCol, cexRow}{
 positive numbers, used as cex.axis in for the row or column axis labeling. Defaults are 

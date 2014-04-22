@@ -54,7 +54,7 @@ Other filters:
 \value{
 A list of four elements containing the results of the analysis.
   \item{ scores }{A table ranking the remaining GO terms after filtering.}
-  \item{ mapping }{A table mapping the remaining GO terms to ensembl identifiers
+  \item{ mapping }{A table mapping the remaining GO terms to gene identifiers
   in the dataset.}
   \item{ anova }{The table ranking the remaining genes present in the dataset and
   mapped to the remaining GO terms.}

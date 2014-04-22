@@ -10,9 +10,9 @@ Successively plots univariate effects of one or more
 as analyzed by \code{\link[stats:aov]{aov}}().
 }
 \usage{
-plot_design(go_id, expr_data, phenodata, result = NULL,
-            factors = colnames(Biobase::pData(phenodata)),
-            main = "", biomart_dataset = "", ...)
+plot_design(go_id, expr_data, phenodata, result,
+                       factors=colnames(Biobase::pData(phenodata)),
+                       main="", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -39,10 +39,6 @@ of a given genes for each level of that factor.
 }
   \item{main}{
 Changes the main title of the plots.
-}
-  \item{biomart_dataset}{
-Optional. The BioMart ensembl dataset corresponding to the species studied.
-Automatically detected if not specified.
 }
   \item{\dots}{
 Additional arguments which will be passed on to the \code{plot.design}()

@@ -18,14 +18,19 @@ The ranked list of GO terms is returned, with tools allowing to visualise the st
 of each gene and ontology.
 }
 \usage{
-GO_anova(expr_data, phenodata, f, biomart_dataset = "", adj.P.method = "BH", FDR = 0.05)
+GO_anova(expr_data, phenodata, f, biomart_dataset="", microarray="",
+                    adj.P.method = "BH", FDR=0.05)
 
 # To force the use of the human ensembl BioMart, use:
 # GO_anova(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
+
+# To force use of the bovine affy_bovine microarray annotations use:
+# GO_anova(expr_data, phenodata, f, microarray = "affy_bovine")
 }
 \arguments{
   \item{expr_data}{
-Gene expression matrix. Row names are ensembl gene identifiers. Column names are sample identifiers.
+Gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
+Column names are sample identifiers.
 }
   \item{phenodata}{
 An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in
@@ -37,6 +42,10 @@ A value in colnames(phenodata) used as the grouping factor for the one-way ANOVA
 }
   \item{biomart_dataset}{
 Optional. The BioMart ensembl dataset corresponding to the species studied.
+Automatically detected if not specified.
+}
+  \item{microarray}{
+Optional. The BioMart microarray column name in the dataset corresponding to the species studied.
 Automatically detected if not specified.
 }
   \item{adj.P.method}{

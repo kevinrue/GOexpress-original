@@ -1,5 +1,5 @@
 # This script will take
-## An expression dataset (requires ensembl-compatible identifiers)
+## An expression dataset (using ensembl_id or probeset identifiers)
 ## A table of phenotypic data of samples
 ## The phenotypic factor expected to discriminate samples
 
@@ -7,22 +7,29 @@
 # discriminate the samples according to the expected phenotypic factor
 
 # The script will summarise genes annotated to a same GO term (Biological Process)
-# to evaluate the pwoer of each GO term to discriminate the samples according 
+# to evaluate the power of each GO term to discriminate the samples according 
 # to the expected phenotypic factor
 
 # The script will return
 ## A table ranking GO terms according to their power to discriminate samples
 ## A table mapping  GO terms and genes to one another
-## A table describing all GO terms annotated for genes in the dataset
-
+## A table ranking genes according to their power to discriminate samples
+## The factor used to calculate scores
 
 # Downstream analyses
-## Contains a function to list the genes annotated to a GO term
-## Contains a function to cluster samples according to a list of genes
-## Contains a function to heatmap the samples according to a list of genes
-## Contains two functions to see the distribution of scores for all GO terms (density + histogram)
-## Contains a function to see quantiles of scores for all GO terms (how many GO terms have score > S)
-## Contains a function to filter the results for GO terms with N genes or more
+## Function to filter the resulting scores to GO terms passing criteria
+## Function to list the genes annotated to a GO term
+## Function to see the scores of the genes annotated to a GO term
+## Function to cluster samples according to a list of genes
+## Function to heatmap the samples according to a list of genes
+## Function to see the distribution of scores for all GO terms (histogram)
+## Function to see the quantiles of scores across all GO terms
+## Function to see quantiles of scores for all GO terms (how many GO terms have score > S)
+## Function to filter the results for GO terms with N genes or more
+## Two function to visualise the expression profile of a gene across a X-variable and 
+### grouped by a Y-factor (plot by gene_id or by gene_symbol)
+## Function to visualise the univariate effect of each factor on the grouping of samples
+
 
 # Dependencies:
 ## Internet connection (biomaRt)
@@ -30,8 +37,8 @@
 ## library(stringr) # pattern extraction
 
 
-GO_anova = function(expr_data, phenodata, f, biomart_dataset="", adj.P.method = "BH", FDR=0.05,
-                    microarray=""){
+GO_anova = function(expr_data, phenodata, f, biomart_dataset="", microarray="",
+                    adj.P.method = "BH", FDR=0.05){
   # if the user did not give a dataset name
   if (biomart_dataset == ""){
     # if the user did not give a microarray value

@@ -6,7 +6,7 @@ Returns the genes associated with a Gene Ontology
 }
 \description{
 Given a Gene Ontology (GO) identifier represented in the dataset,
-returns a character vector listing the ensembl_gene_ids annotated to it.
+returns a character vector listing the gene identifiers annotated to it.
 }
 \usage{
 list_genes(result, go_id)
@@ -25,7 +25,7 @@ A Gene Ontology (GO) identifier represented in the dataset.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A character vector listing the ensembl identifiers of the genes associated
+A character vector listing the gene identifiers of the genes associated
 with the GO term.
 }
 \references{

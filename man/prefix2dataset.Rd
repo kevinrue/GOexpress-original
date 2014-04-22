@@ -13,8 +13,8 @@ This table maps each known prefix to the corresponding species.
 \format{
   A data frame with 66 rows.
   \describe{
-    \item{\code{prefix}}{Prefixes unique to each species.}
-    \item{\code{dataset}}{BioMart dataset for each species.}
+    \item{\code{prefix}}{Unique prefix.}
+    \item{\code{dataset}}{BioMart dataset.}
   }
 }
 \details{

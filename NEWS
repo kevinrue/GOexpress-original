@@ -1,3 +1,20 @@
+RELEASE 0.4.1:
+
+  NEW FEATURES:
+
+  * Supports microarray probeset identifiers as gene identifiers
+in the expression dataset.
+
+  * Argument "result=" is no more optional in all the post-analysis
+functions.
+
+  UPDATED FEATURES:
+
+  * expression_plot*() functions now dynamically adapt the colormap
+to the number of groups of samples instead of three hard-coded colors
+used for the colormap.
+
+
 RELEASE 0.3.1:
 
   NEW FEATURES:
@@ -41,6 +58,7 @@ anovaGO will be available as soon as the package is installed.
   * Messages printed to the user during the executing of the funcions
 were made as clear as possible, particularly when fetching information
 from the BioMart database.
+
 
 RELEASE 0.2:
 

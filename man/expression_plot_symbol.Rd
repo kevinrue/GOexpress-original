@@ -10,22 +10,23 @@ X-axis variable from the AnnotatedDataFrame while representing the mean
 and confidence interval of groups of samples defined by levels of a valid
 grouping factor from the AnnotatedDataFrame.
 
-In the case of a gene name represented by multiple ensembl gene identifiers
+In the case of a gene name represented by multiple gene identifiers
 in the dataset, a lattice of plots will be produced. Each of the plots in this
 lattice can be plotted separately using its associated index.
 }
 \usage{
-expression_plot_symbol(gene_symbol, expr_data, phenodata, x_var,
-                       result = NULL, f = result$factor, index = 0,
-                       biomart_dataset = "", ylab="log2cpm",
-                       cbPalette = c("#56B4E9", "#D55E00", "#F0E442"),
-                       level = 0.95, titles = c(), title.size = 2)
+expression_plot_symbol(gene_symbol, expr_data, phenodata, x_var, result,
+                                  f=result$factor, index=0, ylab="log2cpm",
+                                  col.palette="Accent",
+                                  col = brewer.pal(n=length(levels(pData(phenodata)[,f])), name=col.palette),
+                                  level=0.95,
+                                  titles=c(), title.size=2)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{gene_symbol}{
 A gene name present in rownames(result$anova) if results is specified.
-Otherwise, the BioMart database will be queried for ensembl gene
+Otherwise, the BioMart database will be queried for gene
 identifiers associated with the gene name.
 }
   \item{expr_data}{
@@ -42,7 +43,7 @@ AnnotatedDataFrame for best results.
 }
   \item{result}{
 An output of the \code{GO_anova()} or \code{subset_scores()} function. If not
-specified, the BioMart database will be queried to look for ensembl gene 
+specified, the BioMart database will be queried to look for gene 
 identifiers associated with the gene name, and the \code{f=} argument is
 then mandatory.
 }
@@ -54,19 +55,18 @@ grouping factors of samples can reveal interesting trends (e.g. "Animal",
 "Tissue", "CellType").
 }
   \item{index}{
-In the case where multiple ensembl gene identifiers are associated with the gene
-name, \code{index=2} will plot the expression profile of the second ensembl
+In the case where multiple gene identifiers are associated with the gene
+name, \code{index=2} will plot the expression profile of the second gene
 identifier alone, for instance.
-}
-  \item{biomart_dataset}{
-Optional. The BioMart ensembl dataset corresponding to the species studied.
-Automatically detected if not specified.
 }
   \item{ylab}{
 Change axis labels and legend titles.
 }
-  \item{cbPalette}{
-Optional. A vector of color names or codes. The number of colors provided must match the 
+  \item{col.palette}{
+A valid RColorBrewer palette name to fetch the colormap from.
+}
+  \item{col}{
+A vector of color names or codes. The number of colors provided must match the 
 number of levels of the grouping factor. Default to a color-blind friendly
 palette of three colors.
 }
@@ -76,7 +76,7 @@ Default is 0.95.
 }
   \item{titles}{
 Character vector providing as many titles as there are plots to replace
-the default titles. Default is a combination of the ensembl gene id and the
+the default titles. Default is a combination of the gene id and the
 associated gene.
 }
   \item{title.size}{
@@ -87,7 +87,7 @@ Changes the font size of the title.
 If provided, the \code{result=} argument must contain the output of either the 
 \code{GO_anova()} or the \code{subset_scores()} functions. Those objects contain
 useful information such as the mapping between gene name and corresponding  
-ensembl gene identifiers, but also the factor used for the \code{GO_anova()} function.
+gene identifiers, but also the factor used for the \code{GO_anova()} function.
 This avoids the need to fetch gene annotations from BioMart and also provides a
 default grouping factor for the expression profile.
 

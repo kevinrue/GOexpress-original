@@ -25,8 +25,8 @@ A Gene Ontology (GO) identifier.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A data frame with three columns for ensembl_gene_id, associated_gene_name,
-and description.
+A data frame listing the statistics and BioMart annotations for the genes 
+present in the expression dataset and associated with the GO term.
 }
 \references{
 %% ~put references to the literature/web site here ~

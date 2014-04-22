@@ -1,6 +1,5 @@
 \name{expression_plot}
 \alias{expression_plot}
-\alias{ggplot2}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Plots the expression profile of a gene by levels of a factor
@@ -12,16 +11,15 @@ and confidence interval of groups of samples defined by levels of a valid
 grouping factor from the AnnotatedDataFrame.
 }
 \usage{
-expression_plot(ensembl, expr_data, phenodata, x_var, result=NULL,
-                f=result$factor, ylab = "log2(cpm)",
-                cbPalette = c("#56B4E9", "#D55E00", "#F0E442"),
-                level=0.95, biomart_dataset="", title=NULL,
-                title.size=2)
+expression_plot(gene_id, expr_data, phenodata, x_var, result, f=result$factor, 
+                           ylab = "log2(cpm)", col.palette="Accent",
+                           col = brewer.pal(n=length(levels(pData(phenodata)[,f])), name=col.palette),
+                           level=0.95, title=NULL, title.size=2)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{ensembl}{
-An ensembl gene identifier present in rownames(expr_data).
+  \item{gene_id}{
+An gene identifier present in rownames(expr_data).
 }
   \item{expr_data}{
 A sample-by-gene matrix providing expression levels of each gene in each sample.
@@ -48,7 +46,10 @@ grouping factors of samples can reveal interesting trends (e.g. "Animal",
   \item{ylab}{
 Change axis labels and legend titles.
 }
-  \item{cbPalette}{
+  \item{col.palette}{
+A valid RColorBrewer palette name to fetch the colormap from.
+}
+  \item{col}{
 A vector of color names or codes. The number of colors provided must match the 
 number of levels of the grouping factor. Default to a color-blind friendly
 palette of three colors.
@@ -57,12 +58,8 @@ palette of three colors.
 The confidence interval level to visualise around the mean of each group.
 Default is 0.95.
 }
-  \item{biomart_dataset}{
-Optional. The BioMart ensembl dataset corresponding to the species studied.
-Automatically detected if not specified.
-}
   \item{title}{
-Changes the plot title. Default is a combination of the ensembl gene id and the
+Changes the plot title. Default is a combination of the gene id and the
 associated gene.
 }
   \item{title.size}{
@@ -72,7 +69,7 @@ Changes the font size of the title.
 \details{
 If the \code{result} argument is not specified and no custom title is specified either,
 the function will connect to the BioMart dataset for the species corresponding
-to the gene identifier to generate a title combining the ensembl gene identifier and 
+to the gene identifier to generate a title combining the gene identifier and 
 the associated gene name.
 }
 \value{

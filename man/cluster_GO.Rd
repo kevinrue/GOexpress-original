@@ -24,7 +24,8 @@ A Gene Ontology (GO) identifier.
 The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{expr_data}{
-Sample-by-gene expression matrix. Row names are ensembl gene identifiers. Column names are sample identifiers.
+Sample-by-gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
+Column names are sample identifiers.
 }
   \item{phenodata}{
 An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in the expression dataset.

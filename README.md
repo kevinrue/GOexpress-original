@@ -10,23 +10,27 @@ data based on gene expression measurements. It requires 3 input
 values:
 
 1. a sample-by-gene matrix providing the expression level
-of genes (rows) in each sample (columns)
+of genes (rows) in each sample (columns). Row names are expected to be
+either ensembl gene identifiers or probeset identifiers present in the
+BioMart database.
 2. an AnnotatedDataFrame from the Biobase package providing phenotypic
 information about the samples. Row names are samples, at least one of
-the columns must be a grouping factor with two or more levels.
-3. the name of the grouping factor to investigate, which must be a valid column name
-in the AnnotatedDataFrame.
+the columns must be a grouping factor with two or more levels (factor
+in the actual meaning of the R language).
+3. the name of the grouping factor to investigate, which must be a
+valid column name in the AnnotatedDataFrame.
 
 The analysis identifies all Gene Ontology (GO) terms represented
-in the BioMart database. A one-way ANOVA is performed on
-the grouping factor for each gene present in the expression dataset.
-Following multiple-testing correction, genes below the threshold for
-significance or absent from the dataset are assigned a F.value of
-0. GO terms are scored and ranked on the average F.value of
-associated genes according to BioMart annotations.
+in the BioMart dataset of the species studied. A one-way ANOVA is
+performed on the grouping factor for each gene present in the
+expression dataset. Following multiple-testing correction, genes
+associated with the GO term in BioMart but below the threshold for
+significance or absent from the dataset are assigned a F.value of 0.
+GO terms are scored and ranked on the average F.value of associated
+genes according to BioMart annotations.
 
 Functions are provided to investigate and visualise the results of
-the above analysis. The score table can be filtered for rows over
+the above analysis. The score table can be filtered for GO terms over
 given thresholds. The distribution of scores can be visualised. The
 quantiles of scores can be obtained. The genes associated with a
 given GO term can be listed, with or without descriptive information.
@@ -40,6 +44,9 @@ levell of genes associated with a GO term.
 
 
 # FEATURES
+
+  * Support expression data based on ensembl gene identifiers and
+probeset identifiers.
 
   * GO_anova() scores all Gene Ontology (GO) terms represented in
 the dataset based on the ability of their associated genes to cluster
