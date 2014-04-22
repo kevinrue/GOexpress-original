@@ -120,7 +120,8 @@ Please use \"biomart_dataset=\" argument.")
         # if the dataset/microarray pair exists
         if (microarray_match$dataset == biomart_dataset){
           cat("Loading annotations for detected microarray",
-              microarray_match$microarray, "...", fill=TRUE)
+              microarray_match$microarray, "for requested dataset",
+              biomart_dataset, "...", fill=TRUE)
           mart = useMart(biomart="ensembl", dataset=biomart_dataset)
           microarray = microarray_match$microarray
           print(mart)
@@ -153,7 +154,7 @@ Please use \"biomart_dataset=\" argument.")
       if (!biomart_dataset %in% microarray2dataset[microarray2dataset$microarray == microarray, "dataset"]){
         stop("There is no microarray ", microarray, " in dataset ", biomart_dataset)
       }
-      cat("Loading requested microarray", microarray, "from biomart dataset", biomart_dataset, fill=TRUE)
+      cat("Loading requested microarray", microarray, "from requested biomart dataset", biomart_dataset, fill=TRUE)
       mart = useMart(biomart="ensembl", dataset=biomart_dataset)
     }
   }
