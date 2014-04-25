@@ -3,4 +3,4 @@
 .Rbuildignore
 .RData
 .gitignore
-GOexpress.Rproj
+*.Rproj
