@@ -2,7 +2,7 @@
 \alias{quantiles_scores}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Returns the quantiles of scores following an anovaGO analysis.
+Returns the quantiles of scores following an GOexpress analysis.
 }
 \description{
 Returns a set of quantiles in indicating the scores reached by given proportions
@@ -10,14 +10,14 @@ of the GO terms.
 
 This function can also be used on the output of \code{subset_scores()}
 function as it returns a value formatted identically to the output of the
-\code{GO_anova()} function.
+\code{GO_analyse()} function.
 }
 \usage{
 quantiles_scores(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=c(FALSE, TRUE))
 }
 \arguments{
   \item{result}{
-The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{probs}{
 numeric vector of probabilities with values in [0,1]. (Values up

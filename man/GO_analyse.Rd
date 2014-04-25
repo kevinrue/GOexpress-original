@@ -1,5 +1,5 @@
-\name{GO_anova}
-\alias{GO_anova}
+\name{GO_analyse}
+\alias{GO_analyse}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Identifies gene ontologies clustering samples according to predefined factor.
@@ -18,14 +18,14 @@ The ranked list of GO terms is returned, with tools allowing to visualise the st
 of each gene and ontology.
 }
 \usage{
-GO_anova(expr_data, phenodata, f, biomart_dataset="", microarray="",
+GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
                     adj.P.method = "BH", FDR=0.05)
 
 # To force the use of the human ensembl BioMart, use:
-# GO_anova(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
+# GO_analyse(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
 
 # To force use of the bovine affy_bovine microarray annotations use:
-# GO_anova(expr_data, phenodata, f, microarray = "affy_bovine")
+# GO_analyse(expr_data, phenodata, f, microarray = "affy_bovine")
 }
 \arguments{
   \item{expr_data}{

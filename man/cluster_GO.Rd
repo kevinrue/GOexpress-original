@@ -21,7 +21,7 @@ cluster_GO(go_id, result, expr_data, phenodata, f=result$factor,
 A Gene Ontology (GO) identifier.
 }
   \item{result}{
-The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{expr_data}{
 Sample-by-gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
@@ -73,7 +73,7 @@ Kevin Rue-Albrecht
 %%  ~~further notes~~
 }
 \seealso{
-  Method \code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}.
+  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}.
 }
 \examples{
 %%##---- Should be DIRECTLY executable !! ----

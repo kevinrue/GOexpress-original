@@ -14,7 +14,7 @@ list_genes(result, go_id)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
-The output of \code{GO_anova()} or a subset of it obtained from
+The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
   \item{go_id}{

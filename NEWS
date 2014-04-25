@@ -1,3 +1,13 @@
+RELEASE 0.5.1:
+
+  UPDATED FEATURES:
+
+  * Package renamed GOexpress after verifying that no other package
+on Bioconductor uses this name.
+
+  * Method GO_anova() renamed to GO_analyse() as other metrics than
+ANOVA may be implemented in the future.
+
 RELEASE 0.4.1:
 
   NEW FEATURES:

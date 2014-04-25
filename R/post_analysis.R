@@ -161,7 +161,7 @@ expression_plot = function(gene_id, expr_data, phenodata, x_var, result, f=resul
   }
   # if the result was provided does not look like it should
   if (class(result) != "list" || length(result) != 4){
-    stop("\"result=\" argument does not look like a GO_anova output.")
+    stop("\"result=\" argument does not look like a GO_analyse output.")
   }
   
   title = paste(gene_id, " = ", result$anova[gene_id,]$external_gene_id)
@@ -192,9 +192,9 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
                                   titles=c(), title.size=2){
   # if the result was provided does not look like it should
   if (class(result) != "list" || length(result) != 4){
-    stop("\"result=\" argument does not look like a GO_anova output.")
+    stop("\"result=\" argument does not look like a GO_analyse output.")
   }
-  # the GO_anova result provided contains the annotation of each ensembl identifier
+  # the GO_analyse result provided contains the annotation of each ensembl identifier
   # present in the dataset to a gene name, if any
   cat("Fetching ensembl identifier(s) annotated to",  gene_symbol, "...", fill=TRUE)
   mapping = data.frame(gene_id=rownames(result$anova), 
@@ -356,9 +356,9 @@ plot_design = function(go_id, expr_data, phenodata, result,
   # Fetch the list of genes associated with the go_id
   # if the result was provided does not look like it should
   if (class(result) != "list" || length(result) != 4){
-    stop("\"result=\" argument does not look like a GO_anova output.")
+    stop("\"result=\" argument does not look like a GO_analyse output.")
   }
-  # If the user gave the output of a GO_anova command as result=
+  # If the user gave the output of a GO_analyse command as result=
   # that list contains the mapping between ensembl genes and GO_id
   gene_ids_present = list_genes(result, go_id)
   GO_name = result$scores[result$scores$go_id == go_id,]$name_1006

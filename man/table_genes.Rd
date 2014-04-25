@@ -6,7 +6,7 @@ Returns a table listing the genes associated with a given Gene Ontology
 }
 \description{
 Given a Gene Ontology (GO) identifier represented in the dataset and the output
-variable of a \code{GO_anova()} function, \code{table_genes()} returns a table
+variable of a \code{GO_analyse()} function, \code{table_genes()} returns a table
 listing the genes associated with that go_id, their associated gene name,
 and description.
 }
@@ -15,7 +15,7 @@ table_genes(result, go_id)
 }
 \arguments{
   \item{result}{
-The output of the \code{GO_anova()} function.
+The output of the \code{GO_analyse()} function.
 }
   \item{go_id}{
 A Gene Ontology (GO) identifier.
@@ -41,7 +41,7 @@ Kevin Rue-Albrecht
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-  Method \code{\link[anovaGO:GO_anova]{anovaGO::GO_anova}}.
+  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}.
 }
 \examples{
 %%##---- Should be DIRECTLY executable !! ----

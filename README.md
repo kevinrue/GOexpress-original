@@ -1,4 +1,4 @@
-anovaGO
+GOexpress
 =======
 
 Identification of gene ontology (GO) terms clustering data according to an expected factor
@@ -48,7 +48,7 @@ levell of genes associated with a GO term.
   * Support expression data based on ensembl gene identifiers and
 probeset identifiers.
 
-  * GO_anova() scores all Gene Ontology (GO) terms represented in
+  * GO_analyse() scores all Gene Ontology (GO) terms represented in
 the dataset based on the ability of their associated genes to cluster
 samples according to a predefined grouping factor. It also returns
 the table used to map genes to GO terms, the table summarising the
@@ -61,12 +61,12 @@ dataset based on the gene name of the first gene in the expression
 dataset. The choice of the dataset can be overriden by the user
 if a valid BioMart ensembl dataset is specified.
   
-  * subset_scores() filters output of GO_anova() for GO terms passing
+  * subset_scores() filters output of GO_analyse() for GO terms passing
 desired filters and returns a list formatted identically to the 
-output of GO_anova() with the filtered information.
+output of GO_analyse() with the filtered information.
 
   * hist_scores() plots the distribution of average F scores in the
-output of GO_anova() or subset_scores().
+output of GO_analyse() or subset_scores().
 
   * quantiles_scores() returns the quantile values corresponding
 to defined percentiles.

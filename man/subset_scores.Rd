@@ -2,10 +2,10 @@
 \alias{subset_scores}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Returns a filtered list of GO_anova results.
+Returns a filtered list from GO_analyse results.
 }
 \description{
-Given an output variable from a GO_anova analysis and a set of valid filters
+Given an output variable from a \code{GO_analyse} analysis and a set of valid filters
 and thresholds, returns an identically formatted list keeping only the rows
 of the score table passing all the filters.
 }
@@ -17,7 +17,7 @@ subset_scores(result, ...)
 }
 \arguments{
   \item{result}{
-The output of the \code{GO_anova()} function.
+The output of the \code{GO_analyse()} function.
 }
   \item{\dots}{
 Additional pairs of filter and threshold values in the format "filter=threshold". 

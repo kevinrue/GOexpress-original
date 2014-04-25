@@ -1,6 +1,6 @@
-\name{anovaGO-package}
-\alias{anovaGO-package}
-\alias{anovaGO}
+\name{GOexpress-package}
+\alias{GOexpress-package}
+\alias{GOexpress}
 \docType{package}
 \title{
 Identifies gene ontologies clustering samples according to predefined factor.
@@ -19,10 +19,10 @@ on a gene- and ontology-bases.
 }
 \details{
  \tabular{ll}{
- Package: \tab anovaGO\cr
+ Package: \tab GOexpress\cr
  Type: \tab Package\cr
- Version: \tab 0.3.1\cr
- Date: \tab 2014-04-16\cr
+ Version: \tab 0.5.1\cr
+ Date: \tab 2014-04-24\cr
  License: \tab GPL-2\cr
  }
  This package requires only two input variables
@@ -42,6 +42,8 @@ on a gene- and ontology-bases.
   annotated to a GO term
   \item Expression profile of a gene against one factor (e.g. Time) while grouping 
   samples on another factor (e.g. Treatment)
+  \item Univariate analysis of the expression level of a gene in the different groups
+  of each experimental factor.
  }
 }
 \author{

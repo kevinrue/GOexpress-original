@@ -4,7 +4,7 @@
 export("cluster_GO")
 export("expression_plot")
 export("expression_plot_symbol")
-export("GO_anova")
+export("GO_analyse")
 export("heatmap_GO")
 export("hist_scores")
 export("list_genes")
@@ -13,7 +13,7 @@ export("quantiles_scores")
 export("subset_scores")
 export("table_genes")
 
-# Package required for the features of anovaGO to work
+# Package required for the features of GOexpress to work
 import(Biobase)
 import(biomaRt)
 import(ggplot2)

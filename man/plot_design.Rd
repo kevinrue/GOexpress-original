@@ -29,7 +29,7 @@ An AnnotatedDataFrame from package Biobase providing phenotypic information
 about the samples and grouping factors with 2 or more levels.
 }
   \item{result}{
-The output of \code{GO_anova()} or a subset of it obtained from
+The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
   \item{factors}{

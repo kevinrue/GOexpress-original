@@ -42,7 +42,7 @@ time on the X-axis, make sure the time-points are stored as numeric values in th
 AnnotatedDataFrame for best results.
 }
   \item{result}{
-An output of the \code{GO_anova()} or \code{subset_scores()} function. If not
+An output of the \code{GO_analyse()} or \code{subset_scores()} function. If not
 specified, the BioMart database will be queried to look for gene 
 identifiers associated with the gene name, and the \code{f=} argument is
 then mandatory.
@@ -50,7 +50,7 @@ then mandatory.
   \item{f}{
 Optional. A value from colnames(pData(phenodata)) to group the samples when representing
 mean and confidence interval. If the \code{result} argument is used, the factor
-specified in the initial \code{GO_anova()} call is used by default. Unexpected
+specified in the initial \code{GO_analyse()} call is used by default. Unexpected
 grouping factors of samples can reveal interesting trends (e.g. "Animal",
 "Tissue", "CellType").
 }
@@ -85,9 +85,9 @@ Changes the font size of the title.
 }
 \details{
 If provided, the \code{result=} argument must contain the output of either the 
-\code{GO_anova()} or the \code{subset_scores()} functions. Those objects contain
+\code{GO_analyse()} or the \code{subset_scores()} functions. Those objects contain
 useful information such as the mapping between gene name and corresponding  
-gene identifiers, but also the factor used for the \code{GO_anova()} function.
+gene identifiers, but also the factor used for the \code{GO_analyse()} function.
 This avoids the need to fetch gene annotations from BioMart and also provides a
 default grouping factor for the expression profile.
 

@@ -37,7 +37,7 @@
 ## library(stringr) # pattern extraction
 
 
-GO_anova = function(expr_data, phenodata, f, biomart_dataset="", microarray="",
+GO_analyse = function(expr_data, phenodata, f, biomart_dataset="", microarray="",
                     adj.P.method = "BH", FDR=0.05){
   # if the user did not give a dataset name
   if (biomart_dataset == ""){
@@ -186,6 +186,10 @@ Please use \"biomart_dataset=\" argument.")
   # Calculate the F.value and p.value of ANOVA for each ensembl id in the expression dataset
   cat("Calculating one-way ANOVA on factor", f,"for", nrow(expr_data),
       "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)
+  # Two vectorised calculation to ANOVA get first the F-value, then the p-value for each gene
+  # The alternative, to compute a single ANOVA for each gene is a FOR loop
+  # However, two vectorised approaches are much faster than one FOR loop
+  # Even plyr would call twice the oneway.test function
   res_anova = data.frame("F.value"= apply(X=expr_data,
                                           MARGIN=1,
                                           FUN=function(x){oneway.test(formula=expr~group,

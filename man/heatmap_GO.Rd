@@ -20,7 +20,7 @@ heatmap_GO(go_id, result, expr_data, phenodata, gene_names = TRUE, f = result$fa
 A Gene Ontology (GO) identifier.
 }
   \item{result}{
-The output of \code{GO_anova()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{expr_data}{
 Gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.

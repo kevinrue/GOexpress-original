@@ -2,15 +2,15 @@
 \alias{hist_scores}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Plots the distribution of scores following an anovaGO analysis.
+Plots the distribution of scores following an GOexpress analysis.
 }
 \description{
 Plots the an histogram representing the frequencies of scores in the output
-variable of the {GO_anova()} function.
+variable of the {GO_analyse()} function.
 
 This function can also be used on the output of \code{subset_scores()}
 function as it returns a value formatted identically to the output of the
-\code{GO_anova()} function.
+\code{GO_analyse()} function.
 }
 \usage{
 hist_scores(result,
@@ -20,7 +20,7 @@ hist_scores(result,
 }
 \arguments{
   \item{result}{
-The output of the \code{GO_anova()} function.
+The output of the \code{GO_analyse()} function.
 }
   \item{main, xlab}{
 These arguments to title have useful defaults here.
