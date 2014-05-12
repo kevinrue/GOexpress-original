@@ -1,3 +1,12 @@
+RELEASE 0.5.2:
+
+  UPDATED FEATURES:
+
+  * Method heatmap_GO() updated to color-code the samples by levels
+of a factor, and a better colormap is used to represent the level of
+expression of genes.
+
+
 RELEASE 0.5.1:
 
   UPDATED FEATURES:
