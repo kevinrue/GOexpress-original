@@ -10,9 +10,11 @@ levels of genes related to a given ontology. Represents expression levels of tho
 in a heatmap.
 }
 \usage{
-heatmap_GO(go_id, result, expr_data, phenodata, gene_names = TRUE, f = result$factor,
-           scale = "none", cexCol = 1.2, cexRow = 0.5,
-           main = paste(go_id, result$scores[result$scores$go_id == go_id, ]$name_1006),
+heatmap_GO(go_id, result, expr_data, phenodata, gene_names=TRUE,
+           f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
+           trace="none", expr.col=rev(redgreen(75)), row.col.palette="Accent",
+           row.col=brewer.pal(n=length(unique(pData(phenodata)[,f])), name=row.col.palette),
+           main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
            ...)
 }
 \arguments{
@@ -39,25 +41,43 @@ If FALSE, labels the genes by their gene identifier in the expression dataset.
 The predefined grouping factor.
 }
   \item{scale}{
-character indicating if the values should be centered and scaled in either the row
-direction or the column direction, or none. Default is "none". See \code{heatmap()}.
+Character indicating if the values should be centered and scaled in either the row
+direction or the column direction, or none. Default is "none". See \code{heatmap.2()}.
 }
   \item{cexCol, cexRow}{
-positive numbers, used as cex.axis in for the row or column axis labeling. Defaults are 
-1.2 and 1, respectively. See \code{heatmap()}.
+Positive numbers, used as cex.axis in for the row or column axis labeling. Defaults are 
+.2 and 1, respectively. See \code{heatmap.2()}.
+}
+  \item{trace}{
+Character string indicating whether a solid "trace" line should be drawn across 'row's
+or down 'column's, both' or 'none'. The distance of the line from the center of each
+color-cell is proportional to the size of the measurement. Defaults to 'none'
+}
+  \item{expr.col}{
+Character vector indicating the colors to represent the different levels of gene
+expression. Defaults to a colormap of 75 shades ranging from green (low) to red
+(high) and centered around black.
+}
+  \item{row.col.palette}{
+A valid RColorBrewer palette name to fetch the colormap from, to color-code the groups
+of samples.
+}
+  \item{row.col}{
+A vector of color names or codes. The number of colors provided must match the 
+number of levels of the grouping factor. Default to an adequate palette of colors.
 }
   \item{main}{
 Main title of the figure. Default is paste(go_id, go_name).
 }
   \item{\dots}{
-Additional arguments passed on to \code{heatmap()}.
+Additional arguments passed on to \code{heatmap.2()}.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  Returns the output of the \code{stats::heatmap()} function.
+  Returns the output of the \code{gplots::heatmap.2()} function.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -69,7 +89,7 @@ Kevin Rue-Albrecht
 %%  ~~further notes~~
 }
 \seealso{
-Method \code{\link[stats:heatmap]{stats::heatmap}}.
+Method \code{\link[gplots:heatmap.2]{gplots::heatmap.2}}.
 }
 \examples{
 %%##---- Should be DIRECTLY executable !! ----

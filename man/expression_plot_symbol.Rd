@@ -67,8 +67,7 @@ A valid RColorBrewer palette name to fetch the colormap from.
 }
   \item{col}{
 A vector of color names or codes. The number of colors provided must match the 
-number of levels of the grouping factor. Default to a color-blind friendly
-palette of three colors.
+number of levels of the grouping factor. Default to a palette with an adequate set of colors.
 }
   \item{level}{
 The confidence interval level to visualise around the mean of each group.

@@ -103,9 +103,11 @@ table_genes = function(result, go_id){
 }
 
 heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
-                      f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
-                      main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
-                      ...){
+                        f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
+                        trace="none", expr.col=rev(redgreen(75)), row.col.palette="Accent",
+                        row.col=brewer.pal(n=length(unique(pData(phenodata)[,f])), name=row.col.palette),
+                        main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
+                        ...){
   # Fetch the list of genes associated with the go_id
   gene_ids = list_genes(result, go_id)
   # Fetch and transform the expression data for those genes
@@ -119,10 +121,14 @@ heatmap_GO = function(go_id, result, expr_data, phenodata, gene_names=TRUE,
   else{
     gene_labels = gene_ids
   }
+  # A vector detailing the color of each sample must be prepared
+  samples.col = row.col[as.factor(pData(phenodata)[,f])]
   # Plot the heatmap of the data
-  heatmap(genes_expr, labRow=sample_labels, labCol=gene_labels, scale=scale,
-          cexCol=cexCol, cexRow=cexRow, main=main, ...)
+  heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels, scale=scale,
+            cexCol=cexCol, cexRow=cexRow, main=main, trace=trace, 
+            RowSideColors=samples.col, col=expr.col, ...)
 }
+
 
 cluster_GO = function(go_id, result, expr_data, phenodata, f=result$factor, 
                       method_dist="euclidean", method_hclust="average", cex=0.8,
