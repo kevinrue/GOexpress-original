@@ -182,7 +182,7 @@ Please use \"biomart_dataset=\" argument.")
   all_GO = getBM(attributes=c("go_id", "name_1006", "namespace_1003"),
                  mart=mart)
   # Remove the GO terms which is ""
-  all_GO = subset(x=all_GO, subset=go_id != "")
+  all_GO = all_GO[all_GO$go_id != "",]
   # Calculate the F.value and p.value of ANOVA for each ensembl id in the expression dataset
   cat("Calculating one-way ANOVA on factor", f,"for", nrow(expr_data),
       "genes. This may take a few minutes ... (about 2min for 12,000 genes)", fill=TRUE)

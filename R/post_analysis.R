@@ -379,3 +379,30 @@ plot_design = function(go_id, expr_data, phenodata, result,
   # Perform a plot.design of all the genes in the data frame (= in the GO term and in the dataset)
   plot.design(df, main=main, ...)
 }
+
+overlap_GO = function(go_ids, result, filename, mar=rep(0.1, 4), ...){
+  # Check that all GO terms are present in the result variable
+  if (!all(go_ids %in% result$scores$go_id)){
+    stop("Some go_id(s) are absent from the result variable.")
+  }
+  # Check that 2-5 GO terms are given, otherwise venn.diagram will crash anyway
+  if (length(go_ids) > 5){
+    stop("venn.diagram() supports at most 5 groups: Too many given.")
+  }
+  if (length(go_ids) < 2){
+    stop("venn.diagram() requires at least 2 groups: Too few given.")
+  }
+  # Creates a list of 2-5 gene lists to compare
+  gene_sets = list()
+  for (index in 1:length(go_ids)){
+    gene_sets[[index]] = list_genes(result, go_ids[[index]])
+  }
+  # Print the venn diagram to the filename
+  venn.diagram(x=gene_sets,
+               filename=filename,
+               category.names = go_ids,
+               mar=mar, ...)
+}
+
+
+

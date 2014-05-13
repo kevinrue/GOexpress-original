@@ -1,3 +1,11 @@
+RELEASE 0.5.3:
+
+  NEW FEATURES:
+
+  * Method overlap_GO() produces a Venn diagram showing the overlap
+of gene sets associated with two to five GO terms. The Venn diagram
+is saved in a TIFF image file.
+
 RELEASE 0.5.2:
 
   UPDATED FEATURES:
