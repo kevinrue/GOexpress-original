@@ -12,10 +12,10 @@ Description: The package contains functions to perform a clustering analysis
   evaluated the ability of each gene to cluster samples according to the 
   factor under scrutiny. Finally, GO terms are scored by averaging the power
   of their respective gene sets to cluster the samples.
-Depends: R (>= 3.0.2)
+Depends: R (>= 3.0.2), grid
 Imports: Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2), 
   ggplot2 (>= 0.9.0), RColorBrewer (>= 1.0), gplots (>= 2.13.0),
-  VennDiagram (>= 1.6.5), grid
+  VennDiagram (>= 1.6.5) 
 License: GPL-2
 URL: https://github.com/kevinrue/GOexpress
 LazyData: true
