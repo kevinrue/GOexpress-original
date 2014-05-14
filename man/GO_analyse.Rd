@@ -81,9 +81,26 @@ Kevin Rue-Albrecht
 Method \code{\link[biomaRt:getBM]{biomaRt::getBM}}.
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+# Valid ensembl datasets are listed in the following variable
+data(prefix2dataset)
+
+# Valid microarray= values are listed in the following variable
+data(microarray2dataset)
+
+
+# Load example data subset (100 genes from a RNAseq experiment)
+data(log2cpm)
+
+# Load example sample annotation (117 samples)
+# Multiple treatments, timepoints, and replicates
+data(targets)
+
+# Check that the order of samples are identical in log2cpm and targets
+all(colnames(log2cpm) == rownames(targets)) # TRUE
+
+# Run the analysis on factor "Treatment"
+# Factor must be one of the column names in pData(targets)
+raw_results = GOexpress::GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
 }
 
 \keyword{ GO }

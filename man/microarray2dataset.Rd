@@ -32,6 +32,6 @@ A separate script was used to query the BioMart database and build this table.
 }
 \examples{
 data(microarray2dataset)
-## maybe str(microarray2dataset) ; plot(microarray2dataset) ...
+microarray2dataset
 }
 \keyword{datasets}
