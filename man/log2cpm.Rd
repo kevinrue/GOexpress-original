@@ -12,11 +12,11 @@ log2-transformed normalised expression level of each gene  in each sample.
 }
 \usage{data(log2cpm)}
 \format{
-  The format is:
- num [1:100, 1:117] 6.62 1.31 7.29 4.06 1.8 ...
- - attr(*, "dimnames")=List of 2
-  ..$ : chr [1:100] "ENSBTAG00000008124" "ENSBTAG00000009649" "ENSBTAG00000000948" "ENSBTAG00000001419" ...
-  ..$ : chr [1:117] "N1178_CN_24H" "N1178_CN_2H" "N1178_CN_48H" "N1178_CN_6H" ...
+A matrix of expression levels for 100 genes measured in 117 samples.
+  \describe{
+    \item{\code{colnames(log2cpm)}}{Sample names}
+    \item{\code{rownames(log2cpm)}}{Ensembl gene identifiers (Bos taurus)}
+  }
 }
 \details{
 %%  ~~ If necessary, more details than the __description__ above ~~
@@ -28,8 +28,16 @@ log2-transformed normalised expression level of each gene  in each sample.
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
+# Load the data
 data(log2cpm)
+
+# Structure of the data
 str(log2cpm)
+
+# Dimensions (rows, columns) of the data
+dim(log2cpm)
+
+# Subset of first 5 rows and columns
 log2cpm[1:5, 1:5]
 }
 \keyword{datasets}

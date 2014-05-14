@@ -3,7 +3,7 @@
 \alias{GOexpress}
 \docType{package}
 \title{
-Identifies gene ontologies clustering samples according to predefined factor.
+Visualise microarray and RNAseq data with gene ontology annotations.
 }
 \description{
 Combines local gene expression data with online Gene Ontology (GO) resources to identify ontologies 
@@ -21,8 +21,8 @@ on a gene- and ontology-bases.
  \tabular{ll}{
  Package: \tab GOexpress\cr
  Type: \tab Package\cr
- Version: \tab 0.5.1\cr
- Date: \tab 2014-04-24\cr
+ Version: \tab 0.5.4\cr
+ Date: \tab 2014-05-14\cr
  License: \tab GPL-2\cr
  }
  This package requires only two input variables
@@ -44,6 +44,7 @@ on a gene- and ontology-bases.
   samples on another factor (e.g. Treatment)
   \item Univariate analysis of the expression level of a gene in the different groups
   of each experimental factor.
+  \item Venn diagram of the genes shared between a list of GO terms.
  }
 }
 \author{

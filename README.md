@@ -5,7 +5,7 @@ Identification of gene ontology (GO) terms clustering data according to an expec
   
 # OVERVIEW
 
-This package was designed for the analysis of bioinformatics-related
+This package was designed for the analysis of bioinformatics
 data based on gene expression measurements. It requires 3 input
 values:
 
