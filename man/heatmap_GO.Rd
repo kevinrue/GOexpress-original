@@ -11,11 +11,11 @@ in a heatmap.
 }
 \usage{
 heatmap_GO(go_id, result, expr_data, phenodata, gene_names=TRUE,
-           f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
-           trace="none", expr.col=rev(redgreen(75)), row.col.palette="Accent",
-           row.col=brewer.pal(n=length(unique(pData(phenodata)[,f])), name=row.col.palette),
-           main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
-           ...)
+                      f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
+                      trace="none", expr.col=bluered(75), row.col.palette="Accent",
+                      row.col=brewer.pal(n=length(unique(pData(phenodata)[,f])), name=row.col.palette),
+                      main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
+                      ...)
 }
 \arguments{
   \item{go_id}{
@@ -55,8 +55,9 @@ color-cell is proportional to the size of the measurement. Defaults to 'none'
 }
   \item{expr.col}{
 Character vector indicating the colors to represent the different levels of gene
-expression. Defaults to a colormap of 75 shades ranging from green (low) to red
-(high) and centered around black.
+expression. Defaults to a colormap of 75 shades ranging from blue (low) to red
+(high) and centered around white. If using differential expression data, use
+gplots::greenred(75) instead.
 }
   \item{row.col.palette}{
 A valid RColorBrewer palette name to fetch the colormap from, to color-code the groups

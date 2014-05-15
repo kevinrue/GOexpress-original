@@ -1,7 +1,7 @@
 GOexpress
 =======
 
-Identification of gene ontology (GO) terms clustering data according to an expected factor
+Visualise microarray and RNAseq data with gene ontology annotations
   
 # OVERVIEW
 

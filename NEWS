@@ -1,3 +1,13 @@
+RELEASE 0.5.5:
+
+  UPDATED FEATURES:
+
+  * heatmap_GO() default colorscale has been changed to
+blue-white-red better suited to the representation of expression
+level. The previous colorscale green-black-red is now suggested if
+differential expression data is used (e.g. log2FC).
+
+
 RELEASE 0.5.4:
 
   NEW FEATURES:

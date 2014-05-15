@@ -1,6 +1,6 @@
 Package: GOexpress
 Title: Visualise microarray and RNAseq data with gene ontology annotations
-Version: 0.5.4
+Version: 0.5.5
 Authors@R: c(person("Kevin", "Rue-Albrecht", role = c("aut", "cre"),
   	     email = "kevin.rue@ucdconnect.ie"))
 Description: The package contains functions to perform a clustering analysis
