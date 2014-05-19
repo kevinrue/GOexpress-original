@@ -2,7 +2,14 @@ GOexpress
 =======
 
 Visualise microarray and RNAseq data with gene ontology annotations
-  
+
+Please star this project (top-right corner of the website) if you 
+are using it, you should not be spammed with updates but it will give
+us an idea of our user community.
+
+If you do wish to receive updates on the evolution of GOexpress, please
+click "Watch", also in the top-right corner of this website.
+
 # OVERVIEW
 
 This package was designed for the analysis of bioinformatics
