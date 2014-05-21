@@ -122,7 +122,7 @@ all(colnames(log2cpm) == rownames(targets)) # TRUE
 
 # Run the analysis on factor "Treatment"
 # Factor must be one of the column names in pData(targets)
-raw_results = GOexpress::GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
+raw_result = GOexpress::GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
 }
 
 \keyword{ GOexpress }
