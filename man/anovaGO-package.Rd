@@ -6,23 +6,25 @@
 Visualise microarray and RNAseq data with gene ontology annotations.
 }
 \description{
-Combines local gene expression data with online Gene Ontology (GO) resources to identify ontologies 
-enriched for genes best clustering predefined groups of samples based on gene expression levels.
-The package will import Gene Ontologies from the Biomart database for the species
-corresponding to the expression dataset prior to performing the analysis.
-A one-way ANOVA is performed to evaluate the ability of each gene to cluster samples according 
-to a predefined grouping factor (alternate metrics currently being tested). 
-Each GO term is scored and ranked according to the average power of all related genes to
-cluster the samples according to the factor.
-The ranked list of GO terms is returned, with tools allowing to visualise the statistics
+Combines local gene expression data with online Gene Ontology (GO)
+resources to visualise and rank ontologies enriched for genes best clustering
+predefined groups of samples based on gene expression levels. The
+package will import Gene Ontologies from the Biomart database for
+the species corresponding to the expression dataset prior to
+performing the analysis. A randomForest analysis is performed to evaluate
+the ability of each gene to cluster samples according to a predefined
+grouping factor (one-way ANOVA available as an alteranative). Each GO
+term is scored and ranked according to the average power of all associated
+genes to cluster the samples according to the factor. The ranked list
+of GO terms is returned, with tools allowing to visualise the statistics
 on a gene- and ontology-basis.
 }
 \details{
  \tabular{ll}{
  Package: \tab GOexpress\cr
  Type: \tab Package\cr
- Version: \tab 0.5.5\cr
- Date: \tab 2014-05-15\cr
+ Version: \tab 0.6.1\cr
+ Date: \tab 2014-05-21\cr
  License: \tab GPL-2\cr
  }
  This package requires only two input variables
@@ -31,10 +33,11 @@ on a gene- and ontology-basis.
   \item An AnnotatedDataFrame from the Biobase package providing phenotypic information and
  grouping factors with two or more levels.
  }
- Following analysis, visualisation tools include:
+ Following analysis, visualisation methods include:
  \itemize{
   \item Histogram and quantiles representations of the scores of GO terms
   \item Filtering of results on various criteria (e.g. number of genes in GO term)
+  \item Re-ordering of GO terms and gene result tables based on score or rank metric
   \item Table of statistics for genes annotated to a given GO term
   \item Hierarchical clustering of samples based on the expression level of genes
   annotated to a given GO term
@@ -52,23 +55,52 @@ Kevin Rue-Albrecht
 
 Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
 }
-\references{
-%% ~put references to the literature/web site here ~
+\examples{
+  # Sample input data available with package:
+  data(log2cpm)
+  data(targets)
+  
+  # Sample output data available with package:
+  data(raw_result)
+  
+  # Supported species and microarrays:
+  data(microarray2dataset)
+  data(prefix2dataset)
 }
+\references{
+\itemize{
+  \item \href{http://cran.r-project.org/web/packages/gplots/index.html}{gplots} package.
+  \item \href{http://cran.r-project.org/web/packages/ggplot2/index.html}{ggplot2} package.
+  \item \href{http://cran.r-project.org/web/packages/randomForest/index.html}{randomForest} package.
+  \item \href{http://cran.r-project.org/web/packages/stringr/index.html}{stringr} package.
+  \item \href{http://cran.r-project.org/web/packages/VennDiagram/index.html}{VennDiagram} package.
+  }
+}
+
 \keyword{ package }
+\keyword{ GOexpress }
+\keyword{ randomForest }
+\keyword{ anova }
+\keyword{ gene }
+\keyword{ expression }
+\keyword{ clustering }
+\keyword{ ontology }
+
 \seealso{
-  See also: packages
+  Main method for an example usage:
+  \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}
+  or
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
+
+  Packages
   \code{\link[Biobase]{Biobase}},
   \code{\link[ggplot2]{ggplot2}},
-  
+  \code{\link[randomForest]{randomForest}},
   \code{\link[RColorBrewer]{RColorBrewer}},
-  \code{\link[VennDiagram]{VennDiagram}},
-  and methods
+  \code{\link[VennDiagram]{VennDiagram}}.
+  
+  Methods
   \code{\link[biomaRt:getBM]{biomaRt::getBM}},
-  \code{\link[gplots:heatmap.2]{gplots::heatmap.2}}.
-}
-\examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+  \code{\link[gplots:heatmap.2]{gplots::heatmap.2}},
+  \code{\link[stringr:str_extract]{stringr::str_extract}},.
 }

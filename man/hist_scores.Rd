@@ -1,6 +1,5 @@
 \name{hist_scores}
 \alias{hist_scores}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Plots the distribution of scores following an GOexpress analysis.
 }
@@ -14,9 +13,9 @@ function as it returns a value formatted identically to the output of the
 }
 \usage{
 hist_scores(result,
-            main=paste("Distribution of average F scores in",
+            main=paste("Distribution of average scores in",
                        deparse(substitute(result))),
-            xlab="Average F score", ...)
+            xlab="Average score", ...)
 }
 \arguments{
   \item{result}{
@@ -29,32 +28,30 @@ These arguments to title have useful defaults here.
 Additional arguments passed on to \code{hist()}.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
   Returns the output of the \code{graphics::hist()} function.
-}
-\references{
-%% ~put references to the literature/web site here ~
 }
 \author{
 Kevin Rue-Albrecht
 }
-\note{
-%%  ~~further notes~~
-}
-
 \seealso{
-  Method \code{\link[graphics:hist]{graphics::hist}}.
+  Method \code{\link[graphics:hist]{graphics::hist}},
+  \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}},
+  and
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+# load the sample output data
+data(raw_result)
+
+# Histogram of scores (labelled with counts)
+GOexpress::hist_scores(result=raw_result, breaks=20, labels=TRUE)
+
+# filter for Biological Processes associated with 10+ genes
+filtered_result = GOexpress::subset_scores(result=raw_result, total_count=5, namespace="BP")
+
+# Histogram of scores (labelled with counts)
+GOexpress::hist_scores(result=filtered_result, breaks=20, labels=TRUE)
 }
 
-\keyword{ GO }
-\keyword{ gene }
-\keyword{ ontology }
-\keyword{expression}
+\keyword{ GOexpress }

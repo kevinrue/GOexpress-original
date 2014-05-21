@@ -1,6 +1,5 @@
 \name{subset_scores}
 \alias{subset_scores}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Returns a filtered list from GO_analyse results.
 }
@@ -13,7 +12,9 @@ of the score table passing all the filters.
 subset_scores(result, ...)
 
 # Suggested use:
-# subset_scores(result, total_count=5, namespace_1003="BP")
+# subset_scores(result, total_count=5, namespace_1003="biological_process")
+# synonym to 
+# subset_scores(result, total=5, namespace="BP")
 }
 \arguments{
   \item{result}{
@@ -26,7 +27,7 @@ Filters must be valid names from colnames(result$scores).
 }
 \details{
 It is critical to filter out GO terms with very few genes (e.g. less than 5 genes),
-as the scoring function is biased for those GO terms (see Wiki and FAQ). 
+as the scoring function is biased for those GO terms (see Wiki, link below). 
 
 In addition, it is useful to retain only GO terms of one type (i.e. namespace) among 
 the three possible: "biological process", "molecular function", and "cellular
@@ -60,25 +61,24 @@ A list of four elements containing the results of the analysis.
   mapped to the remaining GO terms.}
   \item{ factor }{The predefined grouping factor.}
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
 Kevin Rue-Albrecht
 }
-\note{
-%%  ~~further notes~~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial} on GitHub..
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+# load the sample output data
+data(raw_result)
+
+# have an overview of the result variable
+str(raw_result)
+
+# filter for Biological Processes associated with 10+ genes
+filtered_result = GOexpress::subset_scores(result=raw_result, total_count=5, namespace="BP")
+
+# have an overview of the filtered result variable
+str(filtered_result)
 }
 
-\keyword{ GO }
-\keyword{ gene }
-\keyword{ ontology }
-\keyword{expression}
+\keyword{ GOexpress }

@@ -1,6 +1,5 @@
 \name{list_genes}
 \alias{list_genes}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Returns the genes associated with a Gene Ontology
 }
@@ -9,9 +8,8 @@ Given a Gene Ontology (GO) identifier represented in the dataset,
 returns a character vector listing the gene identifiers annotated to it.
 }
 \usage{
-list_genes(result, go_id)
+list_genes(result, go_id, data.only=TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{result}{
 The output of \code{GO_analyse()} or a subset of it obtained from
@@ -20,33 +18,30 @@ The output of \code{GO_analyse()} or a subset of it obtained from
   \item{go_id}{
 A Gene Ontology (GO) identifier represented in the dataset.
 }
+  \item{data.only}{
+Whether to return only the gene identifiers present in the given dataset
+or alternatively returns all gene identifiers associated with the GO term
+in the BioMart database.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 A character vector listing the gene identifiers of the genes associated
 with the GO term.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
 Kevin Rue-Albrecht
 }
-\note{
-%%  ~~further notes~~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}} and
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial} on GitHub.
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+# load the sample output data
+data(raw_result)
+
+# List of genes associated with the GO term "toll-like receptor 4 signaling pathway"
+GOexpress::list_genes(result=raw_result, go_id="GO:0034142")
 }
 
-\keyword{ GO }
+\keyword{ GOexpress }
 \keyword{ gene }
-\keyword{ ontology }
-\keyword{expression}

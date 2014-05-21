@@ -1,3 +1,54 @@
+RELEASE 0.6.1:
+
+  NEW FEATURES:
+
+  * GOexpress now implements the randomForest framework to 
+estimate the importance of each gene on the clustering of the samples
+according to the different levels of the desired factor (See section
+UPDATED FEATURES below for more details).
+
+  * rerank() function return a re-ordered version of the result
+variable given, ordered using either the rank or the score metrics.
+
+  * Sample data raw_result was added to provide an example output
+of the analysis, and also allow to test the visualisation functions
+on a readily available variable instead of having to run the analysis
+function everytime (would have killed the R CMD check duration).
+
+  UPDATED FEATURES:
+
+  * GO_analyse() default has been changed to a random forest 
+statistical framework. This framework has various advantages over the
+previous ANOVA approach; namely 1) the bootstrapping and re-sampling
+of gene subsets to measure the importance of each gene in predicting
+the desired factor over many iterations (Default: 1,000 trees), 2)
+a shorter analysis duration due to the Fortran code underlying the
+randomForest package, 3) randomForest does not make assumptions on the
+distribution of the expression level within and between genes, 4)
+randomForest deals implicitely with interactions in multifactorial
+experiments. 
+
+  * Genes are now initially ranked according to their rank and GO terms
+according to the average rank of their associated genes. Genes
+associated with a GO term but absent from the dataset are assigned a
+value of max(rank)+1 and a score of 0. Ties between genes are resolved
+by giving all genes the minimal rank, the next gene being given
+rank+length(tied_genes). The average_rank metric is expected to be
+more robust than the average "score". Depending on the statistical
+framework used, "score" may mean "importance" (randomForest) or
+"F.value" (ANOVA).
+
+  * More sanity checks at the start of some methods to ensure smooth
+execution of the downstream code and more helpful error messages.
+
+  * More synonyms allowed for subsetting and filtering of the result
+variable.
+
+  * list_genes() and table_genes() methods now allow to chose whether
+to return all identifiers associated with a GO term, or only those
+identifiers also present in the expression dataset.
+
+
 RELEASE 0.5.5:
 
   UPDATED FEATURES:

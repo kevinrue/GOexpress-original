@@ -1,6 +1,5 @@
 \name{GO_analyse}
 \alias{GO_analyse}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Identifies gene ontologies clustering samples according to predefined factor.
 }
@@ -10,16 +9,18 @@ enriched for genes best clustering predefined groups of samples based on express
 
 The package will download Gene Ontologies from the Biomart database for the species
 corresponding to the expression dataset prior to the analysis.
-A one-way ANOVA is performed to evaluate the ability of each gene to cluster samples according 
-to a predefined grouping factor. 
-Each GO term is scored and ranked according to the average power of all related genes to
-cluster the samples according to the factor of interest.
-The ranked list of GO terms is returned, with tools allowing to visualise the statistics
+A random forest analysis is performed to evaluate the ability of each gene to
+cluster samples according  to a predefined grouping factor. 
+Each GO term is scored and ranked according to the average power of all associated genes to
+cluster the samples according to the factor of interest. The ranked list of GO terms
+is returned, with tools allowing to visualise the statistics
 of each gene and ontology.
 }
 \usage{
 GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
-                    adj.P.method = "BH", FDR=0.05)
+           method="randomForest", rank.by="rank",
+           do.trace=100, ntree=1000, mtry=ceiling(2*sqrt(nrow(expr_data))), 
+           ...)
 
 # To force the use of the human ensembl BioMart, use:
 # GO_analyse(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
@@ -30,55 +31,77 @@ GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
 \arguments{
   \item{expr_data}{
 Gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
-Column names are sample identifiers.
+Column names are sample identifiers. Typically the output of \code{edgeR::cpm()} or
+\code{Biobase::exprs()}
 }
   \item{phenodata}{
-An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in
+An \code{AnnotatedDataFrame}. Row names are sample idenfifiers in the same order as those in
 the expression dataset.
-Column names are grouping factors and phenotypic traits usable for the one-way ANOVA.  
+Column names are grouping factors and phenotypic traits used for analysis and plotting.  
 }
   \item{f}{
-A value in colnames(phenodata) used as the grouping factor for the one-way ANOVA.
+A value in colnames(phenodata) used as the grouping factor for the analysis.
 }
   \item{biomart_dataset}{
-Optional. The BioMart ensembl dataset corresponding to the species studied.
-Automatically detected if not specified.
+The BioMart ensembl dataset corresponding to the species studied.
+Automatically detected if not specified. Use data(prefix2dataset) for valid values.
 }
   \item{microarray}{
-Optional. The BioMart microarray column name in the dataset corresponding to the species studied.
-Automatically detected if not specified.
+The BioMart microarray column name in the dataset corresponding to the species studied.
+Automatically detected if not specified. Use data(microarray2dataset) for valid values.
 }
-  \item{adj.P.method}{
-Optional. The multiple testing correction method used to correct the P values obtained in each ANOVA.
+  \item{method}{
+Either "randomForest" or "rf" to use the random forest framework, or alternatively
+either of "anova" or "a" to use the one-way ANOVA model. Default is "randomForest".
 }
-  \item{FDR}{
-Optional. The threshold for significance. Default is 0.05.
+  \item{rank.by}{
+Either of "rank" or "score" to chose the metric used to order the gene and GO term
+result tables.
 }
+  \item{do.trace}{
+Only used if method="randomForest". If set to TRUE, give a more verbose output as
+randomForest is run. If set to some integer, then running output is printed for every
+do.trace trees.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{ntree}{
+Only used if method="randomForest". Number of trees to grow. This should not be set to
+too small a number, to ensure that every input row gets predicted at least a few times
+}
+  \item{mtry}{
+Only used if method="randomForest". Number of variables randomly sampled as candidates
+at each split. Default value is 2*sqrt(gene_count) which is approximately 220 genes
+for a dataset of 12,000 genes.
+}
+  \item{\dots}{
+Additional arguments passed on to the randomForest() method.
+}
 }
 \value{
-A list of four elements containing the results of the analysis.
-  \item{ scores }{A table ranking all GO terms related to genes in the expression dataset
+A list containing the results of the analysis. Some elements only appear in the output
+of a randomForest analysis. Core elements:
+  \item{ GO }{A table ranking all GO terms related to genes in the expression dataset
   based on the average ability of their related genes to cluster the samples according
   to the predefined grouping factor.}
   \item{ mapping }{The table mapping genes present in the dataset to GO terms.}
-  \item{ anova }{A table ranking all genes present in the expression dataset based on 
-  their ability to cluster the samples according to the predefined grouping factor}
-  \item{ factor }{The predefined grouping factor}
+  \item{ genes }{A table ranking all genes present in the expression dataset based on 
+  their ability to cluster the samples according to the predefined grouping factor.}
+  \item{ factor }{The predefined grouping factor.}
+  \item{ method }{The statistical framework used.}
 }
 \references{
-%% ~put references to the literature/web site here ~
+\itemize{
+  \item \href{http://cran.r-project.org/web/packages/randomForest/index.html}{randomForest} package.
+  }
 }
 \author{
 Kevin Rue-Albrecht
 }
-\note{
-%%  ~~further notes~~
-}
 \seealso{
-Method \code{\link[biomaRt:getBM]{biomaRt::getBM}}.
+  Methods \code{\link[biomaRt:getBM]{biomaRt::getBM}},
+  \code{\link[randomForest:randomForest]{randomForest::randomForest}}, 
+  \code{\link[stats:oneway.test]{stats::oneway.test}},
+  and
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
 }
 \examples{
 # Valid ensembl datasets are listed in the following variable
@@ -86,7 +109,6 @@ data(prefix2dataset)
 
 # Valid microarray= values are listed in the following variable
 data(microarray2dataset)
-
 
 # Load example data subset (100 genes from a RNAseq experiment)
 data(log2cpm)
@@ -103,7 +125,10 @@ all(colnames(log2cpm) == rownames(targets)) # TRUE
 raw_results = GOexpress::GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
 }
 
-\keyword{ GO }
+\keyword{ GOexpress }
+\keyword{ randomForest }
+\keyword{ anova }
 \keyword{ gene }
+\keyword{ expression }
+\keyword{ clustering }
 \keyword{ ontology }
-\keyword{expression}

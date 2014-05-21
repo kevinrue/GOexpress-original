@@ -1,7 +1,7 @@
 GOexpress
 =======
 
-Visualise microarray and RNAseq data with gene ontology annotations
+Visualise microarray and RNAseq data with gene ontology annotations.
 
 Please star this project (top-right corner of the website) if you 
 are using it, you should not be spammed with updates but it will give
@@ -28,13 +28,15 @@ in the actual meaning of the R language).
 valid column name in the AnnotatedDataFrame.
 
 The analysis identifies all Gene Ontology (GO) terms represented
-in the BioMart dataset of the species studied. A one-way ANOVA is
-performed on the grouping factor for each gene present in the
-expression dataset. Following multiple-testing correction, genes
-associated with the GO term in BioMart but below the threshold for
-significance or absent from the dataset are assigned a F.value of 0.
-GO terms are scored and ranked on the average F.value of associated
-genes according to BioMart annotations.
+in the BioMart dataset of the species studied. A random forest
+(simple one-way ANOVA is also available) is generated on the 
+grouping factor for each gene present in the expression dataset. Genes
+associated with the GO term in BioMart but absent from the dataset
+are assigned a score of 0 and a rank of max(rank)+1. GO terms are
+scored and ranked on the average rank (alternatively, score) of
+associated genes according to BioMart annotations. Note that to
+compute the average, the denominator used is the total number of
+genes associated with the GO term, even those absent from the dataset.
 
 Functions are provided to investigate and visualise the results of
 the above analysis. The score table can be filtered for GO terms over
@@ -47,26 +49,23 @@ accompanied by hierarchical clustering of samples and genes can be
 drawn and customised. The expression profile of genes can be plotted
 against any factor while grouping samples on another factor. The 
 univariate effect of all factors can be visualised on the expression
-levell of genes associated with a GO term.
+levell of genes associated with a GO term. The overlapping between
+multiple GO terms can be visualised in a Venn diagram. The result
+variable of the analysis can be re-ordered according to gene rank or
+score.
 
 
 # FEATURES
 
   * Support expression data based on ensembl gene identifiers and
-probeset identifiers.
+microarray probeset identifiers.
 
   * GO_analyse() scores all Gene Ontology (GO) terms represented in
-the dataset based on the ability of their associated genes to cluster
-samples according to a predefined grouping factor. It also returns
-the table used to map genes to GO terms, the table summarising the
-one-way ANOVA results for each gene, and finally the specified
-grouping factor used for ANOVA. Genes annotated to a GO term but
-absent from the expression dataset are ignored.
-
-  * get_mart_dataset() returns a connection to the appropriate BioMart
-dataset based on the gene name of the first gene in the expression
-dataset. The choice of the dataset can be overriden by the user
-if a valid BioMart ensembl dataset is specified.
+the dataset based on the estimated average ability of their associated
+genes to cluster samples according to a predefined grouping factor. It
+also returns the table used to map genes to GO terms, the table
+summarising the statistics for each gene, and finally the specified
+grouping factor analysed.
   
   * subset_scores() filters output of GO_analyse() for GO terms passing
 desired filters and returns a list formatted identically to the 
@@ -104,3 +103,12 @@ factor for the Y-axis.
   * plot_design() plots the univariate effect of each level of each
 factor available in the AnnotatedDataFrame on the expression levels
 of genes associated with a GO term.
+
+  * overlap_GO() plots the counts of overlapping genes between 2-5
+GO terms in a Venn diagram directly printed into a file. (Sorry, but
+the package doing the clearest Venn diagrams does that, and does not
+offer to directly show the Venn diagram in the standard output.
+
+  * rerank() allows to reorder the ranked tables of GO terms and
+genes either by increasing (average) rank or decreasing (average)
+score.

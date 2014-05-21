@@ -2,20 +2,20 @@
 \alias{cluster_GO}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Generates a hierarchical clustering dendrogram of the samples
+Generates a hierarchical clustering / dendrogram of the samples
 }
 \description{
-Clusters the samples using the expression levels of genes related to a
+Clusters the samples using only the expression levels of genes associated with a
 given go_id.
 }
 \usage{
 cluster_GO(go_id, result, expr_data, phenodata, f=result$factor, 
-                      method_dist="euclidean", method_hclust="average", cex=0.8,
-                      main=paste(go_id, result$scores[result$scores$go_id == go_id,]$name_1006),
-                      xlab="Distance", ...)
+           method_dist="euclidean", method_hclust="average", cex=0.8,
+           main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
+           xlab="Distance",
+           ...)
 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{go_id}{
 A Gene Ontology (GO) identifier.
@@ -28,7 +28,7 @@ Sample-by-gene expression matrix. Row names are ensembl gene identifiers or prob
 Column names are sample identifiers.
 }
   \item{phenodata}{
-An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in the expression dataset.
+An \code{AnnotatedDataFrame}. Row names are sample idenfifiers in the same order as those in the expression dataset.
 Column names are grouping factors and phenotypic traits usable for the one-way ANOVA.  
 }
   \item{f}{
@@ -56,33 +56,34 @@ Additional parameters passed on to \code{dist()}, \code{hclust()}
 and \code{plot()}.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
   Returns the output of the \code{plot()} function.
-}
-\references{
-%% ~put references to the literature/web site here ~
 }
 \author{
 Kevin Rue-Albrecht
 }
 
-\note{
-%%  ~~further notes~~
-}
 \seealso{
-  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}.
+  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}
+  or
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+# load the sample output data
+data(raw_result)
+
+# Hierarchical clustering of samples based on the same GO term
+GOexpress::cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
+                      phenodata=targets, cex=0.7)
+
+# Re-label sample by another factor
+GOexpress::cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
+                      phenodata=targets, cex=0.7,
+                      f="Group")
+
 }
-\keyword{ GO }
+
+\keyword{ GOexpress }
 \keyword{ gene }
-\keyword{ ontology }
-\keyword{expression}
-
-
+\keyword{ expression }
+\keyword{ clustering }

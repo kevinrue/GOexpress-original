@@ -2,12 +2,12 @@
 \alias{targets}
 \docType{data}
 \title{
-Sample AnnotatedDataFrame from a RNAseq experiment.
+Sample \code{AnnotatedDataFrame} from an RNAseq experiment.
 }
 \description{
-An AnnotatedDataFrame to test the package with. Row names are sample names and
+An \code{AnnotatedDataFrame} to test the package with. Row names are sample names and
 columns contain descriptive information about each sample, including
-experimental factors (e.g. Treatment, Timepoint, Replicate).
+experimental factors (e.g. Treatment, Timepoint, Animal).
 }
 \usage{data(targets)}
 \format{
@@ -25,19 +25,16 @@ A data frame with 117 samples and 7 descriptive fields (e.g. experimental factor
       for time-series plotting. See function \code{expression_plot()}.}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
 \source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
-\references{
-%%  ~~ possibly secondary sources and usages ~~
+Publication in review process.
 }
 \examples{
 data(targets)
 Biobase::pData(targets)
 Biobase::pData(targets)$Group
 as.character(Biobase::pData(targets)$Group)
+dim(Biobase::pData(targets))
 }
+
 \keyword{datasets}
+\keyword{GOexpress}

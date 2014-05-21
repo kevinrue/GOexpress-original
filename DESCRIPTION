@@ -1,21 +1,26 @@
 Package: GOexpress
-Title: Visualise microarray and RNAseq data with gene ontology annotations
-Version: 0.5.5
+Title: Visualise microarray and RNAseq data using gene ontology annotations
+Version: 0.6.1
 Authors@R: c(person("Kevin", "Rue-Albrecht", role = c("aut", "cre"),
   	     email = "kevin.rue@ucdconnect.ie"))
-Description: The package contains functions to perform a clustering analysis
-  and subsequently visualise the results. It combines gene expression data
-  and Gene Ontology (GO) annotations to identify GO terms enriched in genes with
+Description: The package contains methods to visualise gene expression levels
+  of genes from a microarray or RNA-seq experiment and offers a clustering
+  analysis to identify GO terms enriched in genes with
   expression levels best clustering predefined groups of samples.
-  The BioMart database is used to obtained Biological Pathway (BP) annotation of
-  the genes present in the expression dataset. A one-way ANOVA is performed to
+  The BioMart database is used to obtain annotation of the genes present
+  in the expression dataset. A random forest approach is used to
   evaluated the ability of each gene to cluster samples according to the 
   factor under scrutiny. Finally, GO terms are scored by averaging the power
-  of their respective gene sets to cluster the samples.
-Depends: R (>= 3.0.2), grid
-Imports: Biobase (>= 2.22.0), biomaRt (>= 2.18.0), stringr (>= 0.6.2), 
+  of their respective gene sets to cluster the samples. An ANOVA approach is
+  also available as an alternative statistical framework.
+Depends: R (>= 3.0.2), grid, Biobase (>= 2.22.0)
+Imports: biomaRt (>= 2.18.0), stringr (>= 0.6.2), 
   ggplot2 (>= 0.9.0), RColorBrewer (>= 1.0), gplots (>= 2.13.0),
-  VennDiagram (>= 1.6.5) 
+  VennDiagram (>= 1.6.5), randomForest (>= 4.6)
 License: GPL-2
+biocViews: Software, GeneExpression, Transcription, DifferentialExpression,
+  GeneSetEnrichment, DataRepresentation, Metagenomics, Clustering, 
+  TimeCourse, Microarray, Sequencing, RNASeq, Annotation, 
+  MultipleComparisons, Pathways, GO, Visualization
 URL: https://github.com/kevinrue/GOexpress
 LazyData: true

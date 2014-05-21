@@ -1,58 +1,56 @@
 \name{expression_plot}
 \alias{expression_plot}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Plots the expression profile of a gene by levels of a factor
 }
 \description{
 This function will plot the expression profile of a gene across a valid
-X-axis variable from the AnnotatedDataFrame while representing the mean
+X-axis variable from the \code{AnnotatedDataFrame} while representing the mean
 and confidence interval of groups of samples defined by levels of a valid
 grouping factor from the AnnotatedDataFrame.
 }
 \usage{
 expression_plot(gene_id, expr_data, phenodata, x_var, result, f=result$factor, 
                            ylab = "log2(cpm)", col.palette="Accent",
-                           col = brewer.pal(n=length(levels(pData(phenodata)[,f])), name=col.palette),
+                           col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(phenodata)[,f])), name=col.palette),
                            level=0.95, title=NULL, title.size=2)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{gene_id}{
-An gene identifier present in rownames(expr_data).
+An gene identifier present in \code{rownames(expr_data)}.
 }
   \item{expr_data}{
 A sample-by-gene matrix providing expression levels of each gene in each sample.
 }
   \item{phenodata}{
-An AnnotatedDataFrame from package Biobase providing phenotypic information
+An \code{AnnotatedDataFrame} from package \code{Biobase} providing phenotypic information
 about the samples and grouping factors with 2 or more levels.
 }
   \item{x_var}{
-A value from colnames(pData(phenodata)) to plot on the X-axis. If representing
-time on the X-axis, make sure the time-points are stored as numeric values in the
-AnnotatedDataFrame for best results.
+A value from \code{colnames(pData(phenodata))} to plot on the X-axis. If representing
+time on the X-axis, try to store the time-points as numeric values in the
+\code{AnnotatedDataFrame} to adequately space the time-points.
 }
   \item{result}{
 An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{f}{
-A value from colnames(pData(phenodata)) to group the samples when representing
-mean and confidence interval. If the \code{result} argument is used, the factor
+A value from \code{colnames(pData(phenodata))} to group the samples when representing
+mean and confidence interval. The factor
 specified in the initial \code{GO_analyse()} call is used by default. Unexpected
 grouping factors of samples can reveal interesting trends (e.g. "Animal",
-"Tissue", "CellType").
+"Tissue", "CellType", ...).
 }
   \item{ylab}{
 Change axis labels and legend titles.
 }
   \item{col.palette}{
-A valid RColorBrewer palette name to fetch the colormap from.
+A valid \code{RColorBrewer} palette name to fetch the colormap from.
 }
   \item{col}{
 A vector of color names or codes. The number of colors provided must match the 
-number of levels of the grouping factor. Default to a color-blind friendly
-palette of three colors.
+number of levels of the grouping factor. Default to a palette with an adequate
+set of colors.
 }
   \item{level}{
 The confidence interval level to visualise around the mean of each group.
@@ -68,43 +66,56 @@ Changes the font size of the title.
 }
 \details{
 If the \code{result} argument is not specified and no custom title is specified either,
-the function will connect to the BioMart dataset for the species corresponding
-to the gene identifier to generate a title combining the gene identifier and 
-the associated gene name.
+the function will combine the gene identifier and the associated gene name.
 }
 \value{
   The ggplot object.
 }
 \references{
-%% ~put references to the literature/web site here ~
+  \itemize{
+    \item \href{http://cran.r-project.org/web/packages/ggplot2/index.html}{ggplot2} package.
+  }
 }
 \author{
 Kevin Rue-Albrecht
 }
-\note{
-%%  ~~further notes~~
-}
-
 \section{Warning}{
   Common issues:
     \itemize{
       \item It may not be possible to produce plots where the combination of X-axis
-  variable and grouping factor leaves less than 10 replicates to compute
+  variable and grouping factor leaves too few replicates to compute
   a confidence interval for each X value. This is a limitation imposed by the ggplot2
   package to produce proper statistics and confidence intervals.
   }
 }
 \seealso{
-Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}.
+  Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
+  , method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}},
+  and
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--  or do  help(data=index)  for the standard data sets.
+# load the sample output data
+data(raw_result)
+
+# Expression by gene identifier (TNIP3)
+GOexpress::expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
+                           phenodata=targets, x_var="Timepoint",
+                           result=raw_result)
+                           
+# Same gene, plotted by animal and grouped by treatment (merging time points)
+GOexpress::expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
+                           phenodata=targets, x_var="Animal",
+                           result=raw_result,
+                           f="Treatment")
+                           
+# Same gene, plotted by animal and grouped by time-point (merging treatments)
+GOexpress::expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
+                           phenodata=targets, x_var="Animal",
+                           result=raw_result,
+                           f="Time")
 }
 
-\keyword{ GO }
+\keyword{ GOexpress }
 \keyword{ gene }
-\keyword{ ontology }
-\keyword{expression}
-
+\keyword{ expression }
