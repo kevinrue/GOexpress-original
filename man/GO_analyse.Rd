@@ -96,6 +96,15 @@ of a randomForest analysis. Core elements:
 \author{
 Kevin Rue-Albrecht
 }
+\section{Warning}{
+  Make sure that the factor \code{f} is an actual factor is the R language meaning.
+  This is important for the underlying statistical framework to identify the groups
+  of samples defined by their level of this factor.
+  
+  If the column defining the factor (e.g. "Treatment") in code{phenodata} is not 
+  an R factor, use \code{pData(targets)$Treatment = factor(pData(targets)$Treatment)}
+  to convert the character values into an actual R factor with appropriate levels.
+}
 \seealso{
   Methods \code{\link[biomaRt:getBM]{biomaRt::getBM}},
   \code{\link[randomForest:randomForest]{randomForest::randomForest}}, 
