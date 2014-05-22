@@ -21,7 +21,7 @@ A Gene Ontology (GO) identifier represented in the dataset.
   \item{data.only}{
 Whether to return only the gene identifiers present in the given dataset
 or alternatively returns all gene identifiers associated with the GO term
-in the BioMart database.
+in the BioMart database. Default is TRUE.
 }
 }
 \value{
