@@ -91,7 +91,7 @@ Kevin Rue-Albrecht
 \seealso{
   Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
   , methods
-  \code{\link[GOexpress:expression_plot_symbol]{GOexpress::expression_plot_symbol}}
+  \code{\link[GOexpress:expression_plot_symbol]{GOexpress::expression_plot_symbol}} and
   \code{\link[GOexpress:expression_plot_symbol]{GOexpress::expression_plot_symbol}},
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
