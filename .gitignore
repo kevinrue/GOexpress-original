@@ -4,3 +4,7 @@
 .RData
 .gitignore
 *.Rproj
+*.pdf
+*.tex
+*.log
+*.synctex.gz
