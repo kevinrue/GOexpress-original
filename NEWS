@@ -1,9 +1,17 @@
+RELEASE 0.99.1:
+
+  UPDATED FEATURES:
+
+  * ....
+
+
 RELEASE 0.99.0:
 
   UPDATED FEATURES:
 
   * Replaced all cat() statements by message() to match the
 Biocondcutor guidelines.
+
 
 RELEASE 0.6.2:
 
@@ -19,6 +27,7 @@ sure that the experimental factor to analyse is actually formatted
 as a factor in the true R language meaning.
 
   * Updated license to GPL (>= 3) instead of GPL-2.
+
 
 RELEASE 0.6.1:
 
@@ -87,6 +96,7 @@ RELEASE 0.5.4:
 
   * Sample data accessible with the utils::data() method.
 
+
 RELEASE 0.5.3:
 
   NEW FEATURES:
@@ -94,6 +104,7 @@ RELEASE 0.5.3:
   * Method overlap_GO() produces a Venn diagram showing the overlap
 of gene sets associated with two to five GO terms. The Venn diagram
 is saved in a TIFF image file.
+
 
 RELEASE 0.5.2:
 
@@ -113,6 +124,7 @@ on Bioconductor uses this name.
 
   * Method GO_anova() renamed to GO_analyse() as other metrics than
 ANOVA may be implemented in the future.
+
 
 RELEASE 0.4.1:
 
