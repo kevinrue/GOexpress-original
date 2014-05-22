@@ -83,7 +83,7 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
   message("Fetching ensembl identifier(s) annotated to ",  gene_symbol, " ...", appendLF=TRUE)
   mapping = data.frame(gene_id=rownames(result$genes), 
                        external_gene_id=result$genes$external_gene_id,
-                       stringsAsFactors=F)
+                       stringsAsFactors=FALSE)
   # if the gene name is absent from the mapping table
   if(!gene_symbol %in% mapping$external_gene_id){
     # suggest close matches if any
