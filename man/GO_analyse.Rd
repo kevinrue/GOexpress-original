@@ -94,7 +94,7 @@ of a randomForest analysis. Core elements:
   enables the user to browse through GO terms of increasing "granularity", i.e.
   associated with increasingly large sets of genes, although consequently being
   increasingly vague and blurry (e.g. "protein binding" molecular function associated
-  with over 6,000 genes.).
+  with over 6,000 genes).
   
   It is suggested to use the \code{GOexpress::subset_scores()} function to filter out
   GO terms with fewer than 5+ genes associated with it. Indeed, those GO terms are

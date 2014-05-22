@@ -4,6 +4,9 @@ RELEASE 0.6.2:
 
   * Fixed typo in the example of the vignette of GO_anova().
 
+  * Advice to use the subset_scores() function in the GO_anova()
+vignette.
+
   * Helpful warning message in the vignette of GO_anova() to make
 sure that the experimental factor to analyse is actually formatted
 as a factor in the true R language meaning.
