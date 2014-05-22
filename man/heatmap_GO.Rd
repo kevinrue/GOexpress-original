@@ -101,6 +101,9 @@ data(raw_result)
 # Heatmap the top-ranked GO term (toll-like receptor 4 signaling pathway) as example
 GOexpress::heatmap_GO("GO:0034142", raw_result, log2cpm, targets)
 
+# Same with larger sample labels on the right hand side.
+GOexpress::heatmap_GO("GO:0034142", raw_result, log2cpm, targets, cexRow=1)
+
 # Change the color-coding to green-black-red gradient (more appropriate for
 # differential expression values)
 GOexpress::heatmap_GO("GO:0034142", raw_result, log2cpm, targets,
