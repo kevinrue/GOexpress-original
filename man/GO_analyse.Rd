@@ -88,6 +88,19 @@ of a randomForest analysis. Core elements:
   \item{ factor }{The predefined grouping factor.}
   \item{ method }{The statistical framework used.}
 }
+\details{
+  The current scoring functions strongly favor GO terms associated with fewer genes at 
+  the top of the ranking. This bias may actually be seen as a valuable feature which
+  enables the user to browse through GO terms of increasing "granularity", i.e.
+  associated with increasingly large sets of genes, although consequently being
+  increasingly vague and blurry (e.g. "protein binding" molecular function associated
+  with over 6,000 genes.).
+  
+  It is suggested to use the \code{GOexpress::subset_scores()} function to filter out
+  GO terms with fewer than 5+ genes associated with it. Indeed, those GO terms are
+  more sensitive to outlier genes as they were scored on the average of a handful of
+  genes.
+}
 \references{
 \itemize{
   \item \href{http://cran.r-project.org/web/packages/randomForest/index.html}{randomForest} package.
@@ -106,7 +119,9 @@ Kevin Rue-Albrecht
   to convert the character values into an actual R factor with appropriate levels.
 }
 \seealso{
-  Methods \code{\link[biomaRt:getBM]{biomaRt::getBM}},
+  Methods
+  \code{\link[GOexpress:subset_scores]{GOexpress::subset_scores}},
+  \code{\link[biomaRt:getBM]{biomaRt::getBM}},
   \code{\link[randomForest:randomForest]{randomForest::randomForest}}, 
   \code{\link[stats:oneway.test]{stats::oneway.test}},
   and
