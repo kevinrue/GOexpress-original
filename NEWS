@@ -1,3 +1,15 @@
+RELEASE 0.6.2:
+
+  UPDATED FEATURES:
+
+  * Fixed typo in the example of the vignette of GO_anova().
+
+  * Helpful warning message in the vignette of GO_anova() to make
+sure that the experimental factor to analyse is actually formatted
+as a factor in the true R language meaning.
+
+  * Updated license to GPL (>= 3) instead of GPL-2.
+
 RELEASE 0.6.1:
 
   NEW FEATURES:
