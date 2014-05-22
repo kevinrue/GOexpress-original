@@ -23,7 +23,7 @@ on a gene- and ontology-basis.
  \tabular{ll}{
  Package: \tab GOexpress\cr
  Type: \tab Package\cr
- Version: \tab 0.6.2\cr
+ Version: \tab 0.99.0\cr
  Date: \tab 2014-05-22\cr
  License: \tab  GPL (>= 3)\cr
  }
