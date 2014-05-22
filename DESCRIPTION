@@ -21,6 +21,6 @@ License: GPL (>= 3)
 biocViews: Software, GeneExpression, Transcription, DifferentialExpression,
   GeneSetEnrichment, DataRepresentation, Metagenomics, Clustering, 
   TimeCourse, Microarray, Sequencing, RNASeq, Annotation, 
-  MultipleComparisons, Pathways, GO, Visualization
+  Pathways, GO, Visualization
 URL: https://github.com/kevinrue/GOexpress
 LazyData: true
