@@ -1,0 +1,60 @@
+\documentclass[a4paper]{article}
+
+\title{GOexpress: Visualise microarray and RNAseq data using gene ontology annotations}
+\author{Kevin Rue-Albrecht}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\SweaveOpts{}
+
+\maketitle
+
+\tableofcontents
+
+\section[Introduction]{Introduction}
+
+\subsection[The origin and purpose of \texttt{GOexpress}]{The origin and purpose of \texttt{GOexpress}}
+
+The idea leading to the \texttt{GOexpress} R package emerged from a set of plotting functions regularly used in our research group across various complex multifactorial transcriptomics studies from both microarray and RNA-seq platforms. Those functions were repeatedly used to visualise the expression profile of genes across groups of samples, to annotate technical gene identifiers from both microarray and RNA-seq platforms (i.e. probesets, ensembl gene identifiers) with their associated gene name, and to evaluate the clustering of samples based on genes participating in a common cellular function or location (i.e. gene ontology). While developing the \texttt{GOexpress} package and discussing its features with potential users, a few more features were added, all leading to current version of the package. Complex multifactorial experiments have become the norm in many research fields, thanks to the decrease in cost of high-throughput transcriptomics platforms and the barcoding/multiplexing of samples on the RNA-seq platform. While much effort has been (rightfully!) spent on the development of adequate statistical frameworks for the processing of raw expression data, much of the genewise visualisation is left to the end-user. This is where \texttt{GOexpress} offers an extendable set of functions readily applicable to the output of widely used analytic packages of differential expression. In short, the \texttt{GOexpress} package is software developed by users to ease the visualisation and interpretation of multifactorial transcriptomics data by bioinformaticians and biologists, while striving to keep it a simple, fast, and intuititive toolkit.
+
+\subsection[Intended input data]{Intended input data}
+
+Despite their different underlying technologies, microarray and RNA-seq analyses typically yield a matrix measuring the expression level of each gene in each sample. \texttt{GOexpress} requires this matrix to be accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase} package providing phenotypic information for each of those samples (e.g. unique identifier, treatment, time-point). This phenotypic data-frame must contain at least one column containing an experimental factor made of two or more levels (in the genuine R meaning of "factor" and "level"). The above expression matrix, phenotypic data-frame, and the name of the column containing such as a factor are the minimal three input variables required for the \texttt{GOexpress} package to work. Additional arguments may be required, in particular for microarray datasets, but those are discussed in a later section.
+
+Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to support and annotate gene expression matrix from any species and any microarray chip supported by the BioMart database (http://www.ensembl.org/biomart/martview).
+
+\section[Getting started]{Getting started}
+
+\subsection[Installation]{Installation}
+
+The package is currently under review by the Bioconductor staff. Hopefully, once accepted instaling \texttt{GOexpress} should be as easy as runnin the two lines below:
+
+<<>>=
+source("http://bioconductor.org/biocLite.R")
+biocLite("GOexpress")
+@
+
+However, if everything else fails, the \texttt{GOexpress} package has been maintained on a GitHub repository since the dawn of the project. The source code, the binaries, a Wiki, and a bug tracking system can be found at https://github.com/kevinrue/GOexpress.
+
+\subsection[Installation]{Installation}
+
+In this example we embed parts of the examples from the
+\texttt{kruskal.test} help page into a \LaTeX{} document:
+
+<<>>=
+data(airquality , package = "datasets")
+library("stats")
+kruskal.test(Ozone ~ Month , data = airquality )
+@
+which shows that the location parameter of the Ozone
+distribution varies significantly from month to month . Finally we
+include a boxplot of the data :
+
+\begin{center}
+<<fig=TRUE,echo=FALSE>>=
+library("graphics")
+boxplot ( Ozone ~ Month , data = airquality )
+@
+\end{center}
+
+\end{document}
