@@ -25,11 +25,11 @@ expression_plot = function(gene_id, expr_data, phenodata, x_var, result, f=resul
     # suggest close matches if any
     matches = agrep(pattern=gene_id, x=rownames(expr_data), max.distance = 1, fixed=TRUE, value=TRUE)
     if (length(matches) > 0){
-      message(gene_id, " not found in dataset. Did you mean: ", appendLF=TRUE)
+      cat(gene_id, "not found in dataset. Did you mean:", fill=TRUE)
       return(matches)
     }
     else{
-      message(gene_id, " not found in dataset. No close match either.")
+      cat(gene_id, "not found in dataset. No close match either.")
       return()
     }
   }
@@ -80,7 +80,7 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
   }
   # the GO_analyse result provided contains the annotation of each ensembl identifier
   # present in the dataset to a gene name, if any
-  message("Fetching ensembl identifier(s) annotated to ",  gene_symbol, " ...", appendLF=TRUE)
+  cat("Fetching ensembl identifier(s) annotated to",  gene_symbol, "...", fill=TRUE)
   mapping = data.frame(gene_id=rownames(result$genes), 
                        external_gene_id=result$genes$external_gene_id,
                        stringsAsFactors=FALSE)
@@ -91,7 +91,7 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
     # if we do have one or more close matches to the symbol
     if (length(matches) > 0){
       # list them to the user for help and stop the function
-      message(gene_symbol, " not found in dataset. Did you mean: ", appendLF=TRUE)
+      cat(gene_symbol, "not found in dataset. Did you mean:", fill=TRUE)
       return(matches)
     }
     # if we don't have close matches in the dataset, tell the user and stop the function
@@ -107,7 +107,7 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
   gene_ids_present = gene_ids[gene_ids %in% rownames(expr_data)]
   # If none of the ensembl identifiers are present in the dataset
   if (length(gene_ids_present) == 0){
-    message("Gene identifiers were found for ", gene_symbol, "\n",
+    cat("Gene identifiers were found for", gene_symbol, "\n",
         "but none of them were found in the expression dataset.\n",
         "Gene identifiers were:")
     return(gene_ids)
@@ -135,20 +135,20 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
   # If there are strictly more than 1 gene id associated with the gene symbol
   if (length(gene_ids_present) > 1){
     # Tell the user
-    message("Multiple gene ids found for ", gene_symbol, appendLF=TRUE)
-    message("Indices are:", appendLF=TRUE)
+    cat("Multiple gene ids found for", gene_symbol, fill=TRUE)
+    cat("Indices are:", fill=TRUE)
     print(gene_ids_present)
     # if the user did not change the default index value (0)
     # the function will plot all ensembl ids in a lattice
     if (index==0){
       # A first time user might not know that how to plot a single plot
-      message("Use argument \"index=1\" to plot the first gene id alone, and so on.", appendLF=TRUE)
+      cat("Use argument \"index=1\" to plot the first gene id alone, and so on.", fill=TRUE)
       # Prepare a grid to plot multiple graphs while optimising the number of columns and rows
       columns = ceiling(sqrt(length(gene_ids_present)))
       # Store all the plots in a list
       plots <- list()
       for (i in seq(1,length(gene_ids_present))){
-        message("Plotting ", gene_ids_present[i], appendLF=TRUE)
+        cat("Plotting", gene_ids_present[i], fill=TRUE)
         plots[[i]] = GOexpress::expression_plot(gene_id=gene_ids_present[i], expr_data=expr_data, phenodata=phenodata,
                                                 x_var=x_var, result=result, f=f, col=col,
                                                 level=level, title=titles[i], title.size=title.size)
@@ -162,12 +162,12 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
       if (abs(index) > length(gene_ids_present)){
         # Return an error
         print("Index is out of bound.")
-        message("Indices are:", appendLF=TRUE)
+        cat("Indices are:", fill=TRUE)
       }
       # If the index is acceptable
       else{
         # Plot the corresponding graph
-        message("Plotting ", gene_ids_present[index], appendLF=TRUE)
+        cat("Plotting", gene_ids_present[index], fill=TRUE)
         GOexpress::expression_plot(gene_id=gene_ids_present[index], expr_data=expr_data, phenodata=phenodata,
                                    x_var=x_var, result=result, f=f, col=col,
                                    level=level, title=titles[index], title.size=title.size)
@@ -176,8 +176,8 @@ expression_plot_symbol = function(gene_symbol, expr_data, phenodata, x_var, resu
   }
   # If there is a unique gene id associated to the gene symbol
   else{
-    message("Unique gene id found for ", gene_symbol, appendLF=TRUE)
-    message("Plotting ", gene_ids_present, appendLF=TRUE)
+    cat("Unique gene id found for", gene_symbol, fill=TRUE)
+    cat("Plotting", gene_ids_present, fill=TRUE)
     GOexpress::expression_plot(gene_id=gene_ids_present, expr_data=expr_data, phenodata=phenodata, x_var=x_var,
                                result=result, f=f, ylab = ylab,
                                col = col, level=level,
@@ -365,22 +365,22 @@ subset_scores = function(result, ...){
     # Save the filter status of each row for this filter
     ## Filter on the total count of genes associated with the GO term
     if (filter %in% c("total_count", "total")){
-      #message(filter, "equal or more than", filters[[filter]], fill=TRUE)
+      #cat(filter, "equal or more than", filters[[filter]], fill=TRUE)
       filtered[,filter] = result$GO[,"total_count"] >= filters[filter]
     }
     ## Filter on the count of genes in the dataset associated with the GO term
     else if (filter %in% c("data_count", "data")){
-      #message(filter, "equal or more than", filters[[filter]], fill=TRUE)
+      #cat(filter, "equal or more than", filters[[filter]], fill=TRUE)
       filtered[,filter] = result$GO[,"data_count"] >= filters[filter]
     }
     ## Filters on the average rank of the genes associated to the GO term
     else if (filter %in% c("ave_rank")){
-      #message(filter, "equal or lower than", filters[[filter]], fill=TRUE)
+      #cat(filter, "equal or lower than", filters[[filter]], fill=TRUE)
       filtered[,filter] = result$GO[,filter] <= filters[filter]
     }
     ## Filters on the namespace of the GO term
     else if (filter %in% c("namespace_1003", "namespace")){
-      #message(filter, "equal to", filters[[filter]], fill=TRUE)
+      #cat(filter, "equal to", filters[[filter]], fill=TRUE)
       # GO namespace filtering should offer shortcuts
       if (filters[filter] %in% c("biological_process", "BP")){
         filtered[,filter] = result$GO$namespace_1003 == "biological_process"
