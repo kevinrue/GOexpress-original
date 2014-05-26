@@ -1,7 +1,7 @@
+\documentclass[a4paper]{article}
+
 %\VignetteIndexEntry{User's manual}
 %\VignetteKeyword{GOexpress}
-
-\documentclass[a4paper]{article}
 
 \title{GOexpress: Visualise microarray and RNAseq data using gene ontology annotations}
 \author{Kevin Rue-Albrecht}
