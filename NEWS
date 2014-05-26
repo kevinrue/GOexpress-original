@@ -2,8 +2,16 @@ RELEASE 0.99.1:
 
   UPDATED FEATURES:
 
-  * ....
+  * Sweave vignette implemented.
 
+  * Replaced all message() statements by cat() to make Sweave
+output the full message in the vignette.
+
+  * Updated a missed F into FALSE
+
+  * Updated an invalid biocViews (typo)
+
+  * Date field added for a proper citation() method.
 
 RELEASE 0.99.0:
 
