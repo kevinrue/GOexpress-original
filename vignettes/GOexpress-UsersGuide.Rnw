@@ -44,7 +44,7 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("GOexpress")
 @
 
-However, if everything else fails, the \texttt{GOexpress} package has been maintained on a GitHub repository since the dawn of the project. The source code, precompiled binaries for Windows and Unix, a Wiki, and a bug tracking system can be found at:
+However, if everything else fails, the \texttt{GOexpress} package has been maintained on a GitHub repository since the dawn of the project. Users may have to manually install missing dependencies, listed in the \texttt{DESCRIPTION} file of the \texttt{GOexpress} package. The source code, precompiled binaries for Windows and Unix, a Wiki, and a bug tracking system can be found at:
 
 \texttt{https://github.com/kevinrue/GOexpress}.
 
@@ -321,10 +321,7 @@ BP.5.byScore = rerank(result=BP.5, rank.by="score")
 
 \subsection[Acknowledgement]{Acknowledgement}
 
-The development of this package would not have been possible without the support and encouragement (and datasets) of my co-supervisors Prof. Stephen Gordon and Prof. David MacHugh. I would like to thank Dr. Andrew Parnell and Belinda Hernandez who suggested and helped me integrate the random forest framework in my package. Special thanks to Dr. Paul McGettigan for the many tips and tricks which made R an easier world for me, and Dr. David Magee for helpful advice on statistics. Last but not least, thanks to the Virtual Institute of Bioinformatics and Evolution (VIBE) community where I first presented \texttt{GOexpress} version 0.5.1 and got valuable feedback and advice underlying a significant number of new and updated features.
+The development of this package would not have been possible without the support and encouragement (and datasets) of my co-supervisors Prof. Stephen Gordon and Prof. David MacHugh. I would like to thank Dr. Andrew Parnell and Belinda Hernandez who suggested and helped me integrate the random forest framework in the package. Special thanks to Dr. Paul McGettigan for the many tips and tricks which made R an easier world for me, and Dr. David Magee for helpful advice on statistics. Last but not least, thanks to the University College Dublin OpenSequencing and Virtual Institute of Bioinformatics and Evolution (VIBE) communities where I first presented \texttt{GOexpress} and got valuable feedback and advice underlying a significant number of new and updated features.
 
-\subsection[Acknowledgement]{Acknowledgement}
-
-The development of this package would not have been possible without the support and encouragement (and datasets) of my co-supervisors Prof. Stephen Gordon and Prof. David MacHugh. I would like to thank Dr. Andrew Parnell and Belinda Hernandez who suggested and helped me integrate the random forest framework in my package. Special thanks to Dr. Paul McGettigan for the many tips and tricks which made R an easier world for me, and Dr. David Magee for helpful advice on statistics. Last but not least, thanks to the Virtual Institute of Bioinformatics and Evolution (VIBE) community where I first presented \texttt{GOexpress} version 0.5.1 and got valuable feedback and advice underlying a significant number of new and updated features.
 
 \end{document}
