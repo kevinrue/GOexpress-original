@@ -7,6 +7,7 @@
 \author{Kevin Rue-Albrecht}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \SweaveOpts{}
 
 \maketitle
@@ -23,7 +24,7 @@ Complex multifactorial experiments have become the norm in many research fields,
 
 \subsection[Intended input data]{Intended input data}
 
-Despite their different underlying technologies, microarray and RNA-seq analytic pipelines typically yield a matrix measuring the expression level of each gene in each sample. \texttt{GOexpress} requires this matrix to be accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase} package providing phenotypic information for each of those samples (e.g. unique identifier, treatment, time-point). This phenotypic data-frame must contain at least one column containing an experimental factor made of two or more levels (in the genuine R meaning of "factor" and "levels"). The above expression matrix, phenotypic data-frame, and the name of the column containing such a factor are the minimal three input variables required for the \texttt{GOexpress} package to work. Additional arguments may be required, in particular for microarray datasets, but those are discussed in a later section.
+Despite their different underlying technologies, microarray and RNA-seq analytic pipelines typically yield a matrix measuring the expression level of each gene in each sample. Typically, this expression matrix will be filtered to retain only genes qualified as "informative" (e.g. > 1 cpm in at least N replicates; N the number of replicates for a given set of experimental conditions); genes lowly expressed are removed to limit the False Discovery Rate (FDR) of differentially expressed genes induced by the larger variability of expression at the lower end of the dynamic range. \texttt{GOexpress} requires this prefiltered expression matrix to be accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase} package providing phenotypic information for each of those samples (e.g. unique identifier, treatment, time-point). This phenotypic data-frame must contain at least one column containing an experimental factor made of two or more levels (in the genuine R meaning of "factor" and "levels"). The above expression matrix, phenotypic data-frame, and the name of the column containing such a factor are the minimal three input variables required for the \texttt{GOexpress} package to work. Additional arguments may be required, in particular for microarray datasets, but those are discussed in a later section.
 
 Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to support and annotate gene expression matrix from any species and any microarray chip supported by the BioMart database:
 
@@ -316,6 +317,30 @@ It is however possible to re-order the tables in the output variable according t
 <<>>=
 BP.5.byScore = rerank(result=BP.5, rank.by="score")
 @
+
+\section[Statistics]{Statistics}
+
+\subsection[Overview]{Overview}
+
+Following the integration of the various plotting functions at the core of the \texttt{GOexpress} package, the need for a ranking of genes and GO terms soon became apparent in order to rapidly identify those best clustering the samples according to the experimental factor studied. A two-fold procedure was implemented:
+\begin{enumerate}
+    \item Using the available expression data, each gene present in the dataset is scored, evaluating its ability to cluster the predefined groups of samples. Genes are ranked according to this score; ties are resolved by assigning the lowest rank R to all G genes, giving the rank G+n to the next gene(s). The genewise scoring functions implemented are described in the following subsections, and all were validated on in-house datasets cross-checked with widely validated analytic pipelines.
+    \item Using the above ranks and scores, each GO term in the BioMart database is assigned the mean score and the mean rank of all the genes associated with it in the BioMart database. Genes present in the BioMart database but absent from the given dataset are assigned a score of 0 (minimum valid score; indicates no power to discriminates the predefined groups of sample) and a rank equal to the number of genes present in the dataset plus one (worst rank, while preserving continuity of the ranking).
+\end{enumerate}
+
+Importantly, the statistics performed to rank GO terms and genes do \emph{not} influence the behaviour of the subsequent plotting functions; heatmaps, clustering trees and gene expression profiles are purely driven by the expression data, sample phenotype annotations provided and GO terms ontologies imported from BioMart, without any transformation applied to the data. Users are encouraged to use and suggest alternative relevant scoring and ranking strategies, which could prioritise GO terms and genes in different ways. A current aknowledged bias is the higher scoring of GO terms associated with fewer genes, which shows some advantages discussed in section \ref{Filtering of results}.
+
+\subsection[Random Forest]{Random Forest}
+
+We implemented the Random Forest framework to answer the question: "How well does each gene in the dataset cluster predefined groups of samples?". Given a number of trees (dendrograms) to build using the samples in the dataset and a number of genes to sample from the dataset to build those trees, the \texttt{randomForest} R package evaluates the "importance" of each gene in the clustering of the predefined groups of samples; genes clustering sample well will have a higher importance than genes randomly clustering samples from the various groups.  Technically, \texttt{GOexpress} extracts the "MeanDecreaseGini" value from the "importance" slot of the \texttt{randomForest} output and uses this value as the score for each gene. This score cannot be inferior to 0 (random clustering). The higher the mean decrease in Gini, the greater the role played by the corresponding gene in partitioning the data into the predefined classes.
+
+A key feature of the Random Forest framework is the implicit handling of interactions between genes, given a sufficient number of trees generated and genes sampled. Indeed, at each node in the dendrogram a sample of genes are tested for their ability to improve the partitioning reached using a particular gene set. For combinations of genes clustering well the predefined groups of samples, all the relevant genes will be given an accordingly high importance (i.e. score). The larger the number of trees and genes sampled, the more complete the coverage of interactions will be.
+
+\subsection[One-way Analysis of Variance (ANOVA)]{One-way Analysis of Variance (ANOVA)}
+
+We implemented the ANOVA statistical framework to answer the question: "How different is the expression level of each gene in the dataset in the different groups of samples?". Given the expression level of a gene in all the samples, the one-way ANOVA measures the ratio of variance between the groups compared to that within the groups, summarised in a F statistic that \texttt{GOexpress} uses as a score for each gene. Simply put, if samples from the same groups show gene expression similar to each other while samples from different groups show different levels of expression, those genes will reach a higher score. This score cannot be inferior to 0 (variance between groups insignificant to variance within groups), while highly significant ratios can easily be reached for genes highgly different between groups.
+
+Contrary to the Random Forest framework, the Analysis of Variance makes important assumptions on the data; namely, the independence of observations, the normality of residuals, and the equality of variances in all groups. While the former two are the responsibility of the user to verify, the latter is taken care of by \texttt{GOexpress}. Indeed, the \texttt{oneway.test} method of package \texttt{stats} is used with parameter \texttt{var.equal} set to to \texttt{FALSE}. While this reduces the sensitivity of the test, all genes are affected by this correction based on the relative amount of variance in the different predefined groups of samples.
 
 \section[Notes]{Notes}
 

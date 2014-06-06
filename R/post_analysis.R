@@ -20,8 +20,9 @@ expression_plot = function(
     gene_id, expr_data, phenodata, x_var, result,
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
-        phenodata)[,f])), name=col.palette),
-    level=0.95, title=NULL, title.size=2){
+        phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
+    title.size=2, axis.title.size=20, axis.text.size=15,
+    legend.text.size=15, legend.title.size=20, legend.key.size=30){
     # if the gene identifier is absent from the dataset
     if (!gene_id %in% rownames(expr_data)){
         # suggest close matches if any
@@ -56,13 +57,17 @@ expression_plot = function(
     gg = ggplot2::ggplot(df) +
         ggplot2::geom_smooth(aes(x=X, y=Expression, group = Factor,
                                  color = Factor, fill=Factor), level=level) +
-        ggplot2::labs(title = title) +
-        ggplot2::xlab(x_var) +
-        ggplot2::ylab(ylab) +
-        ggplot2::theme(plot.title = ggplot2::element_text(
-            size = ggplot2::rel(title.size))) +
-        ggplot2::scale_colour_manual(values=col) + 
-        ggplot2::scale_fill_manual(values=col)
+        ggplot2::labs(title=title, x=x_var, y=ylab) +
+        ggplot2::theme(
+            plot.title = ggplot2::element_text(
+                            size = ggplot2::rel(title.size)),
+            axis.title=ggplot2::element_text(size=axis.title.size),
+            axis.text=ggplot2::element_text(size=axis.text.size),
+            legend.text=ggplot2::element_text(size=legend.text.size),
+            legend.title=ggplot2::element_text(size=legend.title.size),
+            legend.key.size=unit(legend.key.size, "points")) +
+        ggplot2::scale_colour_manual(values=col, name=f) + 
+        ggplot2::scale_fill_manual(values=col, name=f)
     # Return the plot
     return(gg)
 }
@@ -72,8 +77,9 @@ expression_plot_symbol = function(
     gene_symbol, expr_data, phenodata, x_var, result, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
     col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
-        phenodata)[,f])), name=col.palette),
-    level=0.95, titles=c(), title.size=2){
+        phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
+    title.size=2, axis.title.size=20, axis.text.size=15,
+    legend.text.size=20, legend.title.size=20, legend.key.size=30){
     # if the result was provided does not look like it should
     if (! "genes" %in% names(result)){
         stop("\"result=\" argument does not look like a GO_analyse output.")
@@ -153,10 +159,10 @@ expression_plot_symbol = function(
         # the function will plot all ensembl ids in a lattice
         if (index==0){
             # A first time user might not know that how to plot a single plot
-            cat("Use argument \"index=1\" to plot the first gene id alone, and so on.",
-                fill=TRUE)
-            # Prepare a grid to plot multiple graphs while optimising the number
-            # of columns and rows
+            cat("Use argument \"index=1\" to plot the first gene id alone,",
+                "and so on.", fill=TRUE)
+            # Prepare a grid to plot multiple graphs while optimising the
+            # number of columns and rows
             columns = ceiling(sqrt(length(gene_ids_present)))
             # Store all the plots in a list
             plots <- list()
@@ -165,9 +171,14 @@ expression_plot_symbol = function(
                 plots[[i]] = GOexpress::expression_plot(
                     gene_id=gene_ids_present[i],
                     expr_data=expr_data, phenodata=phenodata,
-                    x_var=x_var, result=result, f=f, col=col,
-                    level=level, title=titles[i],
-                    title.size=title.size)
+                    x_var=x_var, result=result, f=f, ylab = "log2(cpm)",
+                    col.palette="Accent", col=col, level=level,
+                    title=titles[i], title.size=title.size,
+                    axis.title.size=axis.title.size,
+                    axis.text.size=axis.text.size,
+                    legend.text.size=legend.text.size,
+                    legend.title.size=legend.title.size,
+                    legend.key.size=legend.key.size)
             }
             # Plot all the graphs in the optimised lattice, using the
             # ensembl-based plotting function
@@ -185,10 +196,17 @@ expression_plot_symbol = function(
             else{
                 # Plot the corresponding graph
                 cat("Plotting", gene_ids_present[index], fill=TRUE)
-                GOexpress::expression_plot(gene_id=gene_ids_present[index],
-                                           expr_data=expr_data, phenodata=phenodata,
-                                           x_var=x_var, result=result, f=f, col=col,
-                                           level=level, title=titles[index], title.size=title.size)
+                GOexpress::expression_plot(
+                    gene_id=gene_ids_present[index],
+                    expr_data=expr_data, phenodata=phenodata, x_var=x_var,
+                    result=result, f=f, ylab = "log2(cpm)",
+                    col.palette="Accent", col=col, level=level,
+                    title=titles[index], title.size=title.size,
+                    axis.title.size=axis.title.size,
+                    axis.text.size=axis.text.size,
+                    legend.text.size=legend.text.size,
+                    legend.title.size=legend.title.size,
+                    legend.key.size=legend.key.size)
             }
         }
     }
@@ -196,10 +214,16 @@ expression_plot_symbol = function(
     else{
         cat("Unique gene id found for", gene_symbol, fill=TRUE)
         cat("Plotting", gene_ids_present, fill=TRUE)
-        GOexpress::expression_plot(gene_id=gene_ids_present,
-                                   expr_data=expr_data, phenodata=phenodata, x_var=x_var,
-                                   result=result, f=f, ylab = ylab, col = col, level=level,
-                                   title=titles, title.size=title.size)
+        GOexpress::expression_plot(
+            gene_id=gene_ids_present,
+            expr_data=expr_data, phenodata=phenodata, x_var=x_var, 
+            result=result, f=f, ylab = ylab, col.palette="Accent", col = col,
+            level=level, title=titles, title.size=title.size,
+            axis.title.size=axis.title.size,
+            axis.text.size=axis.text.size,
+            legend.text.size=legend.text.size,
+            legend.title.size=legend.title.size,
+            legend.key.size=legend.key.size)
     }
 }
 
@@ -230,8 +254,9 @@ heatmap_GO = function(
     samples.col = row.col[as.factor(pData(phenodata)[,f])]
     # Plot the heatmap of the data
     gplots::heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
-                      scale=scale, cexCol=cexCol, cexRow=cexRow, main=main, trace=trace, 
-                      RowSideColors=samples.col, col=expr.col, ...)
+                      scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
+                      trace=trace, RowSideColors=samples.col, col=expr.col,
+                      ...)
 }
 
 hist_scores = function(
@@ -282,7 +307,8 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     } else {
         # Set up the page
         grid.newpage()
-        pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+        pushViewport(viewport(layout = grid.layout(nrow(layout),
+                                                   ncol(layout))))
         
         # Make each plot, in the correct location
         for (i in 1:numPlots) {
@@ -328,8 +354,8 @@ plot_design = function(
     if (any(factors != colnames(Biobase::pData(phenodata)))){
         for(f in factors){
             if (!f %in% colnames(Biobase::pData(phenodata))){
-                # Otherwise, stop and return which of them is not a valid factor
-                # name
+                # Otherwise, stop and return which of them is not a valid
+                # factor name
                 stop(f, " is not a valid factor name in colnames(phenodata).")
             }
         } 
@@ -349,8 +375,8 @@ plot_design = function(
         # Smart title is the name of the GO term
         main=paste(go_id, GO_name)
     }
-    # Perform a plot.design of all the genes in the data frame (= in the GO term
-    # and in the dataset)
+    # Perform a plot.design of all the genes in the data frame (= in the GO
+    # term and in the dataset)
     plot.design(df, main=main, ...)
 }
 
@@ -374,7 +400,8 @@ rerank = function(result, rank.by="rank"){
     }
     else if (rank.by == "score") {
         result$GO = result$GO[order(result$GO$ave_score, decreasing=TRUE),]
-        result$genes = result$genes[order(result$genes$Score, decreasing=TRUE),]
+        result$genes = result$genes[order(
+            result$genes$Score, decreasing=TRUE),]
     }
     else{
         stop("Invalid ranking method: ", rank.by)
@@ -444,8 +471,8 @@ subset_scores = function(result, ...){
     ## Subset the gene/GO mapping to keep only the GO terms left in the score
     ## table
     result$mapping = result$mapping[result$mapping$go_id %in% result$GO$go_id,]
-    ## Subset the anova table to keep only the genes annotated to the genes left
-    ## in the mapping table
+    ## Subset the anova table to keep only the genes annotated to the genes
+    ## left in the mapping table
     result$genes = result$genes[rownames(result$genes) %in%
                                     result$mapping$gene_id,]
     return(result)

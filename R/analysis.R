@@ -28,8 +28,8 @@
 ## Function to filter the results for GO terms by various criteria
 ## Two function to visualise the expression profile of a gene across a
 ### X-variabl e and grouped by a Y-factor (plot by gene_id or by gene_symbol)
-## Function to visualise the univariate effect of each factor on the grouping of
-### samples
+## Function to visualise the univariate effect of each factor on the grouping
+### of samples
 ## Function to reorder the GO terms and genes by either rank or score metrics.
 
 # Dependencies
@@ -88,8 +88,8 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             mart = mart_from_ensembl(sample_gene)
             # if the gene id has not an identifiable ensembl gene id prefix
             if (!class(mart) == "Mart"){
-                # Try to find an appropriate biomaRt microarray dataset from the
-                # gene prefix
+                # Try to find an appropriate biomaRt microarray dataset from
+                # the gene prefix
                 microarray_match = microarray_from_probeset(sample_gene)
                 # if the gene id has an identifiable microarray gene id prefix
                 if (!is.null(nrow(microarray_match))){
@@ -108,12 +108,12 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
                 else{
                     # stop the program and throw an error
                     stop("Cannot guess origin of dataset:
-                         Please use \"biomart_dataset=\" and/or \"microarray=\" arguments.")
+    Please use \"biomart_dataset=\" and/or \"microarray=\" arguments.")
                 }
             }
             # if the gene id has an identifiable ensembl gene id prefix then,
-            # the connection to the mart is already established leave microarray
-            # to "" to imply that we don't work with microarray data
+            # the connection to the mart is already established leave
+            # microarray to "" to imply that we don't work with microarray data
         }
         # if the user gave a microarray name
         else{
@@ -121,8 +121,8 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             if (!microarray %in% microarray2dataset$microarray){
                 stop("Invalid microarray value. See data(microarray2dataset)")
             }
-            # if it is unique to a dataset (some microarray have the same column
-            # name
+            # if it is unique to a dataset (some microarray have the same
+            # column name
             if(sum(microarray2dataset$microarray == microarray) == 1){
                 biomart_dataset = microarray2dataset[
                     microarray2dataset$microarray == microarray, "dataset"]
@@ -141,7 +141,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             else{
                 cat("Multiple datasets possible:", fill=TRUE)
                 print(microarray2dataset[microarray2dataset$microarray ==
-                                             microarray, c("dataset", "microarray")])
+                    microarray, c("dataset", "microarray")])
                 stop("Cannot guess dataset.
                      Please use \"biomart_dataset=\" argument.")
             }    
@@ -188,8 +188,9 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             }
             # if the data does not match a microarray pattern
             else{
-                cat(sample_gene, "gene identifier in expression data cannot\
-                    be resolved to a microarray. Assuming ensembl gene identifiers.", fill=TRUE)
+                cat(sample_gene, "gene identifier in expression data cannot",
+                    "be resolved to a microarray. Assuming ensembl gene",
+                    "identifiers.", fill=TRUE)
             }
             # If it does not look like microarray
             # assume it is ensembl annotations
@@ -251,12 +252,13 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
                                         ntree=ntree, mtry=mtry, ...)
         # Save the importance value used as score for each gene in a data.frame
         res = data.frame("Score" = randomForest::importance(rf)[,
-                                                                "MeanDecreaseGini"])
+                                    "MeanDecreaseGini"])
     }
     else if (method %in% c("anova", "a")){
         # A vectorised calculation the F-value of an ANOVA used as score for
         # each gene
-        res = data.frame("Score" = apply(X=expr_data, MARGIN=1, FUN=function(x){
+        res = data.frame("Score" = apply(X=expr_data, MARGIN=1,
+                                         FUN=function(x){
             oneway.test(formula=expr~group, data=cbind(
                 expr=x, group=Biobase::pData(phenodata)[,f]))$statistic}))
     }
@@ -278,7 +280,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     GO_gene_score_all[is.na(GO_gene_score_all$Score), "Score"] = 0
     # In addition, all genes absent from the dataset are assigned a value =
     # 1 + (the maximum rank of the genes in the dataset)
-    GO_gene_score_all[is.na(GO_gene_score_all$Rank), "Rank"] = max(res$Rank) + 1
+    GO_gene_score_all[is.na(GO_gene_score_all$Rank), "Rank"] = max(res$Rank) +1
     # - Second, merge the tables keeping only the genes present in the dataset
     # This will be used to count how many genes are present in dataset for each
     # GO term
@@ -290,9 +292,11 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     #    if working with ensembl gene identifiers
     if (microarray == ""){
         genes_score = merge(x=res, all.x=TRUE,
-                            y=biomaRt::getBM(attributes=c("ensembl_gene_id", "external_gene_id",
+                            y=biomaRt::getBM(attributes=c("ensembl_gene_id",
+                                                          "external_gene_id",
                                                           "description"),
-                                             filters="ensembl_gene_id", values=rownames(res), mart=mart),
+                                             filters="ensembl_gene_id",
+                                             values=rownames(res), mart=mart),
                             by.x="row.names",
                             by.y="ensembl_gene_id")
     }
@@ -300,15 +304,17 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     else{
         # Prepare a mapping table between gene identifiers and GO terms
         genes_score = merge(x=res, all.x=TRUE, 
-                            y=biomaRt::getBM(attributes=c(microarray, "external_gene_id",
+                            y=biomaRt::getBM(attributes=c(microarray,
+                                                          "external_gene_id",
                                                           "description"),
-                                             filters=microarray, values=rownames(res), mart=mart),
+                                             filters=microarray,
+                                             values=rownames(res), mart=mart),
                             by.x="row.names",
                             by.y=microarray)
-        # In the case of microarray, probesets can be annotated to multiple gene
-        # symbols. For each probeset, keep only the first row (we're losing one
-        # possible annotation here). But otherwise, we will not be able to make
-        # unique row names for each feature measured.
+        # In the case of microarray, probesets can be annotated to multiple
+        # gene symbols. For each probeset, keep only the first row (we're
+        # losing one possible annotation here). But otherwise, we will not be
+        # able to make unique row names for each feature measured.
         # Moreover, keeping the same probeset twice (because of two annotated
         # symbols) would affect the averaging of scores for GO terms.
         # Each probeset should only be there once anyway
@@ -320,34 +326,38 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     cat("Merging score into result table ...", fill=TRUE)
     # Total number of genes in the dataset annotated to each GO term
     GO_scores = merge(x=aggregate(gene_id~go_id, data=GO_gene_score_data,
-                                  FUN=length), y=all_GO, by="go_id", all.y=TRUE)
+                                  FUN=length), y=all_GO, by="go_id",
+                      all.y=TRUE)
     colnames(GO_scores)[2] = "data_count"
     GO_scores[is.na(GO_scores$data_count), "data_count"] = 0
     # Total number of genes annotated to each GO term in BioMart (not
     # necessarily in dataset)
     GO_scores = merge(x=aggregate(Score~go_id, data=GO_gene_score_all,
-                                  FUN=length), y=GO_scores, by="go_id", all.y=TRUE)
+                                  FUN=length), y=GO_scores, by="go_id",
+                      all.y=TRUE)
     colnames(GO_scores)[2] = "total_count"
-    # Average score (denominator being the total of genes by GO term in BioMart)
-    # being tested
+    # Average score (denominator being the total of genes by GO term in
+    # BioMart) being tested
     GO_scores = merge(x=aggregate(Score~go_id, data=GO_gene_score_all,
-                                  FUN=mean), y=GO_scores, by="go_id", all.y=TRUE)
+                                  FUN=mean), y=GO_scores, by="go_id",
+                      all.y=TRUE)
     colnames(GO_scores)[2] = "ave_score"
-    ## Average rank (denominator being the total of genes by GO term in BioMart)
-    # being tested
+    ## Average rank (denominator being the total of genes by GO term in
+    # BioMart) being tested
     # (+) robust for GO terms with several genes
-    GO_scores = merge(x=aggregate(Rank~go_id, data=GO_gene_score_all, FUN=mean),
+    GO_scores = merge(x=aggregate(Rank~go_id, data=GO_gene_score_all,
+                                  FUN=mean),
                       y=GO_scores, by="go_id", all.y=TRUE)
     colnames(GO_scores)[2] = "ave_rank"    
     # Notes of other summary metrics tested:
-    ## Sum: (-) biased toward general GO terms annotated for many thousands of
-    ## genes (e.g. "protein binding")
+    ## Sum: (-) biased toward general GO terms annotated for many thousands
+    ## of genes (e.g. "protein binding")
     ## Max.F.values: (+) insensitive to number of genes annotated for GO term
     #                (-) many GO terms sharing the same gene are tied
     #                (-) biased by outliers
-    # Most top ranked GO terms according to the average F value contain a single
-    # gene, but this bias can easily be attenuated by filtering for GO terms
-    # with a minimal number of genes
+    # Most top ranked GO terms according to the average F value contain a
+    # single gene, but this bias can easily be attenuated by filtering for GO
+    # terms with a minimal number of genes
     if (rank.by == "rank"){
         # Rank the genes by increasing rank
         genes_score = genes_score[order(genes_score$Rank),]
@@ -362,12 +372,12 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     }
     # Return the results of the analysis
     if (method %in% c("randomForest", "rf")){
-        return(list(GO=GO_scores, mapping=GO_genes, genes=genes_score, factor=f,
-                    method=method, ntree=ntree, mtry=mtry))
+        return(list(GO=GO_scores, mapping=GO_genes, genes=genes_score,
+                    factor=f, method=method, ntree=ntree, mtry=mtry))
     }
     else if (method %in% c("anova", "a")) {
-        return(list(GO=GO_scores, mapping=GO_genes, genes=genes_score, factor=f,
-                    method=method))
+        return(list(GO=GO_scores, mapping=GO_genes, genes=genes_score,
+                    factor=f, method=method))
     }
     }
 
@@ -384,13 +394,16 @@ mart_from_ensembl = function(sample_gene){
             cat("Loading detected dataset",
                 prefix2dataset[prefix2dataset$prefix == prefix,]$dataset,
                 "...", fill=TRUE)
-            return(biomaRt::useMart(biomart="ensembl",
-                                    dataset=prefix2dataset[prefix2dataset$prefix == prefix,]$dataset
+            return(biomaRt::useMart(
+                biomart="ensembl",
+                dataset=prefix2dataset[
+                    prefix2dataset$prefix == prefix,]$dataset
             ))
         }
         # Otherwise return FALSE
         else{
-            cat("Did not recognise a valid ensembl gene identifier.", fill=TRUE)
+            cat("Did not recognise a valid ensembl gene identifier.",
+                fill=TRUE)
             return(FALSE)
         }
     }
@@ -448,8 +461,9 @@ microarray_from_probeset = function(sample_gene){
     # If the sample gene was not recognised in the unique ones,
     # check whether it may be an ambiguous identifier
     # For each unique pattern known to be found in multiple microarrays
-    for (pattern in unique(microarray2dataset$prefix[!microarray2dataset$unique]
-    )){
+    for (pattern in unique(
+        microarray2dataset$prefix[!microarray2dataset$unique])
+         ){
         # if the pattern matches the sample gene
         if (length(grep(pattern=pattern, x=sample_gene))){
             # add the pattern to a vector 
