@@ -1,7 +1,6 @@
 .Rproj.user
 .Rhistory
 .Rbuildignore
-.RData
 .gitignore
 *.Rproj
 *.pdf
