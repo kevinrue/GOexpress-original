@@ -4,8 +4,8 @@
 Returns the quantiles of scores following an GOexpress analysis.
 }
 \description{
-Returns a set of quantiles in indicating the scores reached by given proportions
-of the GO terms.
+Returns a set of quantiles in indicating the scores reached by given
+proportions of the GO terms.
 
 This function can also be used on the output of \code{subset_scores()}
 function as it returns a value formatted identically to the output of the
@@ -16,7 +16,8 @@ quantiles_scores(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999), quartiles=FALS
 }
 \arguments{
   \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from
+\code{subset_scores()}.
 }
   \item{probs}{
   Numeric vector of probabilities with values in [0,1]. (Values up
@@ -36,7 +37,8 @@ Kevin Rue-Albrecht
 \seealso{
   Method \code{\link[stats:quantile]{stats::quantile}}
   and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub..
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data

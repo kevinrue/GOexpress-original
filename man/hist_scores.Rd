@@ -38,7 +38,8 @@ Kevin Rue-Albrecht
   Method \code{\link[graphics:hist]{graphics::hist}},
   \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}},
   and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data

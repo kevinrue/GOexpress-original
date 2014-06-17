@@ -4,9 +4,9 @@
 Generates a heatmap and hierarchical clustering of the samples and the genes
 }
 \description{
-Clusters the samples and the genes associated with a GO term using the expression 
-levels of genes related to a given ontology. Represents expression levels of those genes
-in a heatmap.
+Clusters the samples and the genes associated with a GO term using the
+expression levels of genes related to a given ontology. Represents expression
+levels of those genes in a heatmap.
 }
 \usage{
 heatmap_GO(go_id, result, expr_data, phenodata, gene_names=TRUE,
@@ -21,53 +21,56 @@ heatmap_GO(go_id, result, expr_data, phenodata, gene_names=TRUE,
 A Gene Ontology (GO) identifier.
 }
   \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from
+\code{subset_scores()}.
 }
   \item{expr_data}{
-Gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
-Column names are sample identifiers.
+Gene expression matrix. Row names are ensembl gene identifiers or probeset
+identifiers. Column names are sample identifiers.
 }
   \item{phenodata}{
-An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as those in
-the expression dataset.
-Column names are grouping factors and phenotypic traits used for analysis and plotting.  
+An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as
+those in the expression dataset. Column names are grouping factors and
+phenotypic traits used for analysis and plotting.  
 }
   \item{gene_names}{
 A boolean value. Default is TRUE, to label genes by their associated gene name.
-If FALSE, labels the genes by their gene identifier in the expression dataset (i.e. 
-ensembl gene identifier, or microarray probeset).
+If FALSE, labels the genes by their gene identifier in the expression dataset
+(i.e. ensembl gene identifier, or microarray probeset).
 }
   \item{f}{
 The predefined grouping factor.
 }
   \item{scale}{
-Character indicating if the values should be centered and scaled in either the row
-direction or the column direction, or none. Default is "none". See \code{heatmap.2()}.
+Character indicating if the values should be centered and scaled in either the
+row direction or the column direction, or none. Default is "none".
+See \code{heatmap.2()}.
 }
   \item{cexCol, cexRow}{
-Positive numbers, used as cex.axis in for the row or column axis labeling. Defaults are 
-1.2 and 1, respectively. See \code{heatmap.2()}.
+Positive numbers, used as cex.axis in for the row or column axis labeling.
+Defaults are 1.2 and 1, respectively. See \code{heatmap.2()}.
 }
   \item{trace}{
-Character string indicating whether a solid "trace" line should be drawn across each 
-'row' or down each 'column', both' or 'none'. The distance of the line from the center
-of each color-cell is proportional to the size of the measurement. Defaults to 'none'
+Character string indicating whether a solid "trace" line should be drawn across
+each 'row' or down each 'column', both' or 'none'. The distance of the line
+from the center of each color-cell is proportional to the size of the
+measurement. Defaults to 'none'.
 }
   \item{expr.col}{
-Character vector indicating the colors to represent the different levels of gene
-expression. Defaults to a colormap of 75 shades ranging from blue (low) to red
-(high) and centered around white. If using differential expression data, you should
-probably use \code{gplots::greenred(75)} instead.
+Character vector indicating the colors to represent the different levels of
+gene expression. Defaults to a colormap of 75 shades ranging from blue (low) to
+red (high) and centered around white. If using differential expression data,
+you should probably use \code{gplots::greenred(75)} instead.
 }
   \item{row.col.palette}{
-A valid \code{RColorBrewer} palette name to fetch the colormap from, to color-code
-the groups of samples.
+A valid \code{RColorBrewer} palette name to fetch the colormap from, to
+color-code the groups of samples.
 }
   \item{row.col}{
 A vector of color names or codes. The number of colors provided must match the 
-number of levels of the grouping factor. Default to an palette of up to 9 colors
-marking the different levels of the predefined grouping factor on the left side of
-the heatmap.
+number of levels of the grouping factor. Default to an palette of up to 9
+colors marking the different levels of the predefined grouping factor on the
+left side of the heatmap.
 }
   \item{main}{
 Main title of the figure. Default is paste(go_id, go_name).
@@ -81,7 +84,8 @@ Additional arguments passed on to \code{heatmap.2()}.
 }
 \references{
 \itemize{
-  \item \href{http://cran.r-project.org/web/packages/gplots/index.html}{gplots} package.
+  \item \href{http://cran.r-project.org/web/packages/gplots/index.html}{gplots}
+  package.
   }
 }
 \author{
@@ -92,7 +96,8 @@ Kevin Rue-Albrecht
   \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}},
   \code{\link[RColorBrewer:brewer.pal.info]{RColorBrewer::brewer.pal.info}}
   and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data

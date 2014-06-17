@@ -23,16 +23,17 @@ A sample-by-gene matrix providing expression levels of each gene
 in each sample.
 }
   \item{phenodata}{
-An \code{AnnotatedDataFrame} from package Biobase providing phenotypic information
-about the samples and grouping factors with 2 or more levels.
+An \code{AnnotatedDataFrame} from package Biobase providing phenotypic
+information about the samples and grouping factors with 2 or more levels.
 }
   \item{result}{
 The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
   \item{factors}{
-A set of values from \code{colnames(pData(phenodata))}. Each of these values will be
-represented on the X-axis to investigate its effect on the average expression
+A set of values from \code{colnames(pData(phenodata))}. Each of these values
+will be represented on the X-axis to investigate its effect on the average
+expression
 of a given genes for each level of that factor.
 }
   \item{main}{
@@ -52,7 +53,8 @@ Kevin Rue-Albrecht
 \seealso{
   Method \code{\link[graphics:plot.design]{graphics::plot.design}}
   and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data

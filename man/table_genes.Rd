@@ -5,8 +5,8 @@ Returns a table listing the genes associated with a given Gene Ontology
 }
 \description{
 Given a Gene Ontology (GO) identifier represented in the dataset and the output
-variable of a \code{GO_analyse()} function, \code{table_genes()} returns a table
-listing the genes associated with that go_id, their associated gene name,
+variable of a \code{GO_analyse()} function, \code{table_genes()} returns a
+table listing the genes associated with that go_id, their associated gene name,
 and description.
 }
 \usage{

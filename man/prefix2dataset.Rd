@@ -5,8 +5,9 @@
 Table mapping ensembl gene identifier prefixes to BioMart datasets.
 }
 \description{
-The species corresponding to an ensembl gene identifier can typically be identified
-from the prefix of the identifier (e.g. ENSBTAG corresponds to Bos taurus).
+The species corresponding to an ensembl gene identifier can typically be
+identified from the prefix of the identifier (e.g. ENSBTAG corresponds to
+\emph{Bos taurus}).
 This table maps each known unique prefix to the corresponding species.
 }
 \usage{data(prefix2dataset)}
@@ -18,8 +19,9 @@ This table maps each known unique prefix to the corresponding species.
   }
 }
 \details{
-C. elegans, D. melanogaster, and S. cerevisiae have atypical identifier pattern and prefixes.
-Prefixes for those are included in the table, but checked independently of the other species.
+C. elegans, D. melanogaster, and S. cerevisiae have atypical identifier pattern
+and prefixes. Prefixes for those are included in the table, but checked
+independently of the other species.
 }
 \source{
 A separate script was used to query the BioMart database and build this table.

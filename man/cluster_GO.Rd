@@ -1,6 +1,5 @@
 \name{cluster_GO}
 \alias{cluster_GO}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Generates a hierarchical clustering / dendrogram of the samples
 }
@@ -66,7 +65,8 @@ Kevin Rue-Albrecht
 \seealso{
   Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}
   or
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data

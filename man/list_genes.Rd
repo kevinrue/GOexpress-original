@@ -33,7 +33,8 @@ Kevin Rue-Albrecht
 }
 \seealso{
   Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}} and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial} on GitHub.
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data

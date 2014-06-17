@@ -12,7 +12,8 @@ rerank(result, rank.by = "rank")
 }
 \arguments{
   \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from
+\code{subset_scores()}.
 }
   \item{rank.by}{
 Either of "rank" or "score"; the metric to rank the GO terms and genes by.
@@ -29,7 +30,8 @@ Kevin Rue-Albrecht
 Name reorder() was not used to avoid conflict with package \code{stats}.
 }
 \seealso{
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial} on GitHub..
+  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial}
+  on GitHub.
 }
 \examples{
 # load the sample output data
