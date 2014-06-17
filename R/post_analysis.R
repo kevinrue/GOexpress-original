@@ -433,6 +433,11 @@ subset_scores = function(result, ...){
             #cat(filter, "equal or lower than", filters[[filter]], fill=TRUE)
             filtered[,filter] = result$GO[,filter] <= filters[filter]
         }
+        ## Filters on the average score of the genes associated to the GO term
+        else if (filter %in% c("ave_score")){
+            #cat(filter, "equal or lower than", filters[[filter]], fill=TRUE)
+            filtered[,filter] = result$GO[,filter] >= filters[filter]
+        }
         ## Filters on the namespace of the GO term
         else if (filter %in% c("namespace_1003", "namespace")){
             #cat(filter, "equal to", filters[[filter]], fill=TRUE)
