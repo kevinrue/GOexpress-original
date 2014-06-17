@@ -2,12 +2,16 @@ RELEASE 0.99.3:
 
   UPDATED FEATURES:
 
-  * Control the size of the legend text in the two expression
-plot figures. Updated help files accordingly.
+  * Control the size of the legend text in the two expression plot figures.
+Updated help files accordingly.
 
   * Updated vignette with new section "Statistics".
 
   * Complete cleaning of code files for lines shorter than 80 columns.
+
+  * Cleanup of help files for lines shorter than 80 columns.
+
+  * Enabled filtering of raw results on the average score of a GO term.
 
 RELEASE 0.99.2:
 
