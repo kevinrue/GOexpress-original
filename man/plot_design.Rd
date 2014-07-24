@@ -9,7 +9,7 @@ Successively plots univariate effects of one or more
 as analyzed by \code{\link[stats:aov]{aov}}().
 }
 \usage{
-plot_design(go_id, expr_data, phenodata, result,
+plot_design(go_id, result, expr_data, phenodata,
                        factors=colnames(Biobase::pData(phenodata)),
                        main="", ...)
 }
@@ -18,6 +18,10 @@ plot_design(go_id, expr_data, phenodata, result,
 A Gene Ontology (GO) identifier represented by at least one gene
 in the dataset.
 }
+  \item{result}{
+The output of \code{GO_analyse()} or a subset of it obtained from
+\code{subset_scores()}.
+}
   \item{expr_data}{
 A sample-by-gene matrix providing expression levels of each gene
 in each sample.
@@ -25,10 +29,6 @@ in each sample.
   \item{phenodata}{
 An \code{AnnotatedDataFrame} from package Biobase providing phenotypic
 information about the samples and grouping factors with 2 or more levels.
-}
-  \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from
-\code{subset_scores()}.
 }
   \item{factors}{
 A set of values from \code{colnames(pData(phenodata))}. Each of these values

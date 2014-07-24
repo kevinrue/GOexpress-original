@@ -10,14 +10,14 @@ table listing the genes associated with that go_id, their associated gene name,
 and description.
 }
 \usage{
-table_genes(result, go_id, data.only=FALSE)
+table_genes(go_id, result, data.only=FALSE)
 }
 \arguments{
-  \item{result}{
-The output of the \code{GO_analyse()} function.
-}
   \item{go_id}{
 A Gene Ontology (GO) identifier.
+}
+  \item{result}{
+The output of the \code{GO_analyse()} function.
 }
   \item{data.only}{
 Whether to return only the gene identifiers present in the given dataset

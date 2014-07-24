@@ -110,9 +110,9 @@ pData(targets)$Treatment = factor(pData(targets)$Treatment)
 Now, we use the random forest statistical framework to score each gene on its ability to cluster samples from different treatments separately. Then the method will score each GO term by aggregating the average rank of its associated genes:
 
 <<>>=
-raw_results = GOexpress::GO_analyse(expr_data=log2cpm,
-                                    phenodata=targets,
-                                    f="Treatment")
+raw_results = GO_analyse(expr_data=log2cpm,
+                         phenodata=targets,
+                         f="Treatment")
 @
 
 Note that the above command does not specify which species the data originated from. As mentioned in the output messages, the first gene identifier in the expression matrix was used to guess the corresponding species and type of data. This is a fairly straightforward process for ensembl gene identifiers (e.g. "ENSBTA" correspondonds to \textit{Bos taurus}).
@@ -214,7 +214,7 @@ cluster_GO(go_id="GO:0034142", result=BP.5,
 Following the identification of relevant GO terms in the above sections, users may want to have a closer look at the individual genes associated with a given GO term:
 
 <<>>=
-table_genes(result=BP.5, go_id="GO:0034142")
+table_genes(go_id="GO:0034142", result=BP.5)
 @
 
 Note that the default behaviour of the above function is to return a table of all the genes associated with the GO term based on the BioMart database annotations. For obvious reasons, genes present in the BioMart database but absent from the expression dataset will be absent from the score table and conseuqently lack annotations. It is possible to restrict the above table to only genes present in the expression dataset using the \texttt{data.only} argument.
@@ -222,7 +222,7 @@ Note that the default behaviour of the above function is to return a table of al
 If only the gene identifiers associated with a given GO identifier are needed, users may use the function below:
 
 <<>>=
-list_genes(result=BP.5, go_id="GO:0034142")
+list_genes(go_id="GO:0034142", result=BP.5)
 @
 
 \subsection[Expression profile of a gene]{Expression profile of a gene}
@@ -233,8 +233,8 @@ In the above section, we listed the genes associated with a particular gene onto
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
-                phenodata=targets, x_var="Timepoint", result=BP.5)
+expression_plot(gene_id="ENSBTAG00000047107", result=BP.5, expr_data=log2cpm,
+                phenodata=targets, x_var="Timepoint")
 @
 \end{center}
 
@@ -244,8 +244,8 @@ To investigate the impact of other factors on the expression level of the same g
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
-                phenodata=targets, x_var="Animal", result=BP.5)
+expression_plot(gene_id="ENSBTAG00000047107", result=BP.5, expr_data=log2cpm,
+                phenodata=targets, x_var="Animal")
 @
 \end{center}
 
@@ -255,9 +255,8 @@ It is also possible to visualise the expression profile of genes from their asso
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot_symbol(gene_symbol="BIKBA", expr_data=log2cpm,
-                       phenodata=targets, x_var="Timepoint",
-                       result=BP.5)
+expression_plot_symbol(gene_symbol="BIKBA", result=BP.5, expr_data=log2cpm,
+                       phenodata=targets, x_var="Timepoint")
 @
 \end{center}
 
@@ -271,8 +270,8 @@ In other words, given a GO term identifier this feature will generate a plot for
 
 \begin{center}
 <<fig=TRUE>>=
-plot_design(go_id="GO:0034134", expr_data=log2cpm,
-            phenodata=targets, result=BP.5, ask=FALSE,
+plot_design(go_id="GO:0034134", result=BP.5, expr_data=log2cpm,
+            phenodata=targets, ask=FALSE,
             factors=c("Animal", "Treatment", "Time", "Group"))
 @
 \end{center}

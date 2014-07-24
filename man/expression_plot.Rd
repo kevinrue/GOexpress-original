@@ -11,7 +11,7 @@ grouping factor from the AnnotatedDataFrame.
 }
 \usage{
 expression_plot(
-    gene_id, expr_data, phenodata, x_var, result,
+    gene_id, result, expr_data, phenodata, x_var, 
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
         phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
@@ -21,6 +21,9 @@ expression_plot(
 \arguments{
   \item{gene_id}{
 An gene identifier present in \code{rownames(expr_data)}.
+}
+  \item{result}{
+An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{expr_data}{
 A sample-by-gene matrix providing expression levels of each gene in each
@@ -36,9 +39,6 @@ A value from \code{colnames(pData(phenodata))} to plot on the X-axis. If
 representing
 time on the X-axis, try to store the time-points as numeric values in the
 \code{AnnotatedDataFrame} to adequately space the time-points.
-}
-  \item{result}{
-An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{f}{
 A value from \code{colnames(pData(phenodata))} to group the samples when

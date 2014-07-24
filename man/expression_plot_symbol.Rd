@@ -15,7 +15,7 @@ lattice can subsequently be plotted separately using its associated index.
 }
 \usage{
 expression_plot_symbol(
-    gene_symbol, expr_data, phenodata, x_var, result, f=result$factor,
+    gene_symbol, result, expr_data, phenodata, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
     col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
         phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
@@ -25,6 +25,9 @@ expression_plot_symbol(
 \arguments{
   \item{gene_symbol}{
 A gene name present in \code{rownames(raw_result$genes)}.
+}
+  \item{result}{
+An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{expr_data}{
 A sample-by-gene matrix providing the expression levels of each gene in each
@@ -38,9 +41,6 @@ information about the samples and grouping factors with 2 or more levels.
 A value from \code{colnames(pData(phenodata))} to plot on the X-axis. If
 representing time on the X-axis, try to store the time-points as numeric values
 in the \code{AnnotatedDataFrame} to adequately space the time-points.
-}
-  \item{result}{
-An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{f}{
 A value from \code{colnames(pData(phenodata))} to group the samples when

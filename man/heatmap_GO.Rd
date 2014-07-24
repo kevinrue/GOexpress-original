@@ -9,12 +9,13 @@ expression levels of genes related to a given ontology. Represents expression
 levels of those genes in a heatmap.
 }
 \usage{
-heatmap_GO(go_id, result, expr_data, phenodata, gene_names=TRUE,
-           f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
-           trace="none", expr.col=gplots::bluered(75), row.col.palette="Accent",
-           row.col=RColorBrewer::brewer.pal(n=length(unique(Biobase::pData(phenodata)[,f])), name=row.col.palette),
-           main=paste(go_id, result$GO[result$GO$go_id == go_id,"name_1006"]),
-           ...)
+heatmap_GO(
+    go_id, result, expr_data, phenodata, gene_names=TRUE,
+    f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, trace="none",
+    expr.col=gplots::bluered(75), row.col.palette="Accent",
+    row.col=brewer.pal(n=length(unique(Biobase::pData(phenodata)[,f])),
+                       name=row.col.palette),
+    main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]), ...)
 }
 \arguments{
   \item{go_id}{

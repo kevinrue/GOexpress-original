@@ -4,7 +4,7 @@ cluster_GO = function(
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
     xlab="Distance", ...){
     # Fetch the list of genes associated with the go_id
-    gene_ids = GOexpress::list_genes(result, go_id, data.only=TRUE)
+    gene_ids = list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and transform the expression data for those genes
     genes_expr = t(expr_data[gene_ids,])
     # Hierarchical clustering using dist and hclust
@@ -17,7 +17,7 @@ cluster_GO = function(
 }
 
 expression_plot = function(
-    gene_id, expr_data, phenodata, x_var, result,
+    gene_id, result, expr_data, phenodata, x_var, 
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
         phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
@@ -74,7 +74,7 @@ expression_plot = function(
 
 
 expression_plot_symbol = function(
-    gene_symbol, expr_data, phenodata, x_var, result, f=result$factor,
+    gene_symbol, result, expr_data, phenodata, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
     col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
         phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
@@ -232,17 +232,17 @@ heatmap_GO = function(
     f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
     trace="none", expr.col=gplots::bluered(75), 
     row.col.palette="Accent",
-    row.col=RColorBrewer::brewer.pal(n=length(unique(Biobase::pData(
+    row.col=brewer.pal(n=length(unique(Biobase::pData(
         phenodata)[,f])), name=row.col.palette),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
     ...){
     # Fetch the list of genes associated with the go_id
-    gene_ids = GOexpress::list_genes(result, go_id, data.only=TRUE)
+    gene_ids = list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and format the expression data for those genes
     genes_expr = t(expr_data[gene_ids,])
     # Rows are samples, label them according to the user's choson factor
-    sample_labels = Biobase::pData(phenodata)[,f]
+    sample_labels = pData(phenodata)[,f]
     # Columns are genes, label them by identifier or name
     if (gene_names){
         gene_labels = result$genes[gene_ids,]$external_gene_id
@@ -253,10 +253,9 @@ heatmap_GO = function(
     # A vector detailing the color of each sample must be prepared
     samples.col = row.col[as.factor(pData(phenodata)[,f])]
     # Plot the heatmap of the data
-    gplots::heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
-                      scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
-                      trace=trace, RowSideColors=samples.col, col=expr.col,
-                      ...)
+    heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
+              scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
+              trace=trace, RowSideColors=samples.col, col=expr.col, ...)
 }
 
 hist_scores = function(
@@ -266,7 +265,7 @@ hist_scores = function(
     hist(result$GO$ave_score, main=main, xlab=xlab, ...)
 }
 
-list_genes = function(result, go_id, data.only=TRUE){
+list_genes = function(go_id, result, data.only=TRUE){
     # If the go_id requested is not present in the dataset
     if (!go_id %in% result$mapping$go_id){
         # return an error and stop
@@ -337,7 +336,7 @@ overlap_GO = function(go_ids, result, filename, mar=rep(0.1, 4), ...){
     # Creates a list of 2-5 gene lists to compare
     gene_sets = list()
     for (index in 1:length(go_ids)){
-        gene_sets[[index]] = GOexpress::list_genes(result, go_ids[[index]])
+        gene_sets[[index]] = list_genes(go_id=go_ids[[index]], result=result)
     }
     # Print the venn diagram to the filename
     VennDiagram::venn.diagram(x=gene_sets,
@@ -347,7 +346,7 @@ overlap_GO = function(go_ids, result, filename, mar=rep(0.1, 4), ...){
 }
 
 plot_design = function(
-    go_id, expr_data, phenodata, result,
+    go_id, result, expr_data, phenodata,
     factors=colnames(Biobase::pData(phenodata)), main="", ...){
     # if the user changed the default value
     # check that all given factors exist in colnames(phenodata)
@@ -363,7 +362,8 @@ plot_design = function(
     # Fetch the list of genes associated with the go_id
     # If the user gave the output of a GO_analyse command as result=
     # that list contains the mapping between ensembl genes and GO_id
-    gene_ids_present = GOexpress::list_genes(result, go_id, data.only=TRUE)
+    gene_ids_present = list_genes(go_id=go_id, result=result,
+                                             data.only=TRUE)
     GO_name = result$GO[result$GO$go_id == go_id, "name_1006"]
     # Prepare a temporary data frame plot.design-friendly
     df = data.frame(t(expr_data[gene_ids_present,]),
@@ -483,15 +483,14 @@ subset_scores = function(result, ...){
     return(result)
 }
 
-table_genes = function(result, go_id, data.only=FALSE){
+table_genes = function(go_id, result, data.only=FALSE){
     # If the go_id requested is not present in the dataset
     if (!go_id %in% result$mapping$go_id){
         # return an error and stop
         stop(go_id, "is not a valid go_id in the dataset.")
     }
     # Otherwise fetch the list of gene_ids associated with it
-    gene_ids = GOexpress::list_genes(result=result, go_id=go_id,
-                                     data.only=data.only)
+    gene_ids = list_genes(go_id=go_id, result=result, data.only=data.only)
     # Then fetch the results of those genes
     res_table = result$genes[gene_ids,]
     # If gene absent from dataset were also requested (data.only=FALSE)

@@ -8,15 +8,15 @@ Given a Gene Ontology (GO) identifier represented in the dataset,
 returns a character vector listing the gene identifiers annotated to it.
 }
 \usage{
-list_genes(result, go_id, data.only=TRUE)
+list_genes(go_id, result, data.only=TRUE)
 }
 \arguments{
-  \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from
-\code{subset_scores()}.
-}
   \item{go_id}{
 A Gene Ontology (GO) identifier represented in the dataset.
+}
+\item{result}{
+The output of \code{GO_analyse()} or a subset of it obtained from
+\code{subset_scores()}.
 }
   \item{data.only}{
 Whether to return only the gene identifiers present in the given dataset
