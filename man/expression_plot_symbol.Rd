@@ -14,6 +14,7 @@ in the dataset, a lattice of plots will be produced. Each of the plots in this
 lattice can subsequently be plotted separately using its associated index.
 }
 \usage{
+expression_plot_symbol(
     gene_symbol, result, expr_data, phenodata, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(
