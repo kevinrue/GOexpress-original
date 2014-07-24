@@ -63,7 +63,7 @@ Kevin Rue-Albrecht
 }
 
 \seealso{
-  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}
+  Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}
   or
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
   on GitHub.
@@ -73,11 +73,11 @@ Kevin Rue-Albrecht
 data(raw_result)
 
 # Hierarchical clustering of samples based on the same GO term
-GOexpress::cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
+cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
                       phenodata=targets, cex=0.7)
 
 # Re-label sample by another factor
-GOexpress::cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
+cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
                       phenodata=targets, cex=0.7,
                       f="Group")
 

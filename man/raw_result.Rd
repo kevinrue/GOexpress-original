@@ -7,7 +7,7 @@ Sample output from the \code{GO_analyse()} function on an RNAseq experiment.
 \description{
 This variable may be used to test the filtering and visualisation methods
 implemented in the package. It contains the output of the command 
-\code{raw_result = GOexpress::GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")}
+\code{raw_result = GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")}
 applied to the sample input data \code{data(log2cpm)} and \code{data{targets}}.
 
 Running the above command again, you might obtain slightly different scores and

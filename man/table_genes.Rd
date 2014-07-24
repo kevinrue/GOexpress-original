@@ -33,7 +33,7 @@ present in the expression dataset and associated with the GO term.
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}.
+  Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
 \examples{
 # load the sample output data
@@ -41,7 +41,7 @@ data(raw_result)
 
 # Table of result for genes associated with the GO term
 # "toll-like receptor 4 signaling pathway"
-GOexpress::table_genes(result=raw_result, go_id="GO:0034142")
+table_genes(result=raw_result, go_id="GO:0034142")
 }
 
 \keyword{ GOexpress }

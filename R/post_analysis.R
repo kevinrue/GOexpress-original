@@ -168,7 +168,7 @@ expression_plot_symbol = function(
             plots <- list()
             for (i in seq(1,length(gene_ids_present))){
                 cat("Plotting", gene_ids_present[i], fill=TRUE)
-                plots[[i]] = GOexpress::expression_plot(
+                plots[[i]] = expression_plot(
                     gene_id=gene_ids_present[i],
                     expr_data=expr_data, phenodata=phenodata,
                     x_var=x_var, result=result, f=f, ylab = "log2(cpm)",
@@ -196,7 +196,7 @@ expression_plot_symbol = function(
             else{
                 # Plot the corresponding graph
                 cat("Plotting", gene_ids_present[index], fill=TRUE)
-                GOexpress::expression_plot(
+                expression_plot(
                     gene_id=gene_ids_present[index],
                     expr_data=expr_data, phenodata=phenodata, x_var=x_var,
                     result=result, f=f, ylab = "log2(cpm)",
@@ -214,7 +214,7 @@ expression_plot_symbol = function(
     else{
         cat("Unique gene id found for", gene_symbol, fill=TRUE)
         cat("Plotting", gene_ids_present, fill=TRUE)
-        GOexpress::expression_plot(
+        expression_plot(
             gene_id=gene_ids_present,
             expr_data=expr_data, phenodata=phenodata, x_var=x_var, 
             result=result, f=f, ylab = ylab, col.palette="Accent", col = col,

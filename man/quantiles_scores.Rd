@@ -45,10 +45,10 @@ Kevin Rue-Albrecht
 data(raw_result)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = GOexpress::subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
 
 # Quantiles of scores
-GOexpress::quantiles_scores(result=filtered_result)
+quantiles_scores(result=filtered_result)
 }
 
 \keyword{ GOexpress }

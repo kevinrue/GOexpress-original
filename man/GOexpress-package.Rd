@@ -90,7 +90,7 @@ Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
 
 \seealso{
   Main method for an example usage:
-  \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}}
+  \code{\link[GOexpress:GO_analyse]{GO_analyse}}
   or
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
   on GitHub.

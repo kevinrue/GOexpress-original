@@ -116,10 +116,10 @@ Kevin Rue-Albrecht
   Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
   , methods
   \code{\link[GOexpress:expression_plot_symbol]{
-  GOexpress::expression_plot_symbol}}
+  expression_plot_symbol}}
   and
   \code{\link[GOexpress:expression_plot_symbol]{
-  GOexpress::expression_plot_symbol}},
+  expression_plot_symbol}},
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{
   tutorial} on GitHub.
@@ -129,18 +129,18 @@ Kevin Rue-Albrecht
 data(raw_result)
 
 # Expression by gene identifier (TNIP3)
-GOexpress::expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
+expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
                            phenodata=targets, x_var="Timepoint",
                            result=raw_result)
                            
 # Same gene, plotted by animal and grouped by treatment (merging time points)
-GOexpress::expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
+expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
                            phenodata=targets, x_var="Animal",
                            result=raw_result,
                            f="Treatment")
                            
 # Same gene, plotted by animal and grouped by time-point (merging treatments)
-GOexpress::expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
+expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
                            phenodata=targets, x_var="Animal",
                            result=raw_result,
                            f="Time")

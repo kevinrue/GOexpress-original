@@ -94,7 +94,7 @@ Kevin Rue-Albrecht
 }
 \seealso{
   Method \code{\link[gplots:heatmap.2]{gplots::heatmap.2}},
-  \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}},
+  \code{\link[GOexpress:GO_analyse]{GO_analyse}},
   \code{\link[RColorBrewer:brewer.pal.info]{RColorBrewer::brewer.pal.info}}
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
@@ -105,14 +105,14 @@ Kevin Rue-Albrecht
 data(raw_result)
 
 # Heatmap the top-ranked GO term (toll-like receptor 4 signaling pathway) as example
-GOexpress::heatmap_GO("GO:0034142", raw_result, log2cpm, targets)
+heatmap_GO("GO:0034142", raw_result, log2cpm, targets)
 
 # Same with larger sample labels on the right hand side.
-GOexpress::heatmap_GO("GO:0034142", raw_result, log2cpm, targets, cexRow=1)
+heatmap_GO("GO:0034142", raw_result, log2cpm, targets, cexRow=1)
 
 # Change the color-coding to green-black-red gradient (more appropriate for
 # differential expression values)
-GOexpress::heatmap_GO("GO:0034142", raw_result, log2cpm, targets,
+heatmap_GO("GO:0034142", raw_result, log2cpm, targets,
                       expr.col=gplots::greenred(75))
 }
 

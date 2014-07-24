@@ -76,7 +76,7 @@ data(raw_result)
 str(raw_result)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = GOexpress::subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
 
 # have an overview of the filtered result variable
 str(filtered_result)

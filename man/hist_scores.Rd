@@ -36,7 +36,7 @@ Kevin Rue-Albrecht
 }
 \seealso{
   Method \code{\link[graphics:hist]{graphics::hist}},
-  \code{\link[GOexpress:GO_analyse]{GOexpress::GO_analyse}},
+  \code{\link[GOexpress:GO_analyse]{GO_analyse}},
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
   on GitHub.
@@ -46,13 +46,13 @@ Kevin Rue-Albrecht
 data(raw_result)
 
 # Histogram of scores (labelled with counts)
-GOexpress::hist_scores(result=raw_result, breaks=20, labels=TRUE)
+hist_scores(result=raw_result, breaks=20, labels=TRUE)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = GOexpress::subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
 
 # Histogram of scores (labelled with counts)
-GOexpress::hist_scores(result=filtered_result, breaks=20, labels=TRUE)
+hist_scores(result=filtered_result, breaks=20, labels=TRUE)
 }
 
 \keyword{ GOexpress }

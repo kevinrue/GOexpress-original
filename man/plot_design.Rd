@@ -61,7 +61,7 @@ Kevin Rue-Albrecht
 data(raw_result)
 
 # Univariate plot
-GOexpress::plot_design(go_id="GO:0034142", expr_data=log2cpm, phenodata=targets, result=raw_result)
+plot_design(go_id="GO:0034142", expr_data=log2cpm, phenodata=targets, result=raw_result)
 }
 
 \keyword{ GOexpress }

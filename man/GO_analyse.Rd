@@ -104,7 +104,7 @@ output of a randomForest analysis. Core elements:
   although consequently being increasingly vague and blurry (e.g. "protein
   binding" molecular function associated with over 6,000 genes).
   
-  It is suggested to use the \code{GOexpress::subset_scores()} function to
+  It is suggested to use the \code{subset_scores()} function to
   filter out GO terms with fewer than 5+ genes associated with it. Indeed,
   those GO terms are more sensitive to outlier genes as they were scored on the
   average of a handful of genes.
@@ -130,7 +130,7 @@ Kevin Rue-Albrecht
 }
 \seealso{
   Methods
-  \code{\link[GOexpress:subset_scores]{GOexpress::subset_scores}},
+  \code{\link[GOexpress:subset_scores]{subset_scores}},
   \code{\link[biomaRt:getBM]{biomaRt::getBM}},
   \code{\link[randomForest:randomForest]{randomForest::randomForest}}, 
   \code{\link[stats:oneway.test]{stats::oneway.test}},
@@ -157,7 +157,7 @@ all(colnames(log2cpm) == rownames(targets)) # TRUE
 
 # Run the analysis on factor "Treatment"
 # Factor must be one of the column names in pData(targets)
-raw_result = GOexpress::GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
+raw_result = GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
 }
 
 \keyword{ GOexpress }
