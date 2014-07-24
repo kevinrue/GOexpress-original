@@ -103,7 +103,7 @@ Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
   \code{\link[VennDiagram]{VennDiagram}}.
   
   Methods
-  \code{\link[biomaRt:getBM]{biomaRt::getBM}},
-  \code{\link[gplots:heatmap.2]{gplots::heatmap.2}},
-  \code{\link[stringr:str_extract]{stringr::str_extract}},.
+  \code{\link[biomaRt:getBM]{getBM}},
+  \code{\link[gplots:heatmap.2]{heatmap.2}},
+  \code{\link[stringr:str_extract]{str_extract}},.
 }

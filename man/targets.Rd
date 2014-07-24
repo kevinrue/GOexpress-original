@@ -34,10 +34,10 @@ Publication in review process.
 }
 \examples{
 data(targets)
-Biobase::pData(targets)
-Biobase::pData(targets)$Group
-as.character(Biobase::pData(targets)$Group)
-dim(Biobase::pData(targets))
+pData(targets)
+pData(targets)$Group
+as.character(pData(targets)$Group)
+dim(pData(targets))
 }
 
 \keyword{datasets}

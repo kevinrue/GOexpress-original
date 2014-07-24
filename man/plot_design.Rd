@@ -10,7 +10,7 @@ as analyzed by \code{\link[stats:aov]{aov}}().
 }
 \usage{
 plot_design(go_id, result, expr_data, phenodata,
-                       factors=colnames(Biobase::pData(phenodata)),
+                       factors=colnames(pData(phenodata)),
                        main="", ...)
 }
 \arguments{
@@ -51,7 +51,7 @@ function.
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[graphics:plot.design]{graphics::plot.design}}
+  Method \code{\link[graphics:plot.design]{plot.design}}
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
   on GitHub.

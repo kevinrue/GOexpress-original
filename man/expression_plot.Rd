@@ -13,7 +13,7 @@ grouping factor from the AnnotatedDataFrame.
 expression_plot(
     gene_id, result, expr_data, phenodata, x_var, 
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
-    col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
+    col = brewer.pal(n=length(levels(pData(
         phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=15, legend.title.size=20, legend.key.size=30)

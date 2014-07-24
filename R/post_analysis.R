@@ -12,14 +12,14 @@ cluster_GO = function(
     di <- dist(genes_expr, method=method_dist, ...)
     cl <- hclust(di, method=method_hclust, ...)
     # Rows are samples, label them according to the user's chosen factor
-    sample_labels = Biobase::pData(phenodata)[,f]
+    sample_labels = pData(phenodata)[,f]
     plot(cl, hang=-1, label=sample_labels, cex=cex, main=main, xlab=xlab, ...)
 }
 
 expression_plot = function(
     gene_id, result, expr_data, phenodata, x_var, 
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
-    col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
+    col = brewer.pal(n=length(levels(pData(
         phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=15, legend.title.size=20, legend.key.size=30){
@@ -43,7 +43,7 @@ expression_plot = function(
         stop("\"result=\" argument does not look like a GO_analyse output.")
     }
     # If the X variable requested does not exist in the sample annotations
-    if (! x_var %in% colnames(Biobase::pData(phenodata))){
+    if (! x_var %in% colnames(pData(phenodata))){
         # Return an error and stop
         stop("\"x_var=\" argument is not a valid factor in pData(phenodata).")
     }
@@ -51,23 +51,23 @@ expression_plot = function(
     title = paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
     # Assemble a data frame containing the necessary information for ggplot
     df = data.frame(Expression=expr_data[gene_id,],
-                    Factor=Biobase::pData(phenodata)[,f],
-                    X=Biobase::pData(phenodata)[,x_var])
+                    Factor=pData(phenodata)[,f],
+                    X=pData(phenodata)[,x_var])
     # Generate the plot
-    gg = ggplot2::ggplot(df) +
-        ggplot2::geom_smooth(aes(x=X, y=Expression, group = Factor,
+    gg = ggplot(df) +
+        geom_smooth(aes(x=X, y=Expression, group = Factor,
                                  color = Factor, fill=Factor), level=level) +
-        ggplot2::labs(title=title, x=x_var, y=ylab) +
-        ggplot2::theme(
-            plot.title = ggplot2::element_text(
-                            size = ggplot2::rel(title.size)),
-            axis.title=ggplot2::element_text(size=axis.title.size),
-            axis.text=ggplot2::element_text(size=axis.text.size),
-            legend.text=ggplot2::element_text(size=legend.text.size),
-            legend.title=ggplot2::element_text(size=legend.title.size),
+        labs(title=title, x=x_var, y=ylab) +
+        theme(
+            plot.title = element_text(
+                            size = rel(title.size)),
+            axis.title=element_text(size=axis.title.size),
+            axis.text=element_text(size=axis.text.size),
+            legend.text=element_text(size=legend.text.size),
+            legend.title=element_text(size=legend.title.size),
             legend.key.size=unit(legend.key.size, "points")) +
-        ggplot2::scale_colour_manual(values=col, name=f) + 
-        ggplot2::scale_fill_manual(values=col, name=f)
+        scale_colour_manual(values=col, name=f) + 
+        scale_fill_manual(values=col, name=f)
     # Return the plot
     return(gg)
 }
@@ -76,7 +76,7 @@ expression_plot = function(
 expression_plot_symbol = function(
     gene_symbol, result, expr_data, phenodata, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
-    col = RColorBrewer::brewer.pal(n=length(levels(Biobase::pData(
+    col = brewer.pal(n=length(levels(pData(
         phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=20, legend.title.size=20, legend.key.size=30){
@@ -85,7 +85,7 @@ expression_plot_symbol = function(
         stop("\"result=\" argument does not look like a GO_analyse output.")
     }
     # If the X variable requested does not exist in the sample annotations
-    if (! x_var %in% colnames(Biobase::pData(phenodata))){
+    if (! x_var %in% colnames(pData(phenodata))){
         stop("\"x_var=\" argument is not a valid factor in pData(phenodata).")
     }
     # the GO_analyse result provided contains the annotation of each gene
@@ -230,9 +230,9 @@ expression_plot_symbol = function(
 heatmap_GO = function(
     go_id, result, expr_data, phenodata, gene_names=TRUE,
     f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
-    trace="none", expr.col=gplots::bluered(75), 
+    trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
-    row.col=brewer.pal(n=length(unique(Biobase::pData(
+    row.col=brewer.pal(n=length(unique(pData(
         phenodata)[,f])), name=row.col.palette),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
@@ -339,7 +339,7 @@ overlap_GO = function(go_ids, result, filename, mar=rep(0.1, 4), ...){
         gene_sets[[index]] = list_genes(go_id=go_ids[[index]], result=result)
     }
     # Print the venn diagram to the filename
-    VennDiagram::venn.diagram(x=gene_sets,
+    venn.diagram(x=gene_sets,
                               filename=filename,
                               category.names = go_ids,
                               mar=mar, ...)
@@ -347,12 +347,12 @@ overlap_GO = function(go_ids, result, filename, mar=rep(0.1, 4), ...){
 
 plot_design = function(
     go_id, result, expr_data, phenodata,
-    factors=colnames(Biobase::pData(phenodata)), main="", ...){
+    factors=colnames(pData(phenodata)), main="", ...){
     # if the user changed the default value
     # check that all given factors exist in colnames(phenodata)
-    if (any(factors != colnames(Biobase::pData(phenodata)))){
+    if (any(factors != colnames(pData(phenodata)))){
         for(f in factors){
-            if (!f %in% colnames(Biobase::pData(phenodata))){
+            if (!f %in% colnames(pData(phenodata))){
                 # Otherwise, stop and return which of them is not a valid
                 # factor name
                 stop(f, " is not a valid factor name in colnames(phenodata).")
@@ -367,7 +367,7 @@ plot_design = function(
     GO_name = result$GO[result$GO$go_id == go_id, "name_1006"]
     # Prepare a temporary data frame plot.design-friendly
     df = data.frame(t(expr_data[gene_ids_present,]),
-                    Biobase::pData(phenodata[,factors]))
+                    pData(phenodata[,factors]))
     # If no custom title was given
     if (main == ""){
         # Generate a smart one (careful: the same title will be used for all

@@ -12,8 +12,8 @@ levels of those genes in a heatmap.
 heatmap_GO(
     go_id, result, expr_data, phenodata, gene_names=TRUE,
     f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, trace="none",
-    expr.col=gplots::bluered(75), row.col.palette="Accent",
-    row.col=brewer.pal(n=length(unique(Biobase::pData(phenodata)[,f])),
+    expr.col=bluered(75), row.col.palette="Accent",
+    row.col=brewer.pal(n=length(unique(pData(phenodata)[,f])),
                        name=row.col.palette),
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]), ...)
 }
@@ -61,7 +61,7 @@ measurement. Defaults to 'none'.
 Character vector indicating the colors to represent the different levels of
 gene expression. Defaults to a colormap of 75 shades ranging from blue (low) to
 red (high) and centered around white. If using differential expression data,
-you should probably use \code{gplots::greenred(75)} instead.
+you should probably use \code{greenred(75)} instead.
 }
   \item{row.col.palette}{
 A valid \code{RColorBrewer} palette name to fetch the colormap from, to
@@ -81,7 +81,7 @@ Additional arguments passed on to \code{heatmap.2()}.
 }
 }
 \value{
-  Returns the output of the \code{gplots::heatmap.2()} function.
+  Returns the output of the \code{heatmap.2()} function.
 }
 \references{
 \itemize{
@@ -93,9 +93,9 @@ Additional arguments passed on to \code{heatmap.2()}.
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[gplots:heatmap.2]{gplots::heatmap.2}},
+  Method \code{\link[gplots:heatmap.2]{heatmap.2}},
   \code{\link[GOexpress:GO_analyse]{GO_analyse}},
-  \code{\link[RColorBrewer:brewer.pal.info]{RColorBrewer::brewer.pal.info}}
+  \code{\link[RColorBrewer:brewer.pal.info]{brewer.pal.info}}
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
   on GitHub.
@@ -113,7 +113,7 @@ heatmap_GO("GO:0034142", raw_result, log2cpm, targets, cexRow=1)
 # Change the color-coding to green-black-red gradient (more appropriate for
 # differential expression values)
 heatmap_GO("GO:0034142", raw_result, log2cpm, targets,
-                      expr.col=gplots::greenred(75))
+                      expr.col=greenred(75))
 }
 
 \keyword{ GOexpress }

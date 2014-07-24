@@ -29,13 +29,13 @@ Additional arguments passed on to \code{hist()}.
 }
 }
 \value{
-  Returns the output of the \code{graphics::hist()} function.
+  Returns the output of the \code{hist()} function.
 }
 \author{
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[graphics:hist]{graphics::hist}},
+  Method \code{\link[graphics:hist]{hist}},
   \code{\link[GOexpress:GO_analyse]{GO_analyse}},
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}

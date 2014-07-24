@@ -34,7 +34,7 @@ GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
   \item{expr_data}{
 Gene expression matrix. Row names are ensembl gene identifiers or probeset
 identifiers. Column names are sample identifiers. Typically the output of
-\code{edgeR::cpm()} or \code{Biobase::exprs()}
+\code{cpm()} or \code{exprs()}
 }
   \item{phenodata}{
 An \code{AnnotatedDataFrame}. Row names are sample idenfifiers in the same
@@ -131,9 +131,9 @@ Kevin Rue-Albrecht
 \seealso{
   Methods
   \code{\link[GOexpress:subset_scores]{subset_scores}},
-  \code{\link[biomaRt:getBM]{biomaRt::getBM}},
-  \code{\link[randomForest:randomForest]{randomForest::randomForest}}, 
-  \code{\link[stats:oneway.test]{stats::oneway.test}},
+  \code{\link[biomaRt:getBM]{getBM}},
+  \code{\link[randomForest:randomForest]{randomForest}}, 
+  \code{\link[stats:oneway.test]{oneway.test}},
   and
   \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
   on GitHub.
