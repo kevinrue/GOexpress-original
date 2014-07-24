@@ -30,7 +30,7 @@ A gene name present in \code{rownames(raw_result$genes)}.
 An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{expr_data}{
-A sample-by-gene matrix providing the expression levels of each gene in each
+A gene-by-sample matrix providing the expression levels of each gene in each
 sample.
 }
   \item{phenodata}{

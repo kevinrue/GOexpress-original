@@ -26,7 +26,7 @@ An gene identifier present in \code{rownames(expr_data)}.
 An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
   \item{expr_data}{
-A sample-by-gene matrix providing expression levels of each gene in each
+A gene-by-sample matrix providing expression levels of each gene in each
 sample.
 }
   \item{phenodata}{

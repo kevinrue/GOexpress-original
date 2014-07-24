@@ -16,7 +16,7 @@ This package was designed for the analysis of bioinformatics
 data based on gene expression measurements. It requires 3 input
 values:
 
-1. a sample-by-gene matrix providing the expression level
+1. a gene-by-sample matrix providing the expression level
 of genes (rows) in each sample (columns). Row names are expected to be
 either ensembl gene identifiers or probeset identifiers present in the
 BioMart database.

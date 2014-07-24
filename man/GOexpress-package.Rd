@@ -28,7 +28,7 @@ allowing to visualise the statistics on a gene- and ontology-basis.
  }
  This package requires only two input variables
  \enumerate{
-  \item A sample-by-gene matrix providing gene expression values for each gene
+  \item A gene-by-sample matrix providing gene expression values for each gene
     in each sample
   \item An AnnotatedDataFrame from the Biobase package providing phenotypic
   information and grouping factors with two or more levels.

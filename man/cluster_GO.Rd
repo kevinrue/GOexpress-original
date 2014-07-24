@@ -23,7 +23,7 @@ A Gene Ontology (GO) identifier.
 The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
 }
   \item{expr_data}{
-Sample-by-gene expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
+Gene-by-sample expression matrix. Row names are ensembl gene identifiers or probeset identifiers.
 Column names are sample identifiers.
 }
   \item{phenodata}{

@@ -5,7 +5,7 @@
 Sample expression data from a RNAseq experiment.
 }
 \description{
-A sample-by-gene matrix to test the package with. Data subset from an
+A gene-by-sample matrix to test the package with. Data subset from an
 \emph{in vitro} infection of bovine macrophages with different mycobacterial
 strains. Column names are sample names, and row names are ensembl gene 
 identifiers of the \emph{Bos taurus} species. Each cell contains the

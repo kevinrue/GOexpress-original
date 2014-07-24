@@ -23,7 +23,7 @@ The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
   \item{expr_data}{
-A sample-by-gene matrix providing expression levels of each gene
+A gene-by-sample matrix providing expression levels of each gene
 in each sample.
 }
   \item{phenodata}{
