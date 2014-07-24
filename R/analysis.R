@@ -55,7 +55,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     # The random forest requires the factor (f) to be an actual R factor
     if (!any(class(pData(phenodata)[,f]) == "factor")){
         stop("pData(phenodata)[,f] must be an actual R factor.
-             See method factor()")
+             See help(factor)")
     }
     # The random forest requires all levels of the factor to have at least one
     # sample
