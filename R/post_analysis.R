@@ -80,7 +80,7 @@ expression_plot_symbol = function(
         phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=20, legend.title.size=20, legend.key.size=30){
-    # if the result was provided does not look like it should
+    # if the result provided does not look like it should
     if (! "genes" %in% names(result)){
         stop("\"result=\" argument does not look like a GO_analyse output.")
     }
@@ -110,7 +110,7 @@ expression_plot_symbol = function(
         # if we don't have close matches in the dataset, tell the user and stop
         # the function
         else{
-            return(gene_symbol, "not found in dataset. No close match either.")
+            stop(paste(gene_symbol, "not found in dataset. No close match either."))
         }
     }
     # At this stage we know the gene symbol has at least one corresponding gene
