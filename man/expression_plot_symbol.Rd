@@ -14,11 +14,10 @@ in the dataset, a lattice of plots will be produced. Each of the plots in this
 lattice can subsequently be plotted separately using its associated index.
 }
 \usage{
-expression_plot_symbol(
     gene_symbol, result, expr_data, phenodata, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
-    col = brewer.pal(n=length(levels(Biobase::pData(
-        phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
+    col = brewer.pal(n=length(levels(pData(
+    phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=20, legend.title.size=20, legend.key.size=30)
 }
