@@ -118,7 +118,7 @@ output of a randomForest analysis. Core elements:
 Kevin Rue-Albrecht
 }
 \section{Warning}{
-  Make sure that the factor \code{f} is an actual factor is the R language
+  Make sure that the factor \code{f} is an actual factor in the R language
   meaning. This is important for the underlying statistical framework to
   identify the groups of samples defined by their level of this factor.
   
