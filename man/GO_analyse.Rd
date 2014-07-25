@@ -51,9 +51,10 @@ Automatically detected if not specified. Use data(prefix2dataset) for valid
 values.
 }
   \item{microarray}{
-The identifier corresponding to the microarray platform in the Ensembl BioMart.
-If not specified and Ensembl gene identifiers are not detected, the method will
-attempt to automatically resolve this parameter. See
+The identifier in the Ensembl BioMart corresponding to the microarray platform
+used. If not specified and Ensembl gene identifiers are not detected in the
+expressino dataset, the method will attempt to automatically identify the
+platform used from the first probeset in the dataset. See
 \code{data(microarray2dataset)} for valid values.
 }
   \item{method}{

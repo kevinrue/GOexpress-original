@@ -5,7 +5,7 @@
 Table mapping probeset identifier prefixes to datasets in the Ensembl BioMart.
 }
 \description{
-The species corresponding to an probeset identifier can typically be identified
+The species corresponding to an probeset identifier can often be identified
 from the prefix of the identifier (e.g. Bt.457.1.S1_at corresponds to
 \emph{Bos taurus}). This table maps some known unique prefix to the
 corresponding species.
@@ -15,7 +15,8 @@ corresponding species.
   A data frame with 105 observations on the following 5 variables.
   \describe{
     \item{\code{dataset}}{BioMart species dataset.}
-    \item{\code{microarray}}{BioMart microarray identifier in the dataset.}
+    \item{\code{microarray}}{Microarray identifier in the Ensembl BioMart
+    dataset.}
     \item{\code{sample}}{An example probeset of the microarray.}
     \item{\code{prefix}}{The prefix pattern.}
     \item{\code{unique}}{Whether the prefix pattern is unique to the

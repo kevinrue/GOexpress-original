@@ -26,7 +26,7 @@ The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
   \item{expr_data}{
-Gene expression matrix. Row names are ensembl gene identifiers or probeset
+Gene expression matrix. Row names are Ensembl gene identifiers or probeset
 identifiers. Column names are sample identifiers.
 }
   \item{phenodata}{
@@ -36,8 +36,8 @@ phenotypic traits used for analysis and plotting.
 }
   \item{gene_names}{
 A boolean value. Default is TRUE, to label genes by their associated gene name.
-If FALSE, labels the genes by their gene identifier in the expression dataset
-(i.e. ensembl gene identifier, or microarray probeset).
+If FALSE, labels the genes by their feature identifier in the expression
+dataset (i.e. ensembl gene identifier or microarray probeset).
 }
   \item{f}{
 The predefined grouping factor.

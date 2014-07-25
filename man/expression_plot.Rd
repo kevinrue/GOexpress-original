@@ -20,7 +20,7 @@ expression_plot(
 }
 \arguments{
   \item{gene_id}{
-An gene identifier present in \code{rownames(expr_data)}.
+An gene or probeset identifier present in \code{rownames(expr_data)}.
 }
   \item{result}{
 An output of the \code{GO_analyse()} or \code{subset_scores()} function.
@@ -88,7 +88,7 @@ Changes the size of the legend keys.
 }
 \details{
 If the \code{result} argument is not specified and no custom title is
-specified either, the function will combine the gene identifier and the
+specified either, the function will combine the feature identifier and the
 associated gene name.
 }
 \value{

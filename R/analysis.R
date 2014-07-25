@@ -82,11 +82,11 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             # automatically detect both
             # fetch the first gene id in the given expression dataset
             sample_gene = rownames(expr_data)[1]
-            cat("First gene identifier in dataset:", sample_gene, fill=TRUE)
+            cat("First feature identifier in dataset:", sample_gene, fill=TRUE)
             # Try to find an appropriate biomaRt ensembl dataset from the gene
             # prefix
             mart = mart_from_ensembl(sample_gene)
-            # if the gene id has not an identifiable ensembl gene id prefix
+            # if the gene id has not an identifiable Ensembl gene id prefix
             if (!class(mart) == "Mart"){
                 # Try to find an appropriate biomaRt microarray dataset from
                 # the gene prefix
@@ -159,7 +159,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             # Check if looks like microarray
             # fetch the first gene id in the given expression dataset
             sample_gene = rownames(expr_data)[1]
-            cat("First gene identifier in dataset:", sample_gene, fill=TRUE)
+            cat("First feature identifier in dataset:", sample_gene, fill=TRUE)
             microarray_match = microarray_from_probeset(sample_gene)
             # if the data matches a known microarray pattern
             if (!is.null(nrow(microarray_match))){
@@ -188,8 +188,9 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             }
             # if the data does not match a microarray pattern
             else{
-                cat(sample_gene, "gene identifier in expression data cannot",
-                    "be resolved to a microarray. Assuming ensembl gene",
+                cat(sample_gene,
+                    "feature identifier in expression data cannot",
+                    "be resolved to a microarray. Assuming Ensembl gene",
                     "identifiers.", fill=TRUE)
             }
             # If it does not look like microarray
@@ -213,7 +214,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
         }
     }
     print(mart)
-    #    if working with ensembl gene identifiers
+    #    if working with Ensembl gene identifiers
     if (microarray == ""){
         # Prepare a mapping table between gene identifiers and GO terms
         cat("Fetching ensembl_gene_id/GO_id mappings from BioMart ...",
@@ -223,7 +224,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     }
     # if working with microarray probesets
     else{
-        # Prepare a mapping table between gene identifiers and GO terms
+        # Prepare a mapping table between feature identifiers and GO terms
         cat("Fetching probeset/GO_id mappings from BioMart ...", fill=TRUE)
         GO_genes = getBM(attributes=c(microarray, "go_id"), mart=mart)
     }
@@ -279,7 +280,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     GO_gene_score_all[is.na(GO_gene_score_all$Score), "Score"] = 0
     # In addition, all genes absent from the dataset are assigned a value =
     # 1 + (the maximum rank of the genes in the dataset)
-    GO_gene_score_all[is.na(GO_gene_score_all$Rank), "Rank"] = max(res$Rank) +1
+    GO_gene_score_all[is.na(GO_gene_score_all$Rank), "Rank"] = max(res$Rank)+1
     # - Second, merge the tables keeping only the genes present in the dataset
     # This will be used to count how many genes are present in dataset for each
     # GO term
@@ -288,7 +289,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     # Results can now be summarised by aggregating rows with same GOterm
     # Appends gene annotations to rows of res
     cat("Fetching gene description from BioMart ...", fill=TRUE)
-    #    if working with ensembl gene identifiers
+    #    if working with Ensembl gene identifiers
     if (microarray == ""){
         genes_score = merge(x=res, all.x=TRUE,
                             y=getBM(attributes=c("ensembl_gene_id",
@@ -301,7 +302,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     }
     # if working with microarray probesets
     else{
-        # Prepare a mapping table between gene identifiers and GO terms
+        # Prepare a mapping table between feature identifiers and GO terms
         genes_score = merge(x=res, all.x=TRUE, 
                             y=getBM(attributes=c(microarray,
                                                  "external_gene_id",
@@ -319,7 +320,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
         # Each probeset should only be there once anyway
         genes_score = genes_score[ !duplicated(genes_score$Row.names), ]
     }
-    # Put the ensembl identifier back as the row name
+    # Put the Ensembl gene identifier back as the row name
     rownames(genes_score) = genes_score$Row.names
     genes_score$Row.names = NULL
     cat("Merging score into result table ...", fill=TRUE)
@@ -389,7 +390,7 @@ mart_from_ensembl = function(sample_gene){
         # If the ENS* prefix is in the table 
         if (prefix %in% prefix2dataset$prefix){
             # load the corresponding biomart dataset
-            cat("Looks like ensembl gene identifier.", fill=TRUE)
+            cat("Looks like Ensembl gene identifier.", fill=TRUE)
             cat("Loading detected dataset",
                 prefix2dataset[prefix2dataset$prefix == prefix,]$dataset,
                 "...", fill=TRUE)
@@ -401,7 +402,7 @@ mart_from_ensembl = function(sample_gene){
         }
         # Otherwise return FALSE
         else{
-            cat("Did not recognise a valid ensembl gene identifier.",
+            cat("Did not recognise a valid Ensembl gene identifier.",
                 fill=TRUE)
             return(FALSE)
         }
@@ -409,7 +410,7 @@ mart_from_ensembl = function(sample_gene){
     # If the gene id starts with "WBgene"
     else if (length(grep(pattern="^WBGene", x=sample_gene))) {
         # load the corresponding biomart dataset
-        cat("Looks like ensembl gene identifier.", fill=TRUE)
+        cat("Looks like Ensembl gene identifier.", fill=TRUE)
         cat("Loading detected dataset celegans_gene_ensembl ...", fill=TRUE)
         return(useMart(biomart="ensembl",
                        dataset="celegans_gene_ensembl"))
@@ -417,7 +418,7 @@ mart_from_ensembl = function(sample_gene){
     # If the gene id starts with "FBgn"
     else if (length(grep(pattern="^FBgn", x=sample_gene))) {
         # load the corresponding biomart dataset
-        cat("Looks like ensembl gene identifier.", fill=TRUE)
+        cat("Looks like Ensembl gene identifier.", fill=TRUE)
         cat("Loading detected dataset dmelanogaster_gene_ensembl ...",
             fill=TRUE)
         return(useMart(biomart="ensembl",
@@ -426,7 +427,7 @@ mart_from_ensembl = function(sample_gene){
     # If the gene id starts with "Y"
     else if (length(grep(pattern="^Y", x=sample_gene))) {
         # load the corresponding biomart dataset
-        cat("Looks like ensembl gene identifier.", fill=TRUE)
+        cat("Looks like Ensembl gene identifier.", fill=TRUE)
         cat("Loading detected dataset scerevisiae_gene_ensembl ...", fill=TRUE)
         return(useMart(biomart="ensembl",
                        dataset="scerevisiae_gene_ensembl"))
@@ -434,7 +435,7 @@ mart_from_ensembl = function(sample_gene){
     # If the gene id does not match any known ensembl gene id prefix, return an
     # error and stop
     else{
-        cat("Did not recognise an ensembl gene identifier.", fill=TRUE)
+        cat("Did not recognise an Ensembl gene identifier.", fill=TRUE)
         return(FALSE)
     }
 }
@@ -458,7 +459,7 @@ microarray_from_probeset = function(sample_gene){
                                   c("dataset","microarray")])
     }
     # If the sample gene was not recognised in the unique ones,
-    # check whether it may be an ambiguous identifier
+    # check whether it may be an ambiguous probeset identifier
     # For each unique pattern known to be found in multiple microarrays
     for (pattern in unique(
         microarray2dataset$prefix[!microarray2dataset$unique])

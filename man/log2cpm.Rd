@@ -7,7 +7,7 @@ Sample expression data from a RNAseq experiment.
 \description{
 A gene-by-sample matrix to test the package with. Subset of data from an
 \emph{in vitro} stimulation of bovine macrophages with different mycobacterial
-strains. Column names are sample names, and row names are ensembl gene 
+strains. Column names are sample names, and row names are Ensembl gene 
 identifiers of the \emph{Bos taurus} species. Each cell contains the
 log2-transformed normalised expression level of each gene in each sample.
 }
@@ -16,7 +16,7 @@ log2-transformed normalised expression level of each gene in each sample.
 A matrix of expression levels for 100 genes measured in 117 samples.
   \describe{
     \item{\code{colnames(log2cpm)}}{Sample names}
-    \item{\code{rownames(log2cpm)}}{Ensembl gene identifiers (Bos taurus)}
+    \item{\code{rownames(log2cpm)}}{Ensembl gene identifiers (\emph{Bos taurus})}
   }
 }
 \details{

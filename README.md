@@ -18,7 +18,7 @@ values:
 
 1. a gene-by-sample matrix providing the expression level
 of genes (rows) in each sample (columns). Row names are expected to be
-either ensembl gene identifiers or probeset identifiers present in
+either Ensembl gene identifiers or probeset identifiers present in
 microarrays present in the Ensembl BioMart dataset queried.
 2. an AnnotatedDataFrame from the Biobase package providing phenotypic
 information about the samples. Row names are samples, at least one of
@@ -57,7 +57,7 @@ score.
 
 # FEATURES
 
-  * Support expression data based on ensembl gene identifiers and
+  * Support expression data based on Ensembl gene identifiers and
 microarray probeset identifiers.
 
   * GO_analyse() scores all Gene Ontology (GO) terms represented in
@@ -77,28 +77,26 @@ output of GO_analyse() or subset_scores().
   * quantiles_scores() returns the quantile values corresponding
 to defined percentiles.
 
-  * list_genes() returns the list of ensembl gene identifiers
-associated with a given GO term.
+  * list_genes() returns the list of feature identifiers associated
+with a given GO term.
 
-  * table_genes() returns a table of information about the ensembl
-gene identifiers associated with  a given GO term.
+  * table_genes() returns a table of information about the feature
+identifiers associated with  a given GO term.
 
   * cluster_GO() plots a hierarchical clustering of the samples
 based on the expression levels of genes associated with a given
 GO term.
 
-  * heatmap_GO() plots a heatmap with hierarchical clustering of
-the samples and genes based on the expression levels of genes
-associated with a given GO term.
+  * heatmap_GO() plots a heatmap with hierarchical clustering of the samples
+and genes based on the expression levels of genes associated with a given GO
+term.
 
-  * expression_plot() plots the expression profile of the gene
-corresponding to an ensembl identifier, given valid variable name
-for the X-axis and a grouping factor for the Y-axis.
+  * expression_plot() plots the expression profile corresponding to a feature identifier, given valid variable name for the X-axis and a grouping factor for
+the Y-axis.
 
-  * expression_plot_symbol() plots the expression profile of the
-gene(s) with the ensembl identifier(s) corresponding to a gene
-symbol, given valid variable name for the X-axis and a grouping
-factor for the Y-axis.
+  * expression_plot_symbol() plots the expression profile corresponding to
+feature identifier(s) annotated to a gene symbol, given valid variable name for
+the X-axis and a grouping factor for the Y-axis.
 
   * plot_design() plots the univariate effect of each level of each
 factor available in the AnnotatedDataFrame on the expression levels

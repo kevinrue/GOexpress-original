@@ -2,10 +2,10 @@
 \alias{prefix2dataset}
 \docType{data}
 \title{
-Table mapping ensembl gene identifier prefixes to BioMart datasets.
+Table mapping Ensembl gene identifier prefixes to BioMart datasets.
 }
 \description{
-The species corresponding to an ensembl gene identifier can typically be
+The species corresponding to an Ensembl gene identifier can typically be
 identified from the prefix of the identifier (e.g. ENSBTAG corresponds to
 \emph{Bos taurus}).
 This table maps each known unique prefix to the corresponding species.

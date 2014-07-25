@@ -112,8 +112,8 @@ execution of the downstream code and more helpful error messages.
 variable.
 
   * list_genes() and table_genes() methods now allow to chose whether
-to return all identifiers associated with a GO term, or only those
-identifiers also present in the expression dataset.
+to return all feature identifiers associated with a GO term, or only those
+also present in the expression dataset.
 
 
 RELEASE 0.5.5:

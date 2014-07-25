@@ -20,8 +20,8 @@ A Gene Ontology (GO) identifier.
 The output of the \code{GO_analyse()} function.
 }
   \item{data.only}{
-Whether to return only the gene identifiers present in the given dataset
-or alternatively returns all gene identifiers associated with the GO term
+Whether to return only the feature identifiers present in the given dataset
+or alternatively returns all feature identifiers associated with the GO term
 in the Ensembl BioMart.
 }
 }

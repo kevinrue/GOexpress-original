@@ -4,8 +4,8 @@
 Returns the genes associated with a Gene Ontology
 }
 \description{
-Given a Gene Ontology (GO) identifier represented in the dataset,
-returns a character vector listing the gene identifiers annotated to it.
+Given a Gene Ontology (GO) identifier represented in the dataset, returns a
+character vector listing the feature identifiers annotated to it.
 }
 \usage{
 list_genes(go_id, result, data.only=TRUE)
@@ -19,13 +19,13 @@ The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
   \item{data.only}{
-Whether to return only the gene identifiers present in the given dataset
-or alternatively returns all gene identifiers associated with the GO term
+Whether to return only the feature identifiers present in the given dataset
+or alternatively returns all feature identifiers associated with the GO term
 in the Ensembl BioMart. Default is TRUE.
 }
 }
 \value{
-A character vector listing the gene identifiers of the genes associated
+A character vector listing the feature identifiers of the genes associated
 with the GO term.
 }
 \author{

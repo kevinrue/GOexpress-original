@@ -23,7 +23,7 @@ expression_plot = function(
         phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=15, legend.title.size=20, legend.key.size=30){
-    # if the gene identifier is absent from the dataset
+    # if the feature identifier is absent from the dataset
     if (!gene_id %in% rownames(expr_data)){
         # suggest close matches if any
         matches = agrep(pattern=gene_id, x=rownames(expr_data),
@@ -88,11 +88,11 @@ expression_plot_symbol = function(
     if (! x_var %in% colnames(pData(phenodata))){
         stop("\"x_var=\" argument is not a valid factor in pData(phenodata).")
     }
-    # the GO_analyse result provided contains the annotation of each gene
+    # the GO_analyse result provided contains the annotation of each feature
     # identifier
     # present in the dataset to a gene name, if any
-    cat("Fetching ensembl identifier(s) annotated to",    gene_symbol, "...",
-        fill=TRUE)
+    cat("Fetching feature identifier(s) annotated to",    gene_symbol,
+        "...", fill=TRUE)
     mapping = data.frame(gene_id=rownames(result$genes), 
                          external_gene_id=result$genes$external_gene_id,
                          stringsAsFactors=FALSE)
@@ -110,28 +110,29 @@ expression_plot_symbol = function(
         # if we don't have close matches in the dataset, tell the user and stop
         # the function
         else{
-            stop(paste(gene_symbol, "not found in dataset. No close match either."))
+            stop(paste(gene_symbol,
+                       "not found in dataset. No close match either."))
         }
     }
-    # At this stage we know the gene symbol has at least one corresponding gene
-    # identifier in the Ensembl BioMart, fetch all identifier(s) corresponding
-    # to that gene symbol
+    # At this stage we know the gene symbol has at least one corresponding
+    # feature identifier in the Ensembl BioMart, fetch all identifier(s)
+    # corresponding to that gene symbol
     gene_ids = mapping[mapping$external_gene_id == gene_symbol, "gene_id"]
     # However, we still don't know how many of those identifiers are present in
-    # the expression dataset. Remove the ensembl identifiers absent from our
+    # the expression dataset. Remove the feature identifiers absent from our
     # dataset as we cannot plot them
     gene_ids_present = gene_ids[gene_ids %in% rownames(expr_data)]
-    # If none of the ensembl identifiers are present in the dataset
+    # If none of the feature identifiers are present in the dataset
     if (length(gene_ids_present) == 0){
-        cat("Gene identifiers were found for", gene_symbol, "\n",
+        cat("Feature identifiers were found for", gene_symbol, "\n",
             "but none of them were found in the expression dataset.\n",
-            "Gene identifiers were:")
+            "Feature identifiers were:")
         return(gene_ids)
     }
-    # At this stage we are finally sure that at least one of the ensembl
-    # identifiers corresponding to the gene symbol are also present in the
+    # At this stage we are finally sure that at least one of the feature
+    # identifiers corresponding to the gene name are also present in the
     # expression dataset. This is the best moment to generate as many titles as
-    # there are ensembl identifier(s) annotated to the given gene symbol
+    # there are feature identifier(s) annotated to the given gene symbol
     # If the user left the default vector of titles (empty)
     if (is.null(titles)){
         # Create a smart title for each plot
@@ -243,7 +244,7 @@ heatmap_GO = function(
     genes_expr = t(expr_data[gene_ids,])
     # Rows are samples, label them according to the user's choson factor
     sample_labels = pData(phenodata)[,f]
-    # Columns are genes, label them by identifier or name
+    # Columns are features, label them by identifier or name
     if (gene_names){
         gene_labels = result$genes[gene_ids,]$external_gene_id
     }
