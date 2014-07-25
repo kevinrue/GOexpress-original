@@ -1,3 +1,9 @@
+RELEASE 0.99.4:
+
+  UPDATED FEATURES:
+
+  * 
+
 RELEASE 0.99.3:
 
   UPDATED FEATURES:
@@ -124,7 +130,7 @@ RELEASE 0.5.4:
 
   NEW FEATURES:
 
-  * Sample data accessible with the utils::data() method.
+  * Sample data accessible with the data() method.
 
 
 RELEASE 0.5.3:
@@ -233,7 +239,7 @@ INITIAL RELEASE 0.1:
 
 This package was designed for the analysis of bioinformatics-related
 data based on gene expression measurements. It requires 3 input
-values: (1) a sample-by-gene table providing the expression level
+values: (1) a gene-by-sample table providing the expression level
 of genes (rows) in each sample (columns), (2) an AnnotatedDataFrame
 from the Biobase package providing phenotypic information about the
 samples grouping them by levels of the factor, (3) the name of the
