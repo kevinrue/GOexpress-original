@@ -143,10 +143,8 @@ In the above raw results of the analysis, all three type (i.e. namespaces) of GO
 <<>>=
 BP = subset_scores(result=raw_result,
                    namespace="biological_process")
-BP = subset_scores(result=raw_result,
-                   namespace="BP")
 MF = subset_scores(result=raw_result,
-                   namespace="molecular_function")
+                   namespace="MF") # alias for "molecular function"
 CC = subset_scores(result=raw_result,
                    namespace="cellular_component")
 @
