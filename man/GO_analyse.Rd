@@ -8,13 +8,13 @@ Combines local gene expression data with online Gene Ontology (GO) resources to
 visualise and rank ontologies enriched for genes best clustering predefined
 groups of samples based on gene expression levels. 
 
-The package semi-
-automatically imports gene ontologies from the Biomart database for the species
-corresponding to the expression dataset prior to performing the analysis. A
-random forest analysis is performed to evaluate the ability of each gene to
-cluster samples according to a predefined grouping factor (one-way ANOVA
-available as an alteranative). Each GO term is scored and ranked according to
-the average rank or power of all associated genes to cluster the samples
+Using the \code{biomaRt} package, this method semi-automatically retrieves gene
+ontology annotations from Ensembl for the species corresponding to the
+expression dataset  prior to performing the analysis. A random forest analysis
+is performed to evaluate the ability of each gene to cluster samples according
+to a predefined grouping factor (one-way ANOVA available as an alteranative).
+Each GO term is scored and ranked according to the average rank
+(alternatively, average power) of all associated genes to cluster the samples
 according to the factor. The ranked list of GO terms is returned, with tools
 allowing to visualise the statistics on a gene- and ontology-basis.
 }
@@ -24,7 +24,7 @@ GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
            do.trace=100, ntree=1000, mtry=ceiling(2*sqrt(nrow(expr_data))), 
            ...)
 
-# To force the use of the human ensembl BioMart, use:
+# To force the use of the Ensembl BioMart for the human species, use:
 # GO_analyse(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
 
 # To force use of the bovine affy_bovine microarray annotations use:
@@ -32,7 +32,7 @@ GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
 }
 \arguments{
   \item{expr_data}{
-Gene expression matrix. Row names are ensembl gene identifiers or probeset
+Gene expression matrix. Row names are Ensembl gene identifiers or probeset
 identifiers. Column names are sample identifiers. Typically the output of
 \code{cpm()} or \code{exprs()}
 }
@@ -46,14 +46,15 @@ plotting.
 A value in colnames(phenodata) used as the grouping factor for the analysis.
 }
   \item{biomart_dataset}{
-The BioMart ensembl dataset corresponding to the species studied.
+The BioMart Ensembl dataset corresponding to the species studied.
 Automatically detected if not specified. Use data(prefix2dataset) for valid
 values.
 }
   \item{microarray}{
-The BioMart microarray column name in the dataset corresponding to the
-species studied. Automatically detected if not specified. Look at
-data(microarray2dataset) for valid values.
+The identifier corresponding to the microarray platform in the Ensembl BioMart.
+If not specified and Ensembl gene identifiers are not detected, the method will
+attempt to automatically resolve this parameter. See
+\code{data(microarray2dataset)} for valid values.
 }
   \item{method}{
 Either "randomForest" or "rf" to use the random forest framework, or
@@ -139,7 +140,7 @@ Kevin Rue-Albrecht
   on GitHub.
 }
 \examples{
-# Valid ensembl datasets are listed in the following variable
+# Valid Ensembl BioMart datasets are listed in the following variable
 data(prefix2dataset)
 
 # Valid microarray= values are listed in the following variable

@@ -19,12 +19,13 @@ This table maps each known unique prefix to the corresponding species.
   }
 }
 \details{
-C. elegans, D. melanogaster, and S. cerevisiae have atypical identifier pattern
-and prefixes. Prefixes for those are included in the table, but checked
-independently of the other species.
+\emph{C. elegans}, \emp{hD. melanogaster}, and \emph{S. cerevisiae} have
+atypical identifier pattern and prefixes. Prefixes for those are included in
+the table, but checked independently of the other species.
 }
 \source{
-A separate script was used to query the BioMart database and build this table.
+A separate script was used to query the Ensembl BioMart server and build this
+table.
 }
 \examples{
 data(prefix2dataset)

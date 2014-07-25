@@ -18,8 +18,8 @@ values:
 
 1. a gene-by-sample matrix providing the expression level
 of genes (rows) in each sample (columns). Row names are expected to be
-either ensembl gene identifiers or probeset identifiers present in the
-BioMart database.
+either ensembl gene identifiers or probeset identifiers present in
+microarrays present in the Ensembl BioMart dataset queried.
 2. an AnnotatedDataFrame from the Biobase package providing phenotypic
 information about the samples. Row names are samples, at least one of
 the columns must be a grouping factor with two or more levels (factor
@@ -31,12 +31,12 @@ The analysis identifies all Gene Ontology (GO) terms represented
 in the BioMart dataset of the species studied. A random forest
 (simple one-way ANOVA is also available) is generated on the 
 grouping factor for each gene present in the expression dataset. Genes
-associated with the GO term in BioMart but absent from the dataset
+associated with the GO term in the BioMart but absent from the dataset
 are assigned a score of 0 and a rank of max(rank)+1. GO terms are
 scored and ranked on the average rank (alternatively, score) of
-associated genes according to BioMart annotations. Note that to
-compute the average, the denominator used is the total number of
-genes associated with the GO term, even those absent from the dataset.
+associated genes. Note that to compute the average, the denominator used is the
+total number of genes associated with the GO term, even those absent from the
+dataset.
 
 Functions are provided to investigate and visualise the results of
 the above analysis. The score table can be filtered for GO terms over

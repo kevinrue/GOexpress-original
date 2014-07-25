@@ -22,12 +22,12 @@ The output of the \code{GO_analyse()} function.
   \item{data.only}{
 Whether to return only the gene identifiers present in the given dataset
 or alternatively returns all gene identifiers associated with the GO term
-in the BioMart database.
+in the Ensembl BioMart.
 }
 }
 \value{
-A data frame listing the statistics and BioMart annotations for the genes 
-present in the expression dataset and associated with the GO term.
+A data frame listing the statistics and annotations for the genes present in
+the expression dataset and associated with the GO term.
 }
 \author{
 Kevin Rue-Albrecht

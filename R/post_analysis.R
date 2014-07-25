@@ -114,7 +114,7 @@ expression_plot_symbol = function(
         }
     }
     # At this stage we know the gene symbol has at least one corresponding gene
-    # identifier in the BioMart database, fetch all identifier(s) corresponding
+    # identifier in the Ensembl BioMart, fetch all identifier(s) corresponding
     # to that gene symbol
     gene_ids = mapping[mapping$external_gene_id == gene_symbol, "gene_id"]
     # However, we still don't know how many of those identifiers are present in

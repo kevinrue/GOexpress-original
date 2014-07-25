@@ -8,15 +8,16 @@ Visualise microarray and RNAseq data with gene ontology annotations.
 \description{
 Combines local gene expression data with online Gene Ontology (GO) resources to
 visualise and rank ontologies enriched for genes best clustering predefined
-groups of samples based on gene expression levels. The package semi-
-automatically imports gene ontologies from the Biomart database for the species
-corresponding to the expression dataset prior to performing the analysis. A
-random forest analysis is performed to evaluate the ability of each gene to
-cluster samples according to a predefined grouping factor (one-way ANOVA
-available as an alteranative). Each GO term is scored and ranked according to
-the average rank or power of all associated genes to cluster the samples
-according to the factor. The ranked list of GO terms is returned, with tools
-allowing to visualise the statistics on a gene- and ontology-basis.
+groups of samples based on gene expression levels. Using the \code{biomaRt}
+package, \code{GOexpress} semi-automatically retrieves gene ontology
+annotations from Ensembl for the species corresponding to the expression
+dataset prior to performing the analysis. A random forest analysis is performed
+to evaluate the ability of each gene to cluster samples according to a
+predefined grouping factor (one-way ANOVA available as an alteranative). Each
+GO term is scored and ranked according to the average rank (alternatively,
+average power) of all associated genes to cluster the samples according to the
+factor. The ranked list of GO terms is returned, with tools allowing to
+visualise the statistics on a gene- and ontology-basis.
 }
 \details{
  \tabular{ll}{

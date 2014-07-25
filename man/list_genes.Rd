@@ -21,7 +21,7 @@ The output of \code{GO_analyse()} or a subset of it obtained from
   \item{data.only}{
 Whether to return only the gene identifiers present in the given dataset
 or alternatively returns all gene identifiers associated with the GO term
-in the BioMart database. Default is TRUE.
+in the Ensembl BioMart. Default is TRUE.
 }
 }
 \value{

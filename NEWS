@@ -184,11 +184,11 @@ RELEASE 0.3.1:
   NEW FEATURES:
 
   * expression_plot() plots the expression profile of the gene
-corresponding to an ensembl identifier, given valid variable name
+corresponding to an Ensembl identifier, given valid variable name
 for the X-axis and a grouping factor for the Y-axis.
 
   * expression_plot_symbol() plots the expression profile of the
-gene(s) with the ensembl identifier(s) corresponding to a gene
+gene(s) with the Ensembl identifier(s) corresponding to a gene
 symbol, given valid variable name for the X-axis and a grouping
 factor for the Y-axis.
 
@@ -212,7 +212,7 @@ to retain only mappings and gene information related to the GO terms
 left in the $scores slot after filtering. This reduces significantly
 the memory space of the filtered variable, while the object containing
 the raw results of GO_anova() will still contain the full information
-fetched from BioMart if the user wants it.
+fetched from the Ensembl BioMart server if the user wants it.
 
   * ggplot2 and grid are now required for the proper installation of 
 anovaGO, even though these packages are only required for a subset
@@ -221,7 +221,7 @@ anovaGO will be available as soon as the package is installed.
 
   * Messages printed to the user during the executing of the funcions
 were made as clear as possible, particularly when fetching information
-from the BioMart database.
+from the Ensembl BioMart server.
 
 
 RELEASE 0.2:
@@ -276,9 +276,9 @@ grouping factor used for ANOVA. Genes annotated to a GO term but
 absent from the expression dataset are ignored.
 
   * get_mart_dataset() returns a connection to the appropriate BioMart
-dataset based on the gene name of the first gene in the expression
-dataset. The choice of the dataset can be overriden by the user
-if a valid BioMart ensembl dataset is specified.
+dataset  of the Ensembl server based on the gene name of the first gene in the
+expression dataset. The choice of the dataset can be overriden by the user
+if a valid BioMart Ensembl dataset is specified.
   
   * subset_scores() filters the table of scored GO terms in the
 output of GO_anova() and returns a list formatted identically to the 
@@ -290,10 +290,10 @@ output of GO_anova() or subset_scores().
   * quantiles_scores() returns the quantile values corresponding
 to defined percentiles.
 
-  * list_genes() returns the list of ensembl gene identifiers
+  * list_genes() returns the list of Ensembl gene identifiers
 associated with a given GO term.
 
-  * table_genes() returns a table of information about the ensembl
+  * table_genes() returns a table of information about the Ensembl
 gene identifiers associated with  a given GO term.
 
   * cluster_GO() plots a hierarchical clustering of the samples

@@ -26,7 +26,7 @@ Complex multifactorial experiments have become the norm in many research fields,
 
 Despite their different underlying technologies, microarray and RNA-seq analytic pipelines typically yield a matrix measuring the expression level of each gene in each sample. Typically, this expression matrix will be filtered to retain only genes qualified as "informative" (e.g. > 1 cpm in at least N replicates; N the number of replicates for a given set of experimental conditions); genes lowly expressed are removed to limit the False Discovery Rate (FDR) of differentially expressed genes induced by the larger variability of expression at the lower end of the dynamic range. \texttt{GOexpress} requires this prefiltered expression matrix to be accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase} package providing phenotypic information for each of those samples (e.g. unique identifier, treatment, time-point). This phenotypic data-frame must contain at least one column containing an experimental factor made of two or more levels (in the genuine R meaning of "factor" and "levels"). The above expression matrix, phenotypic data-frame, and the name of the column containing such a factor are the minimal three input variables required for the \texttt{GOexpress} package to work. Additional arguments may be required, in particular for microarray datasets, but those are discussed in a later section.
 
-Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to support and annotate gene expression matrix from any species and any microarray chip supported by the BioMart database:
+Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to support and annotate gene expression matrix from any species and any microarray chip present in the Ensembl BioMart:
 
 \texttt{http://www.ensembl.org/biomart/martview}.
 
@@ -53,7 +53,11 @@ However, if everything else fails, the \texttt{GOexpress} package has been maint
 
 The \texttt{GOexpress} package is still in its early days and may require some fine-tuning or yet undetected bug fixes. Please contact the maintainer with a copy of the error message and the command run.
 
-Despite our efforts to repeatedly test the \texttt{GOexpress} package on in-house datasets of both microarray and RNA-seq platforms, and from human and bovine origin, many of the species and microarrays supported by the BioMart database have not been tested yet. Do contact the package maintainer if you feel that the error is on our part(contact address in the package \texttt{DESCRIPTION} file).
+Despite our efforts to repeatedly test the \texttt{GOexpress} package on in-house datasets of both microarray and RNA-seq platforms, and from human and bovine origin, many of the species and microarrays present in the Ensembl BioMart have not been tested yet. Do contact the package maintainer if you feel that the error is on our part:
+
+<<echo=TRUE>>=
+maintainer("GOexpress")
+@
 
 Thoughtful suggestions for additional package functions, or improvement of existing ones is most welcome and may be implemented when time allows. Alternatively, we also encourage users to fork the GitHub repository of the project, develop and test their own feature, and finally generate a pull request to integrate it to the original repository (\texttt{https://github.com/kevinrue/GOexpress}).
 
@@ -150,9 +154,10 @@ CC = subset_scores(result=raw_result,
                    namespace="cellular_component")
 @
 
-Importantly, an early-identified bias of the scoring function is that GO terms associated with fewer genes are favored at the top of the ranking table. This is due to the fact that it is much easier for a group of 5 genes (e.g. "\texttt{B cell apoptotic process}") to have an high average rank than it is for a group of 6,000 genes (e.g. "\texttt{protein binding}"). Indeed the highest average rank of 5 genes is 2.5 while it is 3,000 for a group of 6,000 genes. 
+Importantly, an early-identified bias of the scoring function is that GO terms associated with fewer genes are favored at the top of the ranking table. This is due to the fact that it is much easier for a group of 5 genes (e.g. "\texttt{B cell apoptotic process}") to have an high average rank than it is for a group of ~6,000 genes (e.g. "\texttt{protein binding}"). Indeed the "ideal" highest average rank of 5 genes is 2.5 while it is 3,000 for a group of 6,000 genes. 
 
-However, in our experience, this bias has some advantages. First, it implicitely favors specific and well-defined GO terms(e.g. "\texttt{negative regulation of T cell apoptotic process}") as opposed to vague and uninformative GO terms (e.g. "\texttt{cytoplasm}"). Secondly, we observed many top-ranking GO terms associated with a single gene in the BioMart database. Those GO terms are consequently susceptible to single-gene events and artefacts in the expression data, as opposed to GO terms with a decent number of associated genes. Using the above filtering function, it is straightforward to filter out those GO terms with only a handful of associated genes:
+However, in our experience, this bias has some advantages. First, it implicitely favors specific and well-defined GO terms(e.g. "\texttt{negative regulation of T cell apoptotic process}") as opposed to vague and uninformative GO terms (e.g. "\texttt{cytoplasm}"). Secondly, we observed many top-ranking GO terms associated with a single gene. Those GO terms are consequently susceptible to single-gene events and artefacts in the expression data, as opposed to GO terms with a decent number of associated genes. Using the above filtering function, it is straightforward to filter out those GO terms with only a handful of associated genes:
+
 
 <<>>=
 BP.5 = subset_scores(result=raw_result,
@@ -166,7 +171,10 @@ CC.15 = subset_scores(result=raw_result,
                    total=15)
 @
 
-Furthermore, the inherent hierarchical structure and granularity of gene ontology terms can easily be browsed by using increasingly large value of the \texttt{total} filter. Note that this filter retains only GO terms associated with a certain count of genes in the BioMart database. It is also possible to use the \texttt{data} argument to filter for GO terms associated with a certain count of genes in the given expression dataset, although this approach is obviously more data-dependent and less robust.
+
+On the other hand, GO terms associated with thousands of genes have a very limited sensitivity, as they require a proportionally large number of associated genes to cluster the sample groups in order to be found among the top ranking GO terms.
+
+Furthermore, the inherent hierarchical structure and granularity of gene ontology terms can easily be browsed by using increasingly large value of the \texttt{total} filter. Note that this filter retains only GO terms associated with a certain count of genes in the Ensembl BioMart. It is also possible to use the \texttt{data} argument to filter for GO terms associated with a certain count of genes in the given expression dataset, although this approach is obviously more data-dependent and less robust.
 
 \subsection[Details of the top-ranking GO terms]{Details of the top-ranking GO terms}
 
@@ -217,7 +225,7 @@ Following the identification of relevant GO terms in the above sections, users m
 table_genes(go_id="GO:0034142", result=BP.5)
 @
 
-Note that the default behaviour of the above function is to return a table of all the genes associated with the GO term based on the BioMart database annotations. For obvious reasons, genes present in the BioMart database but absent from the expression dataset will be absent from the score table and conseuqently lack annotations. It is possible to restrict the above table to only genes present in the expression dataset using the \texttt{data.only} argument.
+Note that the default behaviour of the above function is to return a table of all the genes associated with the GO term based on the annotations retrieved from the Ensembl BioMart. For obvious reasons, genes present in the BioMart but absent from the expression dataset will be absent from the score table and conseuqently lack annotations. It is possible to restrict the above table to only genes present in the expression dataset using the \texttt{data.only} argument.
 
 If only the gene identifiers associated with a given GO identifier are needed, users may use the function below:
 
@@ -324,10 +332,10 @@ BP.5.byScore = rerank(result=BP.5, rank.by="score")
 Following the integration of the various plotting functions at the core of the \texttt{GOexpress} package, the need for a ranking of genes and GO terms soon became apparent in order to rapidly identify those best clustering the samples according to the experimental factor studied. A two-fold procedure was implemented:
 \begin{enumerate}
     \item Using the available expression data, each gene present in the dataset is scored, evaluating its ability to cluster the predefined groups of samples. Genes are ranked according to this score; ties are resolved by assigning the lowest rank R to all G genes, giving the rank G+n to the next gene(s). The genewise scoring functions implemented are described in the following subsections, and all were validated on in-house datasets cross-checked with widely validated analytic pipelines.
-    \item Using the above ranks and scores, each GO term in the BioMart database is assigned the mean score and the mean rank of all the genes associated with it in the BioMart database. Genes present in the BioMart database but absent from the given dataset are assigned a score of 0 (minimum valid score; indicates no power to discriminates the predefined groups of sample) and a rank equal to the number of genes present in the dataset plus one (worst rank, while preserving continuity of the ranking).
+    \item Using the above ranks and scores, each GO term in the Ensembl BioMart is assigned the mean score and the mean rank of all the genes associated with it in the BioMart. Genes present in the BioMart but absent from the given dataset are assigned a score of 0 (minimum valid score; indicates no power to discriminates the predefined groups of sample) and a rank equal to the number of genes present in the dataset plus one (worst rank, while preserving discrete continuity of the ranking).
 \end{enumerate}
 
-Importantly, the statistics performed to rank GO terms and genes do \emph{not} influence the behaviour of the subsequent plotting functions; heatmaps, clustering trees and gene expression profiles are purely driven by the expression data, sample phenotype annotations provided and GO terms ontologies imported from BioMart, without any transformation applied to the data. Users are encouraged to use and suggest alternative relevant scoring and ranking strategies, which could prioritise GO terms and genes in different ways. A current aknowledged bias is the higher scoring of GO terms associated with fewer genes, which shows some advantages discussed in section \ref{Filtering of results}.
+Importantly, the statistics performed to rank GO terms and genes do \emph{not} influence the behaviour of the subsequent plotting functions; heatmaps, clustering trees and gene expression profiles are purely driven by the expression data, sample phenotype annotations provided and GO terms ontologies imported from the Ensembl BioMart server, without any transformation applied to the data. Users are encouraged to use and suggest alternative relevant scoring and ranking strategies, which could prioritise GO terms and genes in different ways. A current aknowledged bias is the higher scoring of GO terms associated with fewer genes, which shows some advantages discussed in section \ref{Filtering of results}.
 
 \subsection[Random Forest]{Random Forest}
 

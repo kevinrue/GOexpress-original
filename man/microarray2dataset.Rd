@@ -2,7 +2,7 @@
 \alias{microarray2dataset}
 \docType{data}
 \title{
-Table mapping probeset identifier prefixes to BioMart datasets.
+Table mapping probeset identifier prefixes to datasets in the Ensembl BioMart.
 }
 \description{
 The species corresponding to an probeset identifier can typically be identified
@@ -14,8 +14,8 @@ corresponding species.
 \format{
   A data frame with 105 observations on the following 5 variables.
   \describe{
-    \item{\code{dataset}}{BioMart dataset.}
-    \item{\code{microarray}}{BioMart microarray name for each species.}
+    \item{\code{dataset}}{BioMart species dataset.}
+    \item{\code{microarray}}{BioMart microarray identifier in the dataset.}
     \item{\code{sample}}{An example probeset of the microarray.}
     \item{\code{prefix}}{The prefix pattern.}
     \item{\code{unique}}{Whether the prefix pattern is unique to the
@@ -25,10 +25,11 @@ corresponding species.
 \details{
 All Agilent microarray share the same prefix pattern, making it very difficult
 to differentiate. Many affymetrix microarrays also share the same prefix
-pattern.
+pattern for several probesets.
 }
 \source{
-A separate script was used to query the BioMart database and build this table.
+A separate script was used to query the Ensembl BioMart server and build this
+table.
 }
 \examples{
 data(microarray2dataset)
