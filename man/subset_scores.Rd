@@ -65,8 +65,7 @@ ontologies.
 Kevin Rue-Albrecht
 }
 \seealso{
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{Tutorial}
-  on GitHub.
+    Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
 \examples{
 # load the sample output data

@@ -49,8 +49,7 @@ Kevin Rue-Albrecht
   does not support values outside that range.
 }
 \seealso{
-  Method \code{\link[VennDiagram:venn.diagram]{venn.diagram}} and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial} on GitHub.
+  Method \code{\link[VennDiagram:venn.diagram]{venn.diagram}}.
 }
 \examples{
 # load the sample output data

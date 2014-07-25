@@ -95,10 +95,7 @@ Kevin Rue-Albrecht
 \seealso{
   Method \code{\link[gplots:heatmap.2]{heatmap.2}},
   \code{\link[GOexpress:GO_analyse]{GO_analyse}},
-  \code{\link[RColorBrewer:brewer.pal.info]{brewer.pal.info}}
-  and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
-  on GitHub.
+  and \code{\link[RColorBrewer:brewer.pal.info]{brewer.pal.info}}.
 }
 \examples{
 # load the sample output data

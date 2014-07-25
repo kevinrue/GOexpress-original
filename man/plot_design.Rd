@@ -51,10 +51,7 @@ function.
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[graphics:plot.design]{plot.design}}
-  and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
-  on GitHub.
+  Method \code{\link[graphics:plot.design]{plot.design}}.
 }
 \examples{
 # load the sample output data

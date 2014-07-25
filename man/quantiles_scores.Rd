@@ -35,10 +35,7 @@ A named vector of percentiles and corresponding scores.
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[stats:quantile]{quantile}}
-  and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
-  on GitHub.
+  Method \code{\link[stats:quantile]{quantile}}.
 }
 \examples{
 # load the sample output data

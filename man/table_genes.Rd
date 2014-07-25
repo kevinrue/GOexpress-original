@@ -33,7 +33,7 @@ the expression dataset and associated with the GO term.
 Kevin Rue-Albrecht
 }
 \seealso{
-  Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
+    Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
 \examples{
 # load the sample output data

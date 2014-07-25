@@ -119,10 +119,7 @@ Kevin Rue-Albrecht
   expression_plot_symbol}}
   and
   \code{\link[GOexpress:expression_plot_symbol]{
-  expression_plot_symbol}},
-  and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{
-  tutorial} on GitHub.
+  expression_plot_symbol}}.
 }
 \examples{
 # load the sample output data

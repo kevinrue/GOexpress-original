@@ -139,10 +139,7 @@ Kevin Rue-Albrecht
   \code{\link[GOexpress:subset_scores]{subset_scores}},
   \code{\link[biomaRt:getBM]{getBM}},
   \code{\link[randomForest:randomForest]{randomForest}}, 
-  \code{\link[stats:oneway.test]{oneway.test}},
-  and
-  \href{https://github.com/kevinrue/GOexpress/wiki/Typical-analysis-pipeline}{tutorial}
-  on GitHub.
+  and \code{\link[stats:oneway.test]{oneway.test}}.
 }
 \examples{
 # To force the use of the Ensembl BioMart for the human species, use:
