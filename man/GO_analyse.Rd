@@ -80,17 +80,27 @@ Additional arguments passed on to the randomForest() method.
 }
 }
 \value{
-A list containing the results of the analysis. Some elements only appear in the
-output of a randomForest analysis. Core elements:
-  \item{ GO }{A table ranking all GO terms related to genes in the expression
-  dataset based on the average ability of their related genes to cluster the
-  samples according to the predefined grouping factor.}
-  \item{ mapping }{The table mapping genes present in the dataset to GO terms.}
-  \item{ genes }{A table ranking all genes present in the expression dataset
-  based on their ability to cluster the samples according to the predefined
-  grouping factor.}
-  \item{ factor }{The predefined grouping factor.}
-  \item{ method }{The statistical framework used.}
+A list containing the results of the analysis. Some elements are specific to
+each type of analysis.
+
+Core elements:
+    \item{GO}{A table ranking all GO terms related to genes in the expression
+    dataset based on the average ability of their related genes to cluster the
+    samples according to the predefined grouping factor.}
+    \item{mapping}{The table mapping genes present in the dataset to GO
+    terms.}
+    \item{genes}{A table ranking all genes present in the expression dataset
+    based on their ability to cluster the samples according to the predefined
+    grouping factor.}
+    \item{factor}{The predefined grouping factor.}
+    \item{method}{The statistical framework used.}
+
+Random Forest additional elements:
+    \item{ntree}{Number of trees grown.}
+    \item{mtry}{Number of variables randomly sampled as candidates at each
+    split.}
+    
+One-way ANOVA does not have additional arguments.
 }
 \details{
   The current scoring functions strongly favor GO terms associated with fewer

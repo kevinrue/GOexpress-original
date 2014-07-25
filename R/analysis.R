@@ -253,6 +253,8 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
                           ntree=ntree, mtry=mtry, ...)
         # Save the importance value used as score for each gene in a data.frame
         res = data.frame("Score" = importance(rf)[,"MeanDecreaseGini"])
+        # In the output variable, write the full method name
+        method = "randomForest"
     }
     else if (method %in% c("anova", "a")){
         # A vectorised calculation the F-value of an ANOVA used as score for
@@ -261,6 +263,8 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
                                          FUN=function(x){
             oneway.test(formula=expr~group, data=cbind(
                 expr=x, group=pData(phenodata)[,f]))$statistic}))
+        # In the output variable, write the full method name
+        method = "anova"
     }
     # Calculate the rank of each gene based on their score
     res$Rank = rank(-res$Score, ties.method="min")
