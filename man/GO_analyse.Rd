@@ -23,12 +23,6 @@ GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
            method="randomForest", rank.by="rank",
            do.trace=100, ntree=1000, mtry=ceiling(2*sqrt(nrow(expr_data))), 
            ...)
-
-# To force the use of the Ensembl BioMart for the human species, use:
-# GO_analyse(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
-
-# To force use of the bovine affy_bovine microarray annotations use:
-# GO_analyse(expr_data, phenodata, f, microarray = "affy_bovine")
 }
 \arguments{
   \item{expr_data}{
@@ -141,6 +135,12 @@ Kevin Rue-Albrecht
   on GitHub.
 }
 \examples{
+# To force the use of the Ensembl BioMart for the human species, use:
+#GO_analyse(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
+
+# To force use of the bovine affy_bovine microarray annotations use:
+#GO_analyse(expr_data, phenodata, f, microarray = "affy_bovine")
+
 # Valid Ensembl BioMart datasets are listed in the following variable
 data(prefix2dataset)
 
