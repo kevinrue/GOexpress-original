@@ -83,7 +83,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
             # fetch the first gene id in the given expression dataset
             sample_gene = rownames(expr_data)[1]
             cat("First feature identifier in dataset:", sample_gene, fill=TRUE)
-            # Try to find an appropriate biomaRt ensembl dataset from the gene
+            # Try to find an appropriate biomaRt Ensembl dataset from the gene
             # prefix
             mart = mart_from_ensembl(sample_gene)
             # if the gene id has not an identifiable Ensembl gene id prefix
@@ -111,7 +111,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     Please use \"biomart_dataset=\" and/or \"microarray=\" arguments.")
                 }
             }
-            # if the gene id has an identifiable ensembl gene id prefix then,
+            # if the gene id has an identifiable Ensembl gene id prefix then,
             # the connection to the mart is already established leave
             # microarray to "" to imply that we don't work with microarray data
         }
@@ -194,7 +194,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
                     "identifiers.", fill=TRUE)
             }
             # If it does not look like microarray
-            # assume it is ensembl annotations
+            # assume it is Ensembl annotations
             # therefore do nothing more
             # in both cases load the requested mart dataset
             cat("Loading requested dataset", biomart_dataset, "...", fill=TRUE)
@@ -217,7 +217,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     #    if working with Ensembl gene identifiers
     if (microarray == ""){
         # Prepare a mapping table between gene identifiers and GO terms
-        cat("Fetching ensembl_gene_id/GO_id mappings from BioMart ...",
+        cat("Fetching ensembl_gene_id/go_id mappings from BioMart ...",
             fill=TRUE)
         GO_genes = getBM(attributes=c("ensembl_gene_id", "go_id"),
                          mart=mart)
@@ -225,7 +225,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     # if working with microarray probesets
     else{
         # Prepare a mapping table between feature identifiers and GO terms
-        cat("Fetching probeset/GO_id mappings from BioMart ...", fill=TRUE)
+        cat("Fetching probeset/go_id mappings from BioMart ...", fill=TRUE)
         GO_genes = getBM(attributes=c(microarray, "go_id"), mart=mart)
     }
     # Rename the first column which could be ensembl_id or probeset_id
@@ -433,7 +433,7 @@ mart_from_ensembl = function(sample_gene){
         return(useMart(biomart="ensembl",
                        dataset="scerevisiae_gene_ensembl"))
     }
-    # If the gene id does not match any known ensembl gene id prefix, return an
+    # If the gene id does not match any known Ensembl gene id prefix, return an
     # error and stop
     else{
         cat("Did not recognise an Ensembl gene identifier.", fill=TRUE)

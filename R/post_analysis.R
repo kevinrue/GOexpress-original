@@ -157,7 +157,7 @@ expression_plot_symbol = function(
         cat("Indices are:", fill=TRUE)
         print(gene_ids_present)
         # if the user did not change the default index value (0)
-        # the function will plot all ensembl ids in a lattice
+        # the function will plot all Ensembl ids in a lattice
         if (index==0){
             # A first time user might not know that how to plot a single plot
             cat("Use argument \"index=1\" to plot the first gene id alone,",
@@ -182,7 +182,7 @@ expression_plot_symbol = function(
                     legend.key.size=legend.key.size)
             }
             # Plot all the graphs in the optimised lattice, using the
-            # ensembl-based plotting function
+            # feature-based plotting function
             multiplot(plotlist = plots, cols = columns)
         }
         # If the user gave a non-zero index
@@ -362,7 +362,7 @@ plot_design = function(
     }
     # Fetch the list of genes associated with the go_id
     # If the user gave the output of a GO_analyse command as result=
-    # that list contains the mapping between ensembl genes and GO_id
+    # that list contains the mapping between feature and GO_id
     gene_ids_present = list_genes(go_id=go_id, result=result,
                                              data.only=TRUE)
     GO_name = result$GO[result$GO$go_id == go_id, "name_1006"]

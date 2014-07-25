@@ -37,7 +37,7 @@ phenotypic traits used for analysis and plotting.
   \item{gene_names}{
 A boolean value. Default is TRUE, to label genes by their associated gene name.
 If FALSE, labels the genes by their feature identifier in the expression
-dataset (i.e. ensembl gene identifier or microarray probeset).
+dataset (i.e. Ensembl gene identifier or microarray probeset).
 }
   \item{f}{
 The predefined grouping factor.
