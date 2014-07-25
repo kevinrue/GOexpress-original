@@ -17,7 +17,7 @@
 
 \subsection[The origin and purpose of \texttt{GOexpress}]{The origin and purpose of \texttt{GOexpress}}
 
-The idea leading to the \texttt{GOexpress} R package emerged from a set of plotting functions I regularly used across various complex multifactorial transcriptomics studies from both microarray and RNA-seq platforms. Those functions were repeatedly used to visualise the expression profile of genes across groups of samples, to annotate technical gene identifiers from both microarray and RNA-seq platforms (i.e. probesets, ensembl gene identifiers) with their associated gene name, and to evaluate the clustering of samples based on genes participating in a common cellular function or location (i.e. gene ontology). While developing the \texttt{GOexpress} package and discussing its features with potential users, a few more features were added, to enhance and complement the initial functions, leading to the present version of the package.
+The idea leading to the \texttt{GOexpress} R package emerged from a set of plotting functions I regularly used across various complex multifactorial transcriptomics studies from both microarray and RNA-seq platforms. Those functions were repeatedly used to visualise the expression profile of genes across groups of samples, to annotate technical gene identifiers from both microarray and RNA-seq platforms (i.e. probesets, Ensembll gene identifiers) with their associated gene name, and to evaluate the clustering of samples based on genes participating in a common cellular function or location (i.e. gene ontology). While developing the \texttt{GOexpress} package and discussing its features with potential users, a few more features were added, to enhance and complement the initial functions, leading to the present version of the package.
 
 Complex multifactorial experiments have become the norm in many research fields, thanks to the decrease in cost of high-throughput transcriptomics platforms and the barcoding/multiplexing of samples on the RNA-seq platform. While much effort has been (rightfully!) spent on the development of adequate statistical frameworks for the processing of raw expression data, much of the genewise visualisation is left to the end-user. However, data summarisation and visualisation can be a daunting task in multifactorial experiments, or require large amounts of copy-pasting to investigate the expression profile of a handful or genes and cellular pathways. Tested on multiple RNA-seq and microarray datasets, \texttt{GOexpress} offers an extendable set of data-driven plotting functions readily applicable to the output of widely used analytic packages estimating (differential) gene expression. Once past the initial analysis and filtering of \texttt{GOexpress} results, each gene and gene ontology is accessible by a single line of code to produce high-quality graphics. In short, the \texttt{GOexpress} package is a software package developed based on experimental datasets to ease the visualisation and interpretation of multifactorial transcriptomics data by bioinformaticians and biologists, while striving to keep it a simple, fast, and intuitive tool-kit.
 
@@ -33,7 +33,7 @@ Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to s
 
 This User's Guide was intended as a helpful description of the main features implemented in the \texttt{GOexpress} package, as well as a tutorial taking the user through a typical analysis pipeline \texttt{GOexpress} was designed for. While an example usage will be provided for each function of the package, the many arguments of each function cannot realistically be demonstrated in this Guide, and we kindly ask users to also read the individual R vignettes accompanying the corresponding package functions for further details.
 
-\section[Getting started]{Getting started}
+\section[Before you start]{Before you start}
 
 \subsection[Installation]{Installation}
 
@@ -70,9 +70,9 @@ citation(package="GOexpress")
 
 \section[Quick start]{Quick start}
 
-\subsection[Prerequisites]{Prerequisites}
+\subsection[Input data]{Input data}
 
-As mentioned earlier, the \texttt{GOexpress} package requires two input variables, namely an expression matrix and the an \texttt{AnnotatedDataFrame} of the \texttt{Biobase} package. In the example below, we will use the sample dataset \texttt{log2cpm} provided with the package and made of a subset of 100 bovine ensembl gene identifiers (rows) measured in 117 samples (columns). This sample data is accompanied by an \texttt{AnnotatedDataFrame} \texttt{targets} detailing a number of phenotypic information fields describing each sample.
+As mentioned earlier, the \texttt{GOexpress} package requires two input variables, namely an expression matrix and the an \texttt{AnnotatedDataFrame} of the \texttt{Biobase} package. In the example below, we will use the sample dataset \texttt{log2cpm} provided with the package and made of a subset of 100 bovine Ensembl gene identifiers (rows) measured in 117 samples (columns). This sample data is accompanied by an \texttt{AnnotatedDataFrame} \texttt{targets} detailing a number of phenotypic information fields describing each sample.
 
 Let us load those two variables in the workspace, and load the \texttt{GOexpress} packge as well:
 
@@ -83,7 +83,7 @@ data(targets)
 library(GOexpress)
 @
 
-Importantly, note that the matrix \texttt{log2cpm} must have row names made of unique gene identifiers (i.e. microarray probeset or RNA-seq ensembl gene identifier), and column names made of unique sample identifiers. Most importantly, the order of the samples in the columns of \texttt{log2cpm} must match that of the samples in the rows of \texttt{pData(targets)}.
+Importantly, note that the matrix \texttt{log2cpm} must have row names made of unique gene identifiers (i.e. microarray probeset or Ensembl gene identifier), and column names made of unique sample identifiers. Most importantly, the order of the samples in the columns of \texttt{log2cpm} must match that of the samples in the rows of \texttt{pData(targets)}.
 
 <<>>=
 head(rownames(log2cpm))
@@ -116,7 +116,7 @@ raw_results = GO_analyse(expr_data=log2cpm,
                          f="Treatment")
 @
 
-Note that the above command does not specify which species the data originated from. As mentioned in the output messages, the first gene identifier in the expression matrix was used to guess the corresponding species and type of data. This is a fairly straightforward process for ensembl gene identifiers (e.g. "ENSBTA" correspondonds to \textit{Bos taurus}).
+Note that the above command does not specify which species the data originated from. As mentioned in the output messages, the first gene identifier in the expression matrix was used to guess the corresponding species and type of data. This is a fairly straightforward process for Ensembll gene identifiers (e.g. "ENSBTA" correspondonds to \textit{Bos taurus}).
 
 However, it can be more difficult to guess the microarray used to obtain a certain dataset, as many Affymetrix chips contain probesets named with the pattern "AFFX.*". In cases where the microarray platform cannot be detected automatically, we recommend users to use the \texttt{microarray} argument of the \texttt{GO\_analyse} method. The list of valid values for the microarray argument is available in the \texttt{microarray2dataset} data frame which can be loaded in the workspace using:
 
@@ -265,7 +265,7 @@ expression_plot_symbol(gene_symbol="BIKBA", result=BP.5, expr_data=log2cpm,
 @
 \end{center}
 
-However, the benefits of this feature are balanced by the fact that genes lacking an associated gene name cannot be visualised in this manner, and that some gene symbols are associated with multiple ensembl gene identifiers and probesets (e.g. "RPL36A"). In the latter case, we turned the ambiguity into am additional useful feature: a lattice is created, and each of the multiple genes associated with the given gene symbol are plotted simultaneously in the lattice. Subsequently, each of the sub-figures plotted may be re-plotted by itself using the \texttt{index} argument as indicated in the accompanying printed message.
+However, the benefits of this feature are balanced by the fact that genes lacking an associated gene name cannot be visualised in this manner, and that some gene symbols are associated with multiple Ensembll gene identifiers and probesets (e.g. "RPL36A"). In the latter case, we turned the ambiguity into am additional useful feature: a lattice is created, and each of the multiple genes associated with the given gene symbol are plotted simultaneously in the lattice. Subsequently, each of the sub-figures plotted may be re-plotted by itself using the \texttt{index} argument as indicated in the accompanying printed message.
 
 \subsection[Comparison of univariate effects on gene expression]{Comparison of univariate effects on gene expression}
 
