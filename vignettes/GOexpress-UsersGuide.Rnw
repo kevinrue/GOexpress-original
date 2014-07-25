@@ -105,15 +105,15 @@ pData(targets)$Treatment
 In this case, it is already a properly formatted factor. If that was not the case, the following line of code would convert the column to an R factor and allow to continue the analysis:
 
 <<>>=
-pData(targets)$Treatment = factor(pData(targets)$Treatment)
+pData(targets)$Treatment <- factor(pData(targets)$Treatment)
 @
 
 Now, we use the random forest statistical framework to score each gene on its ability to cluster samples from different treatments separately. Then the method will score each GO term by aggregating the average rank of its associated genes:
 
 <<>>=
-raw_results = GO_analyse(expr_data=log2cpm,
-                         phenodata=targets,
-                         f="Treatment")
+raw_results <- GO_analyse(expr_data = log2cpm,
+                         phenodata = targets,
+                         f = "Treatment")
 @
 
 Note that the above command does not specify which species the data originated from. As mentioned in the output messages, the first feature identifier in the expression matrix was used to guess the corresponding species and type of data. This is a fairly straightforward process for Ensembl gene identifiers (e.g. in the prefix "ENSBTA", "BT" indicates \textit{Bos taurus}).
@@ -141,12 +141,12 @@ head(raw_results$mapping)
 In the above raw results of the analysis, all three type (i.e. namespaces) of GO terms are merged in a single ranked table. It is however possible to extract the GO terms corresponding to a single namespace. 
 
 <<>>=
-BP = subset_scores(result=raw_result,
-                   namespace="biological_process")
-MF = subset_scores(result=raw_result,
-                   namespace="MF") # alias for "molecular function"
-CC = subset_scores(result=raw_result,
-                   namespace="cellular_component")
+BP <- subset_scores(result = raw_result,
+                   namespace = "biological_process")
+MF <- subset_scores(result = raw_result,
+                   namespace = "MF") # alias for "molecular_function"
+CC <- subset_scores(result = raw_result,
+                   namespace = "CC") # cellular_component
 @
 
 Importantly, an early-identified bias of the scoring function is that GO terms associated with fewer genes are favored at the top of the ranking table. This is due to the fact that it is much easier for a group of 5 genes (e.g. "\texttt{B cell apoptotic process}") to have an high average rank than it is for a group of ~6,000 genes (e.g. "\texttt{protein binding}"). Indeed the "ideal" highest average rank of 5 genes is 2.5 while it is 3,000 for a group of 6,000 genes. 
@@ -155,15 +155,15 @@ However, in our experience, this bias has some advantages. First, it implicitely
 
 
 <<>>=
-BP.5 = subset_scores(result=raw_result,
-                      namespace="biological_process",
-                      total=5)
-MF.10 = subset_scores(result=raw_result,
-                   namespace="molecular_function",
-                   total=10)
-CC.15 = subset_scores(result=raw_result,
-                   namespace="cellular_component",
-                   total=15)
+BP.5 <- subset_scores(result = raw_result,
+                      namespace = "biological_process",
+                      total = 5)
+MF.10 <- subset_scores(result = raw_result,
+                   namespace = "molecular_function",
+                   total = 10)
+CC.15 <- subset_scores(result = raw_result,
+                   namespace = "cellular_component",
+                   total = 15)
 @
 
 
@@ -187,8 +187,8 @@ In the previous section, we identified the GO terms most enriched for genes clus
 
 \begin{center}
 <<fig=TRUE>>=
-heatmap_GO(go_id="GO:0034142", result=BP.5,
-           expr_data=log2cpm, phenodata=targets)
+heatmap_GO(go_id = "GO:0034142", result = BP.5,
+           expr_data = log2cpm, phenodata = targets)
 @
 \end{center}
 
@@ -198,8 +198,8 @@ Alternatively, it is possible to focus only on the hirearchical clustering of sa
 
 \begin{center}
 <<fig=TRUE>>=
-cluster_GO(go_id="GO:0034142", result=BP.5,
-           expr_data=log2cpm, phenodata=targets)
+cluster_GO(go_id = "GO:0034142", result = BP.5,
+           expr_data = log2cpm, phenodata = targets)
 @
 \end{center}
 
@@ -207,8 +207,8 @@ Among the various arguments of the \texttt{cluster\_GO} function, the argument \
 
 \begin{center}
 <<fig=TRUE>>=
-cluster_GO(go_id="GO:0034142", result=BP.5,
-           expr_data=log2cpm, phenodata=targets, f="Time")
+cluster_GO(go_id = "GO:0034142", result = BP.5,
+           expr_data = log2cpm, phenodata = targets, f = "Time")
 @
 \end{center}
 
@@ -217,7 +217,7 @@ cluster_GO(go_id="GO:0034142", result=BP.5,
 Following the identification of relevant GO terms in the above sections, users may want to have a closer look at the individual genes associated with a given GO term:
 
 <<>>=
-table_genes(go_id="GO:0034142", result=BP.5)
+table_genes(go_id = "GO:0034142", result = BP.5)
 @
 
 Note that the default behaviour of the above function is to return a table of all the genes associated with the GO term based on the annotations retrieved from the Ensembl BioMart. For obvious reasons, genes present in the BioMart but absent from the expression dataset will be absent from the score table and conseuqently lack annotations. It is possible to restrict the above table to only genes present in the expression dataset using the \texttt{data.only} argument.
@@ -225,7 +225,7 @@ Note that the default behaviour of the above function is to return a table of al
 If only the feature identifiers associated with a given GO identifier are needed, users may use the function below:
 
 <<>>=
-list_genes(go_id="GO:0034142", result=BP.5)
+list_genes(go_id = "GO:0034142", result = BP.5)
 @
 
 \subsection[Expression profile of a gene]{Expression profile of a gene}
@@ -236,8 +236,8 @@ In the above section, we listed the genes associated with a particular gene onto
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot(gene_id="ENSBTAG00000047107", result=BP.5, expr_data=log2cpm,
-                phenodata=targets, x_var="Timepoint")
+expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, expr_data = log2cpm,
+                phenodata = targets, x_var = "Timepoint")
 @
 \end{center}
 
@@ -247,8 +247,8 @@ To investigate the impact of other factors on the expression level of the same g
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot(gene_id="ENSBTAG00000047107", result=BP.5, expr_data=log2cpm,
-                phenodata=targets, x_var="Animal")
+expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, expr_data = log2cpm,
+                phenodata = targets, x_var = "Animal")
 @
 \end{center}
 
@@ -258,8 +258,8 @@ It is also possible to visualise the expression profile of genes from their asso
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot_symbol(gene_symbol="BIKBA", result=BP.5, expr_data=log2cpm,
-                       phenodata=targets, x_var="Timepoint")
+expression_plot_symbol(gene_symbol = "BIKBA", result = BP.5, expr_data = log2cpm,
+                       phenodata = targets, x_var = "Timepoint")
 @
 \end{center}
 
@@ -273,9 +273,9 @@ In other words, given a GO term identifier this feature will generate a plot for
 
 \begin{center}
 <<fig=TRUE>>=
-plot_design(go_id="GO:0034134", result=BP.5, expr_data=log2cpm,
-            phenodata=targets, ask=FALSE,
-            factors=c("Animal", "Treatment", "Time", "Group"))
+plot_design(go_id = "GO:0034134", result = BP.5, expr_data = log2cpm,
+            phenodata = targets, ask = FALSE,
+            factors = c("Animal", "Treatment", "Time", "Group"))
 @
 \end{center}
 
@@ -288,8 +288,8 @@ Often, the top-ranked cellular functions identified by pathways analysis and gen
 Typically, overlapping sets are representated as Venn diagrams. The example below will produce a Venn diagram of the gene-sets associated with the five top-ranked "Biological Process" ontologies, and directly save it as a TIFF image file (no matter the file extension given):
 
 <<>>=
-overlap_GO(go_ids=head(BP.5$GO$go_id, n=5), result=BP.5,
-           filename="VennDiagram.tiff")
+overlap_GO(go_ids = head(BP.5$GO$go_id, n=5), result = BP.5,
+           filename = "VennDiagram.tiff")
 @
 
 This Venn diagram package was chosen due to its consistent and easily readable layout, despite lacking the possibility to output the figure in the standard "Plot" panel. 
@@ -300,14 +300,14 @@ Users might be interested in the general distribution of score and rank statisti
 
 \begin{center}
 <<fig=TRUE>>=
-hist_scores(result=BP.5, labels=TRUE)
+hist_scores(result = BP.5, labels = TRUE)
 @
 \end{center}
 
 Alternatively, quantile values can be returned for default or customised percentiles:
 
 <<>>=
-quantiles_scores(result=BP.5)
+quantiles_scores(result = BP.5)
 @
 
 \subsection[Reordering by score]{Reordering by score}
@@ -317,7 +317,7 @@ While scores are more prone to extreme outlier values and may slightly fluctuate
 It is however possible to re-order the tables in the output variable according to the score metric (or revert back to the original one) as in the example below:
 
 <<>>=
-BP.5.byScore = rerank(result=BP.5, rank.by="score")
+BP.5.byScore <- rerank(result = BP.5, rank.by = "score")
 @
 
 \section[Statistics]{Statistics}
