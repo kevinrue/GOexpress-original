@@ -379,7 +379,8 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
         return(list(GO=GO_scores, mapping=GO_genes, genes=genes_score,
                     factor=f, method=method))
     }
-    }
+}
+
 
 mart_from_ensembl = function(sample_gene){
     # If the gene id starts by "ENS" (most cases, except 3 handled separately
