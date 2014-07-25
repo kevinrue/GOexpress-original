@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
 
-%\VignetteIndexEntry{User's manual}
+%\VignetteIndexEntry{UsersGuide}
 %\VignetteKeyword{GOexpress}
 
 \title{GOexpress: Visualise microarray and RNAseq data using gene ontology annotations}
@@ -8,7 +8,6 @@
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
-\SweaveOpts{}
 
 \maketitle
 
@@ -32,22 +31,20 @@ Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to s
 
 \subsection[Purpose of this document]{Purpose of this document}
 
-This User's Manual was intended as a helpful description of the main features implemented in the \texttt{GOexpress} package, along with a tutorial taking the user through a typical analysis pipeline \texttt{GOexpress} was designed for. While an example usage will be provided for each function of the package, the many arguments of each function cannot realistically be demonstrated in this manual, and we kindly ask users to also read the individual R vignettes accompanying the corresponding package functions for further details.
+This User's Guide was intended as a helpful description of the main features implemented in the \texttt{GOexpress} package, as well as a tutorial taking the user through a typical analysis pipeline \texttt{GOexpress} was designed for. While an example usage will be provided for each function of the package, the many arguments of each function cannot realistically be demonstrated in this Guide, and we kindly ask users to also read the individual R vignettes accompanying the corresponding package functions for further details.
 
 \section[Getting started]{Getting started}
 
 \subsection[Installation]{Installation}
 
-The package is currently under review by the Bioconductor staff. Hopefully, once accepted installing \texttt{GOexpress} should be as easy as running the two lines below:
+Installing \texttt{GOexpress} should be as easy as running the two lines below:
 
 <<>>=
 source("http://bioconductor.org/biocLite.R")
 biocLite("GOexpress")
 @
 
-However, if everything else fails, the \texttt{GOexpress} package has been maintained on a GitHub repository since the dawn of the project. Users may have to manually install missing dependencies, listed in the \texttt{DESCRIPTION} file of the \texttt{GOexpress} package. The source code, precompiled binaries for Windows and Unix, a Wiki, and a bug tracking system can be found at:
-
-\texttt{https://github.com/kevinrue/GOexpress}.
+Installation issues should be reported to the Bioconductor mailing list.
 
 \subsection[Getting help]{Getting help}
 
@@ -61,7 +58,7 @@ maintainer("GOexpress")
 
 Thoughtful suggestions for additional package functions, or improvement of existing ones is most welcome and may be implemented when time allows. Alternatively, we also encourage users to fork the GitHub repository of the project, develop and test their own feature, and finally generate a pull request to integrate it to the original repository (\texttt{https://github.com/kevinrue/GOexpress}).
 
-As for all Bioconductor packages, the Bioconductor developers mailing list is probably the best place to ask for advice with a large and active community of Bioconducotr users \texttt{bioc-devel@r-project.org}.
+As for all Bioconductor packages, the Bioconductor developers mailing list is probably the best place to ask for advice with a large and active community of Bioconductor users \texttt{http://www.bioconductor.org/help/mailing-list/}.
 
 \subsection[Citing \texttt{GOexpress}]{Citing \texttt{GOexpress}}
 
