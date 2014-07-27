@@ -47,7 +47,7 @@ The name reorder() was not used to avoid conflict with package \code{stats}.
 data(raw_results)
 
 # Re-rank the GO terms and genes based on the actual score instead of the rank
-reranked.byScore = rerank(result=raw_results, rank.by="score")
+reranked.byScore <- rerank(result=raw_results, rank.by="score")
 }
 
 \keyword{ GOexpress }

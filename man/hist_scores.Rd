@@ -55,7 +55,7 @@ data(raw_results)
 hist_scores(result=raw_results, breaks=20, labels=TRUE)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_results = subset_scores(result=raw_results, total_count=5,
+filtered_results <- subset_scores(result=raw_results, total_count=5,
     namespace="BP")
 
 # Histogram of scores (labelled with counts)

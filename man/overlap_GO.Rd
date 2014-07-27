@@ -60,7 +60,7 @@ overlap_GO(go_ids, result, filename, mar = rep(0.1, 4), ...)
 data(raw_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_results = subset_scores(result=raw_results, total_count=5,
+filtered_results <- subset_scores(result=raw_results, total_count=5,
     namespace="BP")
 
 # Venn diagram of overlapping genes between top 5 GO terms

@@ -67,15 +67,15 @@ visualise the statistics on a gene- and ontology-basis.
 }
 
 \examples{
-    # Sample input data available with package:
-    data(AlvMac)
-    
-    # Sample output data available with package:
-    data(raw_results)
-    
-    # Supported species and microarrays:
-    data(microarray2dataset)
-    data(prefix2dataset)
+# Sample input data available with package:
+data(AlvMac)
+
+# Sample output data available with package:
+data(raw_results)
+
+# Supported species and microarrays:
+data(microarray2dataset)
+data(prefix2dataset)
 }
 
 \keyword{ package }

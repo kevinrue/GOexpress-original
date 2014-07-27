@@ -85,7 +85,7 @@ data(raw_results)
 str(raw_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_results = subset_scores(result=raw_results, total_count=5,
+filtered_results <- subset_scores(result=raw_results, total_count=5,
     namespace="BP")
 
 # have an overview of the filtered result variable

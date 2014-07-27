@@ -164,7 +164,7 @@ data(AlvMac)
 
 # Run the analysis on factor "Treatment"
 # Factor must be one of the column names in pData(targets)
-raw_results = GO_analyse(eSet=AlvMac, f="Treatment")
+raw_results <- GO_analyse(eSet=AlvMac, f="Treatment")
 }
 
 \keyword{ GOexpress }
