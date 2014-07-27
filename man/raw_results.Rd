@@ -6,14 +6,9 @@ Sample output from the \code{GO_analyse()} function on an RNAseq experiment.
 }
 \description{
 This variable may be used to test the filtering and visualisation methods
-implemented in the package. It contains the output of the command 
+implemented in the package. It contains the output of the command
 \code{raw_results = GO_analyse(eSet=AlvMac, f="Treatment")}
 applied to the sample input data \code{data(AlvMac)}.
-
-Running the above command again, you might obtain slightly different scores and
-ranks ue to the stochastic process of sampling used by the random forest
-algorithm. However, the ranking metric was found to be robust and stable across
-run, given adequate number of trees and predictor variables sampled.
 }
 \usage{data(raw_results)}
 \format{
@@ -32,9 +27,17 @@ A list of 7 slots summarising the input and results of the analysis:
   }
 
 }
+\section{Warning}{
+Running the above command again, you might obtain slightly different scores and
+ranks due to the stochastic process of sampling used by the random forest
+algorithm. However, the ranking metric was found to be robust and stable across
+run, given adequate number of trees and predictor variables sampled.
+}
+
 \source{
 Source data are part of a publication in review.
 }
+
 \examples{
 data(raw_results)
 str(raw_results)
