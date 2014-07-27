@@ -73,9 +73,9 @@ citation(package="GOexpress")
 
 Despite their different underlying technologies, microarray and RNA-seq analytic pipelines typically yield a matrix measuring the expression level of each gene in each sample. Commonly, this expression matrix will be filtered to retain only genes qualified as "informative" (e.g. > 1 cpm in at least N replicates; N being the number of replicates for a given set of experimental conditions); genes lowly expressed are removed to limit the False Discovery Rate (FDR) of differentially expressed genes induced by the larger variability of expression at the lower end of the dynamic range. 
 
-\texttt{GOexpress} requires this prefiltered normalised expression matrix to be accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase} package providing phenotypic information for each of those samples (e.g. unique identifier, treatment, time-point). \texttt{GOexpress} expects those two variables in an \texttt{ExpressionSet} container of the \texttt{Biobase} package, both easing the manipulation of the data and most importantly ensuring interoperatibility with other packages that handle Bioconductor \texttt{ExpressionSet} objects. The other fields of the \texttt{ExpressionSet} container may be left empty as \texttt{GOexpress} does not currently access them.
+\texttt{GOexpress} requires this prefiltered normalised expression matrix to be accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase} package providing phenotypic information for each of those samples (e.g. unique identifier, treatment, time-point). \texttt{GOexpress} expects those two variables in an \texttt{ExpressionSet} container of the \texttt{Biobase} package, both easing the manipulation of the data and, most importantly, ensuring interoperatibility with other packages that handle Bioconductor \texttt{ExpressionSet} objects. The other fields of the \texttt{ExpressionSet} container may be left empty as \texttt{GOexpress} does not currently access them.
 
-To use the analytic part of the \texttt{GOexpress} package, the phenotypic data-frame --- \texttt{phenodata} field of the \texttt{ExpressionSet} --- must contain at least one column containing an experimental factor made of two or more levels in the genuine R meaning of "factor" and "levels". The above \texttt{ExpressionSet} and the name of the column containing such a factor are the minimal two input variables required for the \texttt{GO\_analyse} method to work. Additional arguments may be required, in particular for microarray datasets, but those are discussed later in section \ref{sec:MicroarrayArguments}.
+To use the analytic part of the \texttt{GOexpress} package, the phenotypic data-frame --- \texttt{phenodata} slot of the \texttt{ExpressionSet} --- must contain at least one column containing an experimental factor made of two or more levels in the genuine R meaning of "factor" and "levels". The above \texttt{ExpressionSet} and the name of the column containing such a factor are the minimal two input variables required for the \texttt{GO\_analyse} method to work. Additional arguments may be required, in particular for microarray datasets, but those are discussed later in section \ref{sec:MicroarrayArguments}.
 
 In the examples below, we will use the sample dataset \texttt{AlvMac} provided with the package and made of a subset of 100 bovine Ensembl gene identifiers (rows) measured in 117 samples (columns). This sample data includes a data-frame detailing a number of phenotypic information fields describing each sample.
 
@@ -168,7 +168,7 @@ However, in our experience, this bias has some advantages. First, it implicitely
 <<>>=
 BP.5 <- subset_scores(result = raw_results,
                       namespace = "biological_process",
-                      total = 5)
+                      total = 5) # requires 5 or more associated genes
 MF.10 <- subset_scores(result = raw_results,
                    namespace = "molecular_function",
                    total = 10)
@@ -179,7 +179,7 @@ CC.15 <- subset_scores(result = raw_results,
 
 On the other hand, GO terms associated with thousands of genes have a very limited sensitivity, as they require a proportionally large number of associated genes to cluster the sample groups in order to compete among the top ranking scores.
 
-Furthermore, the inherent hierarchical structure and "granularity" of gene ontology terms can easily be browsed by using increasingly large value of the \texttt{total} filter. Note that this filter retains only GO terms associated with a certain count of genes in the Ensembl BioMart. It is also possible to use the \texttt{data} argument to filter for GO terms associated with a certain count of genes in the given expression dataset, although this approach is obviously more data-dependent and less robust.
+Furthermore, the inherent hierarchical structure and "granularity" of gene ontology terms can easily be browsed by using increasingly large value of the \texttt{total} filter. Note that this filter retains only GO terms associated with a minimal given count of genes in the Ensembl BioMart. It is also possible to use the \texttt{data} argument to filter for GO terms associated with a certain count of genes in the given expression dataset, although this approach is obviously more data-dependent and less robust.
 
 \subsection[Details of the top-ranking GO terms]{Details of the top-ranking GO terms}
 
@@ -197,7 +197,8 @@ In the previous section, we identified the GO terms most enriched for genes clus
 
 \begin{center}
 <<fig=TRUE>>=
-heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac)
+heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
+           cexCol=1)
 @
 \end{center}
 
@@ -205,7 +206,8 @@ Importantly, users should be aware that the "best" GO term may not cluster sampl
 
 \begin{center}
 <<fig=TRUE>>=
-heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, f="Group")
+heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
+           cexCol=1, f="Group")
 @
 \end{center}
 
