@@ -56,7 +56,7 @@ expression_plot <- function(
     # Generate the plot
     gg <- ggplot(df) +
         geom_smooth(aes(x=X, y=Expression, group = Factor,
-                                 color = Factor, fill=Factor), level=level) +
+                                color = Factor, fill=Factor), level=level) +
         labs(title=title, x=x_var, y=ylab) +
         theme(
             plot.title = element_text(
@@ -91,11 +91,11 @@ expression_plot_symbol <- function(
     # the GO_analyse result provided contains the annotation of each feature
     # identifier
     # present in the dataset to a gene name, if any
-    cat("Fetching feature identifier(s) annotated to",    gene_symbol,
-        "...", fill=TRUE)
+    cat("Fetching feature identifier(s) annotated to", gene_symbol, "...",
+        fill=TRUE)
     mapping <- data.frame(gene_id=rownames(result$genes), 
-                         external_gene_id=result$genes$external_gene_id,
-                         stringsAsFactors=FALSE)
+                        external_gene_id=result$genes$external_gene_id,
+                        stringsAsFactors=FALSE)
     # if the gene name is absent from the mapping table
     if(!gene_symbol %in% mapping$external_gene_id){
         # suggest close matches if any
@@ -111,7 +111,7 @@ expression_plot_symbol <- function(
         # the function
         else{
             stop(paste(gene_symbol,
-                       "not found in dataset. No close match either."))
+                        "not found in dataset. No close match either."))
         }
     }
     # At this stage we know the gene symbol has at least one corresponding
@@ -146,8 +146,8 @@ expression_plot_symbol <- function(
         if(length(titles) != length(gene_ids_present)){
             # return an error and stop
             stop("The number of titles (", length(titles),
-                 ") does not match the number of plots (",
-                 length(gene_ids_present), ").")
+                    ") does not match the number of plots (",
+                    length(gene_ids_present), ").")
         }
     }
     # If there are strictly more than 1 gene id associated with the gene symbol
@@ -255,14 +255,14 @@ heatmap_GO <- function(
     samples.col <- row.col[as.factor(pData(eSet)[,f])]
     # Plot the heatmap of the data
     heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
-              scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
-              trace=trace, RowSideColors=samples.col, col=expr.col, ...)
+                scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
+                trace=trace, RowSideColors=samples.col, col=expr.col, ...)
 }
 
 hist_scores <- function(
     result,
     main=paste("Distribution of average scores in",
-               deparse(substitute(result))), xlab="Average score", ...){
+                deparse(substitute(result))), xlab="Average score", ...){
     hist(result$GO$ave_score, main=main, xlab=xlab, ...)
 }
 
@@ -289,16 +289,14 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     # http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)
     # Make a list from the ... arguments and plotlist
     plots <- c(list(...), plotlist)
-    
     numPlots <- length(plots)
-    
     # If layout is NULL, then use 'cols' to determine layout
     if (is.null(layout)) {
         # Make the panel
         # ncol: Number of columns of plots
         # nrow: Number of rows needed, calculated from # of cols
         layout <- matrix(seq(1, cols * ceiling(numPlots/cols)), byrow=TRUE,
-                         ncol = cols, nrow = ceiling(numPlots/cols))
+                        ncol = cols, nrow = ceiling(numPlots/cols))
     }
     
     if (numPlots==1) {
@@ -308,14 +306,13 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
         # Set up the page
         grid.newpage()
         pushViewport(viewport(layout = grid.layout(nrow(layout),
-                                                   ncol(layout))))
+                                                    ncol(layout))))
         
         # Make each plot, in the correct location
         for (i in 1:numPlots) {
             # Get the i,j matrix positions of the regions that contain this
             # subplot
             matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-            
             print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
                                             layout.pos.col = matchidx$col))
         }
@@ -340,10 +337,8 @@ overlap_GO <- function(go_ids, result, filename, mar=rep(0.1, 4), ...){
         gene_sets[[index]] <- list_genes(go_id=go_ids[[index]], result=result)
     }
     # Print the venn diagram to the filename
-    venn.diagram(x=gene_sets,
-                              filename=filename,
-                              category.names = go_ids,
-                              mar=mar, ...)
+    venn.diagram(x=gene_sets, filename=filename, category.names = go_ids,
+                    mar=mar, ...)
 }
 
 plot_design <- function(
@@ -364,7 +359,7 @@ plot_design <- function(
     # If the user gave the output of a GO_analyse command as result=
     # that list contains the mapping between feature and GO_id
     gene_ids_present <- list_genes(go_id=go_id, result=result,
-                                             data.only=TRUE)
+                                    data.only=TRUE)
     GO_name <- result$GO[result$GO$go_id == go_id, "name_1006"]
     # Prepare a temporary data frame plot.design-friendly
     df <- data.frame(t(exprs(AlvMac)[gene_ids_present,]),
