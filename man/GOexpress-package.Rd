@@ -30,7 +30,7 @@ visualise the statistics on a gene- and ontology-basis.
     Package: \tab GOexpress\cr
     Type: \tab Package\cr
     Version: \tab 0.99.4\cr
-    Date: \tab 2014-06-25\cr
+    Date: \tab 2014-07-27\cr
     License: \tab  GPL (>= 3)\cr
     }
     This package requires only two input variables

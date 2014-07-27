@@ -57,57 +57,57 @@ score.
 
 # FEATURES
 
-  * Support expression data based on Ensembl gene identifiers and
+* Support expression data based on Ensembl gene identifiers and
 microarray probeset identifiers.
 
-  * GO_analyse() scores all Gene Ontology (GO) terms represented in
+* GO_analyse() scores all Gene Ontology (GO) terms represented in
 the dataset based on the estimated average ability of their associated
 genes to cluster samples according to a predefined grouping factor. It
 also returns the table used to map genes to GO terms, the table
 summarising the statistics for each gene, and finally the specified
 grouping factor analysed.
-  
-  * subset_scores() filters output of GO_analyse() for GO terms passing
+
+* subset_scores() filters output of GO_analyse() for GO terms passing
 desired filters and returns a list formatted identically to the 
 output of GO_analyse() with the filtered information.
 
-  * hist_scores() plots the distribution of average F scores in the
+* hist_scores() plots the distribution of average F scores in the
 output of GO_analyse() or subset_scores().
 
-  * quantiles_scores() returns the quantile values corresponding
+* quantiles_scores() returns the quantile values corresponding
 to defined percentiles.
 
-  * list_genes() returns the list of feature identifiers associated
+* list_genes() returns the list of feature identifiers associated
 with a given GO term.
 
-  * table_genes() returns a table of information about the feature
+* table_genes() returns a table of information about the feature
 identifiers associated with  a given GO term.
 
-  * cluster_GO() plots a hierarchical clustering of the samples
+* cluster_GO() plots a hierarchical clustering of the samples
 based on the expression levels of genes associated with a given
 GO term.
 
-  * heatmap_GO() plots a heatmap with hierarchical clustering of the samples
+* heatmap_GO() plots a heatmap with hierarchical clustering of the samples
 and genes based on the expression levels of genes associated with a given GO
 term.
 
-  * expression_plot() plots the expression profile corresponding to a feature
+* expression_plot() plots the expression profile corresponding to a feature
 identifier, given valid variable name for the X-axis and a grouping factor for
 the Y-axis.
 
-  * expression_plot_symbol() plots the expression profile corresponding to
+* expression_plot_symbol() plots the expression profile corresponding to
 feature identifier(s) annotated to a gene symbol, given valid variable name for
 the X-axis and a grouping factor for the Y-axis.
 
-  * plot_design() plots the univariate effect of each level of each
+* plot_design() plots the univariate effect of each level of each
 factor available in the AnnotatedDataFrame on the expression levels
 of genes associated with a GO term.
 
-  * overlap_GO() plots the counts of overlapping genes between 2-5
+* overlap_GO() plots the counts of overlapping genes between 2-5
 GO terms in a Venn diagram directly printed into a file. (Sorry, but
 the package doing the clearest Venn diagrams does that, and does not
 offer to directly show the Venn diagram in the standard output.
 
-  * rerank() allows to reorder the ranked tables of GO terms and
+* rerank() allows to reorder the ranked tables of GO terms and
 genes either by increasing (average) rank or decreasing (average)
 score.
