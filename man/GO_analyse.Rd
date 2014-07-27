@@ -122,13 +122,6 @@ One-way ANOVA does not have additional arguments.
     the average of a handful of genes.
 }
 
-\references{
-    \itemize{
-    \item \href{http://cran.r-project.org/web/packages/randomForest/index.html}
-    {randomForest} package.
-    }
-}
-
 \author{
     Kevin Rue-Albrecht
 }

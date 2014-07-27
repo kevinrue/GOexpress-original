@@ -93,13 +93,6 @@ heatmap_GO(
     Returns the output of the \code{heatmap.2()} function.
 }
 
-\references{
-    \itemize{
-    \item \href{http://cran.r-project.org/web/packages/gplots/index.html}
-    {gplots} package.
-    }
-}
-
 \author{
     Kevin Rue-Albrecht
 }

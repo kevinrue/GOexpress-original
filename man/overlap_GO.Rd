@@ -41,13 +41,6 @@ overlap_GO(go_ids, result, filename, mar = rep(0.1, 4), ...)
     Returns the output of the \code{venn.diagram()} function.
 }
 
-\references{
-    \itemize{
-    \item \href{http://cran.r-project.org/web/packages/VennDiagram/index.html}
-    {VennDiagram} package.
-    }
-}
-
 \author{
     Kevin Rue-Albrecht
 }

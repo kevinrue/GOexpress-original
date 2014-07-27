@@ -78,21 +78,6 @@ visualise the statistics on a gene- and ontology-basis.
     data(prefix2dataset)
 }
 
-\references{
-    \itemize{
-    \item \href{http://cran.r-project.org/web/packages/gplots/index.html}
-    {gplots} package.
-    \item \href{http://cran.r-project.org/web/packages/ggplot2/index.html}
-    {ggplot2} package.
-    \item \href{http://cran.r-project.org/web/packages/randomForest/index.html}
-    {randomForest} package.
-    \item \href{http://cran.r-project.org/web/packages/stringr/index.html}
-    {stringr} package.
-    \item \href{http://cran.r-project.org/web/packages/VennDiagram/index.html}
-    {VennDiagram} package.
-    }
-}
-
 \keyword{ package }
 \keyword{ GOexpress }
 \keyword{ randomForest }
