@@ -1,66 +1,23 @@
-# This script will take
-## An expression dataset (using ensembl_id or probeset identifiers)
-## A table of phenotypic information of samples
-## A character vector of the factor to analyse
 
-# The script will evaluate the power of each gene expression level to 
-# discriminate the samples according to the expected phenotypic factor
-
-# The script will summarise genes annotated to a same GO term
-# to evaluate the power of each GO term to discriminate the samples according 
-# to the expected phenotypic factor
-
-# The script will return
-## A table ranking GO terms according to their power to discriminate samples
-## A table mapping    GO terms and genes to one another
-## A table ranking genes according to their power to discriminate samples
-## The factor used to calculate scores
-## Some parameters used to perform the analysis
-
-# Downstream analyses
-## Function to filter the resulting scores to GO terms passing given criteria
-## Function to list the genes annotated to a GO term
-## Function to see the scores of the genes annotated to a GO term
-## Function to cluster samples according to a list of genes
-## Function to heatmap the samples according to a list of genes
-## Function to see the distribution of scores for all GO terms (histogram)
-## Function to see the quantiles of scores across all GO terms
-## Function to filter the results for GO terms by various criteria
-## Two function to visualise the expression profile of a gene across a
-### X-variabl e and grouped by a Y-factor (plot by gene_id or by gene_symbol)
-## Function to visualise the univariate effect of each factor on the grouping
-### of samples
-## Function to reorder the GO terms and genes by either rank or score metrics.
-
-# Dependencies
-## Internet connection (biomaRt)
-## Packages grid, Biobase, biomaRt, stringr, ggplot2, RColorBrewer, gplots,
-### VennDiagram
-
-
-GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
+GO_analyse = function(eSet, f, biomart_dataset="",
                       microarray="", method="randomForest", rank.by="rank",
                       do.trace=100, ntree=1000,
-                      mtry=ceiling(2*sqrt(nrow(expr_data))), ...){
-    # if less than 4 genes in data will cause mtry lrager than number ofgenes
+                      mtry=ceiling(2*sqrt(nrow(eSet))), ...){
+    # if less than 4 genes in data will cause mtry larger than number of genes
     # which is then impossible.
     # However, who uses a transcriptomics dataset of 4 genes?
-    if (nrow(expr_data) < 4){
-        stop("Too few genes in dataset: ", nrow(expr_data))
-    }
-    # If phenodata is not a Biobase object, the function pData would fail later
-    if (!class(phenodata) == "AnnotatedDataFrame"){
-        stop("Invalid type: phenodata is not an AnnotatedDataFrame object.")
+    if (nrow(eSet) < 4 && method %in% c("randomForest","rf")){
+        stop("Too few genes in dataset: ", nrow(eSet))
     }
     # The random forest requires the factor (f) to be an actual R factor
-    if (!any(class(pData(phenodata)[,f]) == "factor")){
-        stop("pData(phenodata)[,f] must be an actual R factor.
+    if (!any(class(pData(eSet)[,f]) == "factor")){
+        stop("pData(eSet)[,f] must be an actual R factor.
              See help(factor)")
     }
     # The random forest requires all levels of the factor to have at least one
-    # sample
-    if (any(table(pData(phenodata)[,f]) == 0)){
-        stop("One level of pData(phenodata)[,f] has no correspondig sample.
+    # sample, otherwise it crashes
+    if (any(table(pData(eSet)[,f]) == 0)){
+        stop("One level of pData(eSet)[,f] has no correspondig sample.
              Please remove that level.")
     }
     # If the user gave an invalid method name (allow specific abbreviations)
@@ -72,7 +29,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
         stop("Invalid ranking method: ", rank.by)
     }
     # If the user gave an invalid factor name
-    if (!f %in% colnames(pData(phenodata))){
+    if (!f %in% colnames(pData(eSet))){
         stop("Invalid factor name: ", f)
     }
     # if the user did not give a dataset name
@@ -81,7 +38,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
         if (microarray == ""){
             # automatically detect both
             # fetch the first gene id in the given expression dataset
-            sample_gene = rownames(expr_data)[1]
+            sample_gene = rownames(eSet)[1]
             cat("First feature identifier in dataset:", sample_gene, fill=TRUE)
             # Try to find an appropriate biomaRt Ensembl dataset from the gene
             # prefix
@@ -158,7 +115,7 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
         if (microarray == ""){
             # Check if looks like microarray
             # fetch the first gene id in the given expression dataset
-            sample_gene = rownames(expr_data)[1]
+            sample_gene = rownames(eSet)[1]
             cat("First feature identifier in dataset:", sample_gene, fill=TRUE)
             microarray_match = microarray_from_probeset(sample_gene)
             # if the data matches a known microarray pattern
@@ -243,12 +200,12 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     # Remove the GO terms which is ""
     all_GO = all_GO[all_GO$go_id != "",]
     # Run the analysis with the desired method
-    cat("Analysis using method", method ,"on factor", f,"for", nrow(expr_data),
+    cat("Analysis using method", method ,"on factor", f,"for", nrow(eSet),
         "genes. This may take a few minutes ...", fill=TRUE)
     if (method %in% c("randomForest", "rf")){
         ## Similarly to the previous anova procedure (see below)
         # Run the randomForest algorithm
-        rf = randomForest(x=t(expr_data), y=pData(phenodata)[,f],
+        rf = randomForest(x=t(exprs(eSet)), y=pData(eSet)[,f],
                           importance=TRUE, do.trace=do.trace,
                           ntree=ntree, mtry=mtry, ...)
         # Save the importance value used as score for each gene in a data.frame
@@ -259,10 +216,10 @@ GO_analyse = function(expr_data, phenodata, f, biomart_dataset="",
     else if (method %in% c("anova", "a")){
         # A vectorised calculation the F-value of an ANOVA used as score for
         # each gene
-        res = data.frame("Score" = apply(X=expr_data, MARGIN=1,
+        res = data.frame("Score" = apply(X=eSet, MARGIN=1,
                                          FUN=function(x){
             oneway.test(formula=expr~group, data=cbind(
-                expr=x, group=pData(phenodata)[,f]))$statistic}))
+                expr=x, group=pData(eSet)[,f]))$statistic}))
         # In the output variable, write the full method name
         method = "anova"
     }

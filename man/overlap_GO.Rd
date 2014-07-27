@@ -53,13 +53,13 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_results = subset_scores(result=raw_results, total_count=5, namespace="BP")
 
 # Venn diagram of overlapping genes between top 5 GO terms
-overlap_GO(go_ids=head(filtered_result$GO$go_id, n=5), result=filtered_result, filename="VennDiagram.tiff")
+overlap_GO(go_ids=head(filtered_results$GO$go_id, n=5), result=filtered_results, filename="VennDiagram.tiff")
 }
 
 \keyword{ GOexpress }

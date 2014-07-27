@@ -19,22 +19,20 @@ according to the factor. The ranked list of GO terms is returned, with tools
 allowing to visualise the statistics on a gene- and ontology-basis.
 }
 \usage{
-GO_analyse(expr_data, phenodata, f, biomart_dataset="", microarray="",
-           method="randomForest", rank.by="rank",
-           do.trace=100, ntree=1000, mtry=ceiling(2*sqrt(nrow(expr_data))), 
-           ...)
+GO_analyse(eSet, f, biomart_dataset="",
+                      microarray="", method="randomForest", rank.by="rank",
+                      do.trace=100, ntree=1000,
+                      mtry=ceiling(2*sqrt(nrow(eSet))), ...)
 }
 \arguments{
-  \item{expr_data}{
-Gene expression matrix. Row names are Ensembl gene identifiers or probeset
-identifiers. Column names are sample identifiers. Typically the output of
-\code{cpm()} or \code{exprs()}
-}
-  \item{phenodata}{
-An \code{AnnotatedDataFrame}. Row names are sample idenfifiers in the same
-order as those in the expression dataset.
-Column names are grouping factors and phenotypic traits used for analysis and
-plotting.  
+  \item{eSet}{
+\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
+expression matrix in the \code{AssayData} slot, and phenotypic information
+data-frame in the \code{phenodate} slot. In the expression matrix, row names
+are Ensembl gene identifiers or probeset identifiers, and column names are
+sample identifiers. In the phentypic data-frame, row names are sample
+idenfifiers, column names are grouping factors and phenotypic traits usable
+for the one-way ANOVA. 
 }
   \item{f}{
 A value in colnames(phenodata) used as the grouping factor for the analysis.
@@ -143,10 +141,10 @@ Kevin Rue-Albrecht
 }
 \examples{
 # To force the use of the Ensembl BioMart for the human species, use:
-#GO_analyse(expr_data, phenodata, f, biomart_dataset = "hsapiens_gene_ensembl")
+#GO_analyse(eSet, f, biomart_dataset = "hsapiens_gene_ensembl")
 
 # To force use of the bovine affy_bovine microarray annotations use:
-#GO_analyse(expr_data, phenodata, f, microarray = "affy_bovine")
+#GO_analyse(eSet, f, microarray = "affy_bovine")
 
 # Valid Ensembl BioMart datasets are listed in the following variable
 data(prefix2dataset)
@@ -154,19 +152,12 @@ data(prefix2dataset)
 # Valid microarray= values are listed in the following variable
 data(microarray2dataset)
 
-# Load example data subset (100 genes from a RNAseq experiment)
-data(log2cpm)
-
-# Load example sample annotation (117 samples)
-# Multiple treatments, timepoints, and replicates
-data(targets)
-
-# Check that the order of samples are identical in log2cpm and targets
-all(colnames(log2cpm) == rownames(targets)) # TRUE
+# Load example data subset
+data(AlvMac)
 
 # Run the analysis on factor "Treatment"
 # Factor must be one of the column names in pData(targets)
-raw_result = GO_analyse(expr_data=log2cpm, phenodata=targets, f="Treatment")
+raw_results = GO_analyse(eSet=AlvMac, f="Treatment")
 }
 
 \keyword{ GOexpress }

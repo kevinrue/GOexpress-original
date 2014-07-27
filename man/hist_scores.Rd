@@ -40,16 +40,16 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # Histogram of scores (labelled with counts)
-hist_scores(result=raw_result, breaks=20, labels=TRUE)
+hist_scores(result=raw_results, breaks=20, labels=TRUE)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_results = subset_scores(result=raw_results, total_count=5, namespace="BP")
 
 # Histogram of scores (labelled with counts)
-hist_scores(result=filtered_result, breaks=20, labels=TRUE)
+hist_scores(result=filtered_results, breaks=20, labels=TRUE)
 }
 
 \keyword{ GOexpress }

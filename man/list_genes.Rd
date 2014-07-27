@@ -36,10 +36,10 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # List of genes associated with the GO term "toll-like receptor 4 signaling pathway"
-list_genes(result=raw_result, go_id="GO:0034142")
+list_genes(result=raw_results, go_id="GO:0034142")
 }
 
 \keyword{ GOexpress }

@@ -34,10 +34,10 @@ Name reorder() was not used to avoid conflict with package \code{stats}.
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # Re-rank the GO terms and genes based on the actual score instead of the rank
-raw_reranked = rerank(result=raw_result, rank.by="score")
+reranked.byScore = rerank(result=raw_results, rank.by="score")
 }
 
 \keyword{ GOexpress }

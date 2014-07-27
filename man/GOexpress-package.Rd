@@ -60,11 +60,10 @@ Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
 }
 \examples{
   # Sample input data available with package:
-  data(log2cpm)
-  data(targets)
+  data(AlvMac)
   
   # Sample output data available with package:
-  data(raw_result)
+  data(raw_results)
   
   # Supported species and microarrays:
   data(microarray2dataset)
@@ -103,5 +102,5 @@ Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
   Methods
   \code{\link[biomaRt:getBM]{getBM}},
   \code{\link[gplots:heatmap.2]{heatmap.2}},
-  \code{\link[stringr:str_extract]{str_extract}},.
+  \code{\link[stringr:str_extract]{str_extract}}.
 }

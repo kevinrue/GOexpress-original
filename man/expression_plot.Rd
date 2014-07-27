@@ -11,12 +11,12 @@ grouping factor from the AnnotatedDataFrame.
 }
 \usage{
 expression_plot(
-    gene_id, result, expr_data, phenodata, x_var, 
+    gene_id, result, eSet, x_var, 
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
-    col = brewer.pal(n=length(levels(pData(
-        phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
-    title.size=2, axis.title.size=20, axis.text.size=15,
-    legend.text.size=15, legend.title.size=20, legend.key.size=30)
+    col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
+    level=0.95, title=NULL, title.size=2, axis.title.size=20,
+    axis.text.size=15, legend.text.size=15, legend.title.size=20,
+    legend.key.size=30)
 }
 \arguments{
   \item{gene_id}{
@@ -25,14 +25,14 @@ An gene or probeset identifier present in \code{rownames(expr_data)}.
   \item{result}{
 An output of the \code{GO_analyse()} or \code{subset_scores()} function.
 }
-  \item{expr_data}{
-A gene-by-sample matrix providing expression levels of each gene in each
-sample.
-}
-  \item{phenodata}{
-An \code{AnnotatedDataFrame} from package \code{Biobase} providing
-phenotypic information
-about the samples and grouping factors with 2 or more levels.
+  \item{eSet}{
+\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
+expression matrix in the \code{AssayData} slot, and phenotypic information
+data-frame in the \code{phenodate} slot. In the expression matrix, row names
+are Ensembl gene identifiers or probeset identifiers, and column names are
+sample identifiers. In the phentypic data-frame, row names are sample
+idenfifiers, column names are grouping factors and phenotypic traits usable
+for the one-way ANOVA. 
 }
   \item{x_var}{
 A value from \code{colnames(pData(phenodata))} to plot on the X-axis. If
@@ -123,23 +123,20 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # Expression by gene identifier (TNIP3)
-expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
-                           phenodata=targets, x_var="Timepoint",
-                           result=raw_result)
+expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Timepoint",
+                           result=raw_results)
                            
 # Same gene, plotted by animal and grouped by treatment (merging time points)
-expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
-                           phenodata=targets, x_var="Animal",
-                           result=raw_result,
+expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Animal",
+                           result=raw_results,
                            f="Treatment")
                            
 # Same gene, plotted by animal and grouped by time-point (merging treatments)
-expression_plot(gene_id="ENSBTAG00000047107", expr_data=log2cpm,
-                           phenodata=targets, x_var="Animal",
-                           result=raw_result,
+expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Animal",
+                           result=raw_results,
                            f="Time")
 }
 

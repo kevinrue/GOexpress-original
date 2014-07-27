@@ -1,32 +1,32 @@
 cluster_GO = function(
-    go_id, result, expr_data, phenodata, f=result$factor, 
+    go_id, result, eSet, f=result$factor, 
     method_dist="euclidean", method_hclust="average", cex=0.8,
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
     xlab="Distance", ...){
     # Fetch the list of genes associated with the go_id
     gene_ids = list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and transform the expression data for those genes
-    genes_expr = t(expr_data[gene_ids,])
+    genes_expr = t(exprs(eSet)[gene_ids,])
     # Hierarchical clustering using dist and hclust
     # (The clearest method to read the labels and control their size)
     di <- dist(genes_expr, method=method_dist, ...)
     cl <- hclust(di, method=method_hclust, ...)
     # Rows are samples, label them according to the user's chosen factor
-    sample_labels = pData(phenodata)[,f]
+    sample_labels = pData(eSet)[,f]
     plot(cl, hang=-1, label=sample_labels, cex=cex, main=main, xlab=xlab, ...)
 }
 
 expression_plot = function(
-    gene_id, result, expr_data, phenodata, x_var, 
+    gene_id, result, eSet, x_var, 
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
-    col = brewer.pal(n=length(levels(pData(
-        phenodata)[,f])), name=col.palette), level=0.95, title=NULL,
-    title.size=2, axis.title.size=20, axis.text.size=15,
-    legend.text.size=15, legend.title.size=20, legend.key.size=30){
+    col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
+    level=0.95, title=NULL, title.size=2, axis.title.size=20,
+    axis.text.size=15, legend.text.size=15, legend.title.size=20,
+    legend.key.size=30){
     # if the feature identifier is absent from the dataset
-    if (!gene_id %in% rownames(expr_data)){
+    if (!gene_id %in% rownames(eSet)){
         # suggest close matches if any
-        matches = agrep(pattern=gene_id, x=rownames(expr_data),
+        matches = agrep(pattern=gene_id, x=rownames(eSet),
                         max.distance = 1, fixed=TRUE, value=TRUE)
         if (length(matches) > 0){
             cat(gene_id, "not found in dataset. Did you mean:", fill=TRUE)
@@ -43,16 +43,16 @@ expression_plot = function(
         stop("\"result=\" argument does not look like a GO_analyse output.")
     }
     # If the X variable requested does not exist in the sample annotations
-    if (! x_var %in% colnames(pData(phenodata))){
+    if (! x_var %in% colnames(pData(eSet))){
         # Return an error and stop
-        stop("\"x_var=\" argument is not a valid factor in pData(phenodata).")
+        stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
     }
     # Build the title message from the combination of gene_id and gene_symbol
     title = paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
     # Assemble a data frame containing the necessary information for ggplot
-    df = data.frame(Expression=expr_data[gene_id,],
-                    Factor=pData(phenodata)[,f],
-                    X=pData(phenodata)[,x_var])
+    df = data.frame(Expression=exprs(eSet)[gene_id,],
+                    Factor=pData(eSet)[,f],
+                    X=pData(eSet)[,x_var])
     # Generate the plot
     gg = ggplot(df) +
         geom_smooth(aes(x=X, y=Expression, group = Factor,
@@ -74,10 +74,10 @@ expression_plot = function(
 
 
 expression_plot_symbol = function(
-    gene_symbol, result, expr_data, phenodata, x_var, f=result$factor,
+    gene_symbol, result, eSet, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(
-        phenodata)[,f])), name=col.palette), level=0.95, titles=c(),
+        eSet)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=20, legend.title.size=20, legend.key.size=30){
     # if the result provided does not look like it should
@@ -85,8 +85,8 @@ expression_plot_symbol = function(
         stop("\"result=\" argument does not look like a GO_analyse output.")
     }
     # If the X variable requested does not exist in the sample annotations
-    if (! x_var %in% colnames(pData(phenodata))){
-        stop("\"x_var=\" argument is not a valid factor in pData(phenodata).")
+    if (! x_var %in% colnames(pData(eSet))){
+        stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
     }
     # the GO_analyse result provided contains the annotation of each feature
     # identifier
@@ -121,7 +121,7 @@ expression_plot_symbol = function(
     # However, we still don't know how many of those identifiers are present in
     # the expression dataset. Remove the feature identifiers absent from our
     # dataset as we cannot plot them
-    gene_ids_present = gene_ids[gene_ids %in% rownames(expr_data)]
+    gene_ids_present = gene_ids[gene_ids %in% rownames(eSet)]
     # If none of the feature identifiers are present in the dataset
     if (length(gene_ids_present) == 0){
         cat("Feature identifiers were found for", gene_symbol, "\n",
@@ -171,7 +171,7 @@ expression_plot_symbol = function(
                 cat("Plotting", gene_ids_present[i], fill=TRUE)
                 plots[[i]] = expression_plot(
                     gene_id=gene_ids_present[i],
-                    expr_data=expr_data, phenodata=phenodata,
+                    eSet=eSet,
                     x_var=x_var, result=result, f=f, ylab = "log2(cpm)",
                     col.palette="Accent", col=col, level=level,
                     title=titles[i], title.size=title.size,
@@ -199,7 +199,7 @@ expression_plot_symbol = function(
                 cat("Plotting", gene_ids_present[index], fill=TRUE)
                 expression_plot(
                     gene_id=gene_ids_present[index],
-                    expr_data=expr_data, phenodata=phenodata, x_var=x_var,
+                    eSet=eSet, x_var=x_var,
                     result=result, f=f, ylab = "log2(cpm)",
                     col.palette="Accent", col=col, level=level,
                     title=titles[index], title.size=title.size,
@@ -217,7 +217,7 @@ expression_plot_symbol = function(
         cat("Plotting", gene_ids_present, fill=TRUE)
         expression_plot(
             gene_id=gene_ids_present,
-            expr_data=expr_data, phenodata=phenodata, x_var=x_var, 
+            eSet=eSet, x_var=x_var, 
             result=result, f=f, ylab = ylab, col.palette="Accent", col = col,
             level=level, title=titles, title.size=title.size,
             axis.title.size=axis.title.size,
@@ -229,21 +229,21 @@ expression_plot_symbol = function(
 }
 
 heatmap_GO = function(
-    go_id, result, expr_data, phenodata, gene_names=TRUE,
+    go_id, result, eSet, gene_names=TRUE,
     f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
     trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
     row.col=brewer.pal(n=length(unique(pData(
-        phenodata)[,f])), name=row.col.palette),
+        eSet)[,f])), name=row.col.palette),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
     ...){
     # Fetch the list of genes associated with the go_id
     gene_ids = list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and format the expression data for those genes
-    genes_expr = t(expr_data[gene_ids,])
+    genes_expr = t(exprs(AlvMac)[gene_ids,])
     # Rows are samples, label them according to the user's choson factor
-    sample_labels = pData(phenodata)[,f]
+    sample_labels = pData(eSet)[,f]
     # Columns are features, label them by identifier or name
     if (gene_names){
         gene_labels = result$genes[gene_ids,]$external_gene_id
@@ -252,7 +252,7 @@ heatmap_GO = function(
         gene_labels = gene_ids
     }
     # A vector detailing the color of each sample must be prepared
-    samples.col = row.col[as.factor(pData(phenodata)[,f])]
+    samples.col = row.col[as.factor(pData(eSet)[,f])]
     # Plot the heatmap of the data
     heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
               scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
@@ -347,16 +347,16 @@ overlap_GO = function(go_ids, result, filename, mar=rep(0.1, 4), ...){
 }
 
 plot_design = function(
-    go_id, result, expr_data, phenodata,
-    factors=colnames(pData(phenodata)), main="", ...){
+    go_id, result, eSet,
+    factors=colnames(pData(eSet)), main="", ...){
     # if the user changed the default value
-    # check that all given factors exist in colnames(phenodata)
-    if (any(factors != colnames(pData(phenodata)))){
+    # check that all given factors exist in colnames(eSet)
+    if (any(factors != colnames(pData(eSet)))){
         for(f in factors){
-            if (!f %in% colnames(pData(phenodata))){
+            if (!f %in% colnames(pData(eSet))){
                 # Otherwise, stop and return which of them is not a valid
                 # factor name
-                stop(f, " is not a valid factor name in colnames(phenodata).")
+                stop(f, " is not a valid factor name in colnames(eSet).")
             }
         } 
     }
@@ -367,8 +367,8 @@ plot_design = function(
                                              data.only=TRUE)
     GO_name = result$GO[result$GO$go_id == go_id, "name_1006"]
     # Prepare a temporary data frame plot.design-friendly
-    df = data.frame(t(expr_data[gene_ids_present,]),
-                    pData(phenodata[,factors]))
+    df = data.frame(t(exprs(AlvMac)[gene_ids_present,]),
+                    pData(eSet)[,factors])
     # If no custom title was given
     if (main == ""){
         # Generate a smart one (careful: the same title will be used for all

@@ -9,9 +9,9 @@ Successively plots univariate effects of one or more
 as analyzed by \code{\link[stats:aov]{aov}}().
 }
 \usage{
-plot_design(go_id, result, expr_data, phenodata,
-                       factors=colnames(pData(phenodata)),
-                       main="", ...)
+plot_design(
+    go_id, result, eSet,
+    factors=colnames(pData(eSet)), main="", ...)
 }
 \arguments{
   \item{go_id}{
@@ -22,13 +22,14 @@ in the dataset.
 The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
-  \item{expr_data}{
-A gene-by-sample matrix providing expression levels of each gene
-in each sample.
-}
-  \item{phenodata}{
-An \code{AnnotatedDataFrame} from package Biobase providing phenotypic
-information about the samples and grouping factors with 2 or more levels.
+  \item{eSet}{
+\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
+expression matrix in the \code{AssayData} slot, and phenotypic information
+data-frame in the \code{phenodate} slot. In the expression matrix, row names
+are Ensembl gene identifiers or probeset identifiers, and column names are
+sample identifiers. In the phentypic data-frame, row names are sample
+idenfifiers, column names are grouping factors and phenotypic traits usable
+for the one-way ANOVA. 
 }
   \item{factors}{
 A set of values from \code{colnames(pData(phenodata))}. Each of these values
@@ -55,10 +56,10 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # Univariate plot
-plot_design(go_id="GO:0034142", expr_data=log2cpm, phenodata=targets, result=raw_result)
+plot_design(go_id="GO:0034142", eSet=AlvMac, result=raw_results)
 }
 
 \keyword{ GOexpress }

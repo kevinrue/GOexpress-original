@@ -39,13 +39,13 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_results = subset_scores(result=raw_results, total_count=5, namespace="BP")
 
 # Quantiles of scores
-quantiles_scores(result=filtered_result)
+quantiles_scores(result=filtered_results)
 }
 
 \keyword{ GOexpress }

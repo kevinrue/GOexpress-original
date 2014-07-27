@@ -69,16 +69,16 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # have an overview of the result variable
-str(raw_result)
+str(raw_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_result = subset_scores(result=raw_result, total_count=5, namespace="BP")
+filtered_results = subset_scores(result=raw_results, total_count=5, namespace="BP")
 
 # have an overview of the filtered result variable
-str(filtered_result)
+str(filtered_results)
 }
 
 \keyword{ GOexpress }

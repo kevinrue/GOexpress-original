@@ -10,12 +10,15 @@ levels of those genes in a heatmap.
 }
 \usage{
 heatmap_GO(
-    go_id, result, expr_data, phenodata, gene_names=TRUE,
-    f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, trace="none",
-    expr.col=bluered(75), row.col.palette="Accent",
-    row.col=brewer.pal(n=length(unique(pData(phenodata)[,f])),
-                       name=row.col.palette),
-    main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]), ...)
+    go_id, result, eSet, gene_names=TRUE,
+    f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
+    trace="none", expr.col=bluered(75), 
+    row.col.palette="Accent",
+    row.col=brewer.pal(n=length(unique(pData(
+        eSet)[,f])), name=row.col.palette),
+    main=paste(go_id, result$GO[result$GO$go_id == go_id,
+                                "name_1006"]),
+    ...)
 }
 \arguments{
   \item{go_id}{
@@ -25,14 +28,14 @@ A Gene Ontology (GO) identifier.
 The output of \code{GO_analyse()} or a subset of it obtained from
 \code{subset_scores()}.
 }
-  \item{expr_data}{
-Gene expression matrix. Row names are Ensembl gene identifiers or probeset
-identifiers. Column names are sample identifiers.
-}
-  \item{phenodata}{
-An AnnotatedDataFrame. Row names are sample idenfifiers in the same order as
-those in the expression dataset. Column names are grouping factors and
-phenotypic traits used for analysis and plotting.  
+  \item{eSet}{
+\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
+expression matrix in the \code{AssayData} slot, and phenotypic information
+data-frame in the \code{phenodate} slot. In the expression matrix, row names
+are Ensembl gene identifiers or probeset identifiers, and column names are
+sample identifiers. In the phentypic data-frame, row names are sample
+idenfifiers, column names are grouping factors and phenotypic traits usable
+for the one-way ANOVA. 
 }
   \item{gene_names}{
 A boolean value. Default is TRUE, to label genes by their associated gene name.
@@ -99,19 +102,19 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # Heatmap the top-ranked GO term (toll-like receptor 4 signaling pathway) as
 # example
-heatmap_GO("GO:0034142", raw_result, log2cpm, targets)
+heatmap_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac)
 
 # Same with larger sample labels on the right hand side.
-heatmap_GO("GO:0034142", raw_result, log2cpm, targets, cexRow=1)
+heatmap_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cexRow=1)
 
 # Change the color-coding to green-black-red gradient (more appropriate for
 # differential expression values)
 library(gplots)
-heatmap_GO("GO:0034142", raw_result, log2cpm, targets, expr.col=greenred(75))
+heatmap_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, expr.col=greenred(75))
 }
 
 \keyword{ GOexpress }

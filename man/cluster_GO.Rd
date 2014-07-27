@@ -4,11 +4,11 @@
 Generates a hierarchical clustering / dendrogram of the samples
 }
 \description{
-Clusters the samples using only the expression levels of genes associated with a
-given go_id.
+Clusters the samples using only the expression levels of genes associated with
+a given go_id.
 }
 \usage{
-cluster_GO(go_id, result, expr_data, phenodata, f=result$factor, 
+cluster_GO(go_id, result, eSet, f=result$factor, 
            method_dist="euclidean", method_hclust="average", cex=0.8,
            main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
            xlab="Distance",
@@ -20,15 +20,17 @@ cluster_GO(go_id, result, expr_data, phenodata, f=result$factor,
 A Gene Ontology (GO) identifier.
 }
   \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from \code{subset_scores()}.
+The output of \code{GO_analyse()} or a subset of it obtained from
+\code{subset_scores()}.
 }
-  \item{expr_data}{
-Gene-by-sample expression matrix. Row names are Ensembl gene identifiers or probeset identifiers.
-Column names are sample identifiers.
-}
-  \item{phenodata}{
-An \code{AnnotatedDataFrame}. Row names are sample idenfifiers in the same order as those in the expression dataset.
-Column names are grouping factors and phenotypic traits usable for the one-way ANOVA.  
+  \item{eSet}{
+\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
+expression matrix in the \code{AssayData} slot, and phenotypic information
+data-frame in the \code{phenodate} slot. In the expression matrix, row names
+are Ensembl gene identifiers or probeset identifiers, and column names are
+sample identifiers. In the phentypic data-frame, row names are sample
+idenfifiers, column names are grouping factors and phenotypic traits usable
+for the one-way ANOVA. 
 }
   \item{f}{
 The predefined grouping factor.
@@ -67,15 +69,13 @@ Kevin Rue-Albrecht
 }
 \examples{
 # load the sample output data
-data(raw_result)
+data(raw_results)
 
 # Hierarchical clustering of samples based on the same GO term
-cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
-                      phenodata=targets, cex=0.7)
+cluster_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cex=0.7)
 
 # Re-label sample by another factor
-cluster_GO(go_id="GO:0034142", result=raw_result, expr_data=log2cpm,
-                      phenodata=targets, cex=0.7,
+cluster_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cex=0.7,
                       f="Group")
 
 }
