@@ -1,8 +1,11 @@
 \name{expression_plot_symbol}
+
 \alias{expression_plot_symbol}
+
 \title{
 Plots the expression profile of a gene by levels of a factor
 }
+
 \description{
 This function will plot the expression profile of a gene across a valid
 X-axis variable from the \code{AnnotatedDataFrame} while representing the mean
@@ -13,6 +16,7 @@ In the case of a gene name represented by multiple gene or probeset identifiers
 in the dataset, a lattice of plots will be produced. Each of the plots in this
 lattice can subsequently be plotted separately using its associated index.
 }
+
 \usage{
 expression_plot_symbol(
     gene_symbol, result, eSet, x_var, f=result$factor,
@@ -22,105 +26,112 @@ expression_plot_symbol(
     title.size=2, axis.title.size=20, axis.text.size=15,
     legend.text.size=20, legend.title.size=20, legend.key.size=30)
 }
+
 \arguments{
-  \item{gene_symbol}{
-A gene name present in \code{rownames(raw_result$genes)}.
+    \item{gene_symbol}{
+    A gene name present in \code{rownames(raw_result$genes)}.
+    }
+    \item{result}{
+    An output of the \code{GO_analyse()} or \code{subset_scores()} function.
+    }
+    \item{eSet}{
+    \code{ExpressionSet} of the \code{Biobase} package including a
+    gene-by-sample expression matrix in the \code{AssayData} slot, and a
+    phenotypic information data-frame in the \code{phenodate} slot. In the
+    expression matrix, row names are Ensembl gene identifiers or probeset
+    identifiers, and column names are sample identifiers. In the phentypic
+    data-frame, row names are sample idenfifiers, column names are grouping
+    factors and phenotypic traits usable for the one-way ANOVA. 
+    }
+    \item{x_var}{
+    A column name in \code{phenodata} to plot on the X-axis. If representing
+    time on the X-axis, users should store the time-points as numeric values in
+    the \code{AnnotatedDataFrame} to adequately space the time-points.
+    }
+    \item{f}{
+    A column name in \code{phenodata} to group the samples when representing
+    mean and confidence interval. The factor specified in the initial
+    \code{GO_analyse()} call is used by default. Unexpected grouping factors of
+    samples can reveal interesting trends (e.g. "Animal", "Tissue", "CellType",
+    ...).
+    }
+    \item{index}{
+    In the case where multiple gene or probeset identifiers are associated with
+    the gene name, \code{index=2} will plot the expression profile of the
+    second feature identifier alone, for instance.
+    }
+    \item{ylab}{
+    Change axis labels and legend titles.
+    }
+    \item{col.palette}{
+    A valid \code{RColorBrewer} palette name to fetch the colormap from.
+    }
+    \item{col}{
+    A vector of color names or codes. The number of colors provided must match
+    the number of levels of the grouping factor. Default to a palette with an
+    adequate set of colors. If specified, overrides argument
+    \code{col.palette}.
+    }
+    \item{level}{
+    The confidence interval level to visualise around the mean of each group.
+    Default is 0.95.
+    }
+    \item{titles}{
+    Character vector providing as many titles as there are plots to replace
+    the default titles. Default is a combination of the gene id and the
+    associated gene.
+    }
+    \item{title.size}{
+    Changes the font size of the title.
+    }
+    \item{axis.title.size}{
+    Changes the font size of the axes title.
+    }
+    \item{axis.text.size}{
+    Changes the font size of the axes text labels.
+    }
+    \item{legend.text.size}{
+    Changes the font size of the legend text labels.
+    }
+    \item{legend.title.size}{
+    Changes the font size of the legend title.
+    }
+    \item{legend.key.size}{
+    Changes the size of the legend keys.
+    }
 }
-  \item{result}{
-An output of the \code{GO_analyse()} or \code{subset_scores()} function.
-}
-  \item{eSet}{
-\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
-expression matrix in the \code{AssayData} slot, and phenotypic information
-data-frame in the \code{phenodate} slot. In the expression matrix, row names
-are Ensembl gene identifiers or probeset identifiers, and column names are
-sample identifiers. In the phentypic data-frame, row names are sample
-idenfifiers, column names are grouping factors and phenotypic traits usable
-for the one-way ANOVA. 
-}
-  \item{x_var}{
-A value from \code{colnames(pData(phenodata))} to plot on the X-axis. If
-representing time on the X-axis, try to store the time-points as numeric values
-in the \code{AnnotatedDataFrame} to adequately space the time-points.
-}
-  \item{f}{
-A value from \code{colnames(pData(phenodata))} to group the samples when
-representing mean and confidence interval. The factor specified in the initial
-\code{GO_analyse()} call is used by default. Unexpected grouping factors of
-samples can reveal interesting trends (e.g. "Animal", "Tissue", "CellType",
-...).
-}
-  \item{index}{
-In the case where multiple gene or probeset identifiers are associated with the
-gene name, \code{index=2} will plot the expression profile of the second
-feature identifier alone, for instance.
-}
-  \item{ylab}{
-Change axis labels and legend titles.
-}
-  \item{col.palette}{
-A valid \code{RColorBrewer} palette name to fetch the colormap from.
-}
-  \item{col}{
-If specified, overrides \code{col.palette}. A vector of color names or codes.
-The number of colors provided must match the number of levels of the grouping
-factor. Default to a palette with an adequate set of colors.
-}
-  \item{level}{
-The confidence interval level to visualise around the mean of each group.
-Default is 0.95.
-}
-  \item{titles}{
-Character vector providing as many titles as there are plots to replace
-the default titles. Default is a combination of the gene id and the
-associated gene.
-}
-  \item{title.size}{
-Changes the font size of the title.
-}
-  \item{axis.title.size}{
-Changes the font size of the axes title.
-}
-  \item{axis.text.size}{
-Changes the font size of the axes text labels.
-}
-  \item{legend.text.size}{
-Changes the font size of the legend text labels.
-}
-  \item{legend.title.size}{
-Changes the font size of the legend title.
-}
-  \item{legend.key.size}{
-Changes the size of the legend keys.
-}
-}
+
 \value{
-  The ggplot object.
+    The ggplot object.
 }
+
 \references{
-  \itemize{
+    \itemize{
     \item \href{http://cran.r-project.org/web/packages/ggplot2/index.html}{
     ggplot2} package.
-  }
+    }
 }
+
 \author{
 Kevin Rue-Albrecht
 }
+
 \section{Warning}{
-  Common issues:
+    Common issues:
     \itemize{
-      \item It may not be possible to produce plots where the combination of
-      X-axis variable and grouping factor leaves too few replicates to compute
-  a confidence interval for each X value. This is a limitation imposed by the
-  ggplot2 package to produce proper statistics and confidence intervals.
-  }
+    \item It may not be possible to produce plots where the combination of
+    X-axis variable and grouping factor leaves too few replicates to compute
+    a confidence interval for each X value. This is a limitation imposed by the
+    ggplot2 package to produce proper statistics and confidence intervals.
+    }
 }
+
 \seealso{
   Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
-  , methods
-  \code{\link[GOexpress:expression_plot]{expression_plot}} and
+  , methods \code{\link[GOexpress:expression_plot]{expression_plot}} and
   \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
+
 \examples{
 # load the sample output data
 data(raw_results)

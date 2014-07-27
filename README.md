@@ -91,7 +91,8 @@ GO term.
 and genes based on the expression levels of genes associated with a given GO
 term.
 
-  * expression_plot() plots the expression profile corresponding to a feature identifier, given valid variable name for the X-axis and a grouping factor for
+  * expression_plot() plots the expression profile corresponding to a feature
+identifier, given valid variable name for the X-axis and a grouping factor for
 the Y-axis.
 
   * expression_plot_symbol() plots the expression profile corresponding to

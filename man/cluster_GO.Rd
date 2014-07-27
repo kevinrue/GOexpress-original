@@ -1,12 +1,16 @@
 \name{cluster_GO}
+
 \alias{cluster_GO}
+
 \title{
-Generates a hierarchical clustering / dendrogram of the samples
+Generates a hierarchical clustering of the samples
 }
+
 \description{
 Clusters the samples using only the expression levels of genes associated with
 a given go_id.
 }
+
 \usage{
 cluster_GO(go_id, result, eSet, f=result$factor, 
            method_dist="euclidean", method_hclust="average", cex=0.8,
@@ -15,58 +19,62 @@ cluster_GO(go_id, result, eSet, f=result$factor,
            ...)
 
 }
+
 \arguments{
-  \item{go_id}{
-A Gene Ontology (GO) identifier.
+    \item{go_id}{
+    A Gene Ontology (GO) identifier.
+    }
+    \item{result}{
+    The output of \code{GO_analyse()} or a subset of it obtained from
+    \code{subset_scores()}.
+    }
+    \item{eSet}{
+    \code{ExpressionSet} of the \code{Biobase} package including a
+    gene-by-sample expression matrix in the \code{AssayData} slot, and a
+    phenotypic information data-frame in the \code{phenodata} slot. In the
+    expression matrix, row names are Ensembl gene identifiers or probeset
+    identifiers, and column names are sample identifiers. In the phentypic
+    data-frame, row names are sample idenfifiers, column names are grouping
+    factors and phenotypic traits usable for the one-way ANOVA. 
+    }
+    \item{f}{
+    The grouping factor in \code{phenodata} to label the samples by.
+    }
+    \item{method_dist}{
+    The method used to calculate distance between samples. See the 
+    \code{dist()} method from package \code{stats}.
+    }
+    \item{method_hclust}{
+    The method used to cluster samples. See the 
+    \code{hclust()} method from package \code{stats}.
+    }
+    \item{cex}{
+    A numeric value defining the character expansion of text in the plot.
+    }
+    \item{main}{
+    A character string for the main title of the plot.
+    }
+    \item{xlab}{
+    A label for the x axis, defaults to "Distance".
+    }
+    \item{\dots}{
+    Additional parameters passed on to \code{dist()}, \code{hclust()}
+    and \code{plot()}.
+    }
 }
-  \item{result}{
-The output of \code{GO_analyse()} or a subset of it obtained from
-\code{subset_scores()}.
-}
-  \item{eSet}{
-\code{ExpressionSet} of the \code{Biobase} package including a gene-by-sample
-expression matrix in the \code{AssayData} slot, and phenotypic information
-data-frame in the \code{phenodate} slot. In the expression matrix, row names
-are Ensembl gene identifiers or probeset identifiers, and column names are
-sample identifiers. In the phentypic data-frame, row names are sample
-idenfifiers, column names are grouping factors and phenotypic traits usable
-for the one-way ANOVA. 
-}
-  \item{f}{
-The predefined grouping factor.
-}
-  \item{method_dist}{
-The method used to calculate distance between samples. See the 
-\code{dist()} method from package \code{stats}.
-}
-  \item{method_hclust}{
-The method used to cluster samples. See the 
-\code{hclust()} method from package \code{stats}.
-}
-  \item{cex}{
-A numeric value defining the character expansion of text in the plot.
-}
-  \item{main}{
-A character string for the main title of the plot.
-}
-  \item{xlab}{
-A label for the x axis, defaults to "Distance".
-}
-  \item{\dots}{
-Additional parameters passed on to \code{dist()}, \code{hclust()}
-and \code{plot()}.
-}
-}
+
 \value{
-  Returns the output of the \code{plot()} function.
+    Returns the output of the \code{plot()} function.
 }
+
 \author{
-Kevin Rue-Albrecht
+    Kevin Rue-Albrecht
 }
 
 \seealso{
-  Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
+    Method \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
+
 \examples{
 # load the sample output data
 data(raw_results)
