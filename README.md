@@ -50,7 +50,7 @@ accompanied by hierarchical clustering of samples and genes can be
 drawn and customised. The expression profile of genes can be plotted
 against any factor while grouping samples on another factor. The 
 univariate effect of all factors can be visualised on the expression
-levell of genes associated with a GO term. The counts of overlapping genes
+level of genes associated with a GO term. The counts of overlapping genes
 between multiple GO terms can be visualised in a Venn diagram. The result
 variable of the analysis can be re-ordered according to gene rank or
 score.
@@ -105,10 +105,9 @@ the X-axis and a grouping factor for the Y-axis.
 factor available in the phenoData on the expression levels
 of genes associated with a GO term.
 
-* overlap_GO() plots the counts of overlapping genes between 2-5
-GO terms in a Venn diagram directly printed into a file. (Sorry:
-the package doing the clearest Venn diagrams does that, and does not
-offer to directly show the Venn diagram in the standard output.
+* overlap_GO() calls VennDiagram to plot the counts of overlapping genes
+between 2-5 GO terms. Currently this does not display to screen the output goes
+directly to file. 
 
 * rerank() allows to reorder the ranked tables of GO terms and
 genes either by increasing (average) rank or decreasing (average)
