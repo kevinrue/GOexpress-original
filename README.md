@@ -3,36 +3,37 @@ GOexpress
 
 Visualise microarray and RNAseq data with gene ontology annotations.
 
-Please star this project (top-right corner of the website) if you 
+Please star this project (top-right corner of the GitHub) if you 
 are using it, you should not be spammed with updates but it will give
 us an idea of our user community.
 
 If you do wish to receive updates on the evolution of GOexpress, please
-click "Watch", also in the top-right corner of this website.
+click "Watch", also in the top-right corner of the GitHub.
 
 # OVERVIEW
 
 This package was designed for the analysis of bioinformatics
-data based on gene expression measurements. It requires 3 input
+data based on gene expression measurements. It requires two input
 values:
 
-1. a gene-by-sample matrix providing the expression level
+1. an ExpressionSet containing assaData and phenoData. The assayData slot
+should be a gene-by-sample matrix providing the expression level
 of genes (rows) in each sample (columns). Row names are expected to be
 either Ensembl gene identifiers or probeset identifiers present in
-microarrays present in the Ensembl BioMart dataset queried.
-2. an AnnotatedDataFrame from the Biobase package providing phenotypic
+microarrays present in the Ensembl BioMart dataset queried. The phenoData slot
+should be an AnnotatedDataFrame from the Biobase package providing phenotypic
 information about the samples. Row names are samples, at least one of
 the columns must be a grouping factor with two or more levels (factor
 in the actual meaning of the R language).
-3. the name of the grouping factor to investigate, which must be a
-valid column name in the AnnotatedDataFrame.
+2. the name of the grouping factor to investigate, which must be a
+valid column name in the phenoData.
 
-The analysis identifies all Gene Ontology (GO) terms represented
+The analysis scores all Gene Ontology (GO) terms represented
 in the BioMart dataset of the species studied. A random forest
 (simple one-way ANOVA is also available) is generated on the 
 grouping factor for each gene present in the expression dataset. Genes
 associated with the GO term in the BioMart but absent from the dataset
-are assigned a score of 0 and a rank of max(rank)+1. GO terms are
+are assigned a score of 0 and a rank of number(genes)+1. GO terms are
 scored and ranked on the average rank (alternatively, score) of
 associated genes. Note that to compute the average, the denominator used is the
 total number of genes associated with the GO term, even those absent from the
@@ -49,8 +50,8 @@ accompanied by hierarchical clustering of samples and genes can be
 drawn and customised. The expression profile of genes can be plotted
 against any factor while grouping samples on another factor. The 
 univariate effect of all factors can be visualised on the expression
-levell of genes associated with a GO term. The overlapping between
-multiple GO terms can be visualised in a Venn diagram. The result
+levell of genes associated with a GO term. The counts of overlapping genes
+between multiple GO terms can be visualised in a Venn diagram. The result
 variable of the analysis can be re-ordered according to gene rank or
 score.
 
@@ -65,13 +66,14 @@ the dataset based on the estimated average ability of their associated
 genes to cluster samples according to a predefined grouping factor. It
 also returns the table used to map genes to GO terms, the table
 summarising the statistics for each gene, and finally the specified
-grouping factor analysed.
+grouping factor analysed. Additional information specific to each statistical
+framework may be returned.
 
 * subset_scores() filters output of GO_analyse() for GO terms passing
 desired filters and returns a list formatted identically to the 
 output of GO_analyse() with the filtered information.
 
-* hist_scores() plots the distribution of average F scores in the
+* hist_scores() plots the distribution of GO term scores in the
 output of GO_analyse() or subset_scores().
 
 * quantiles_scores() returns the quantile values corresponding
@@ -81,7 +83,7 @@ to defined percentiles.
 with a given GO term.
 
 * table_genes() returns a table of information about the feature
-identifiers associated with  a given GO term.
+identifiers associated with a given GO term.
 
 * cluster_GO() plots a hierarchical clustering of the samples
 based on the expression levels of genes associated with a given
@@ -100,11 +102,11 @@ feature identifier(s) annotated to a gene symbol, given valid variable name for
 the X-axis and a grouping factor for the Y-axis.
 
 * plot_design() plots the univariate effect of each level of each
-factor available in the AnnotatedDataFrame on the expression levels
+factor available in the phenoData on the expression levels
 of genes associated with a GO term.
 
 * overlap_GO() plots the counts of overlapping genes between 2-5
-GO terms in a Venn diagram directly printed into a file. (Sorry, but
+GO terms in a Venn diagram directly printed into a file. (Sorry:
 the package doing the clearest Venn diagrams does that, and does not
 offer to directly show the Venn diagram in the standard output.
 
