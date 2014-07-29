@@ -319,7 +319,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     }
 }
 
-overlap_GO <- function(go_ids, result, filename, mar=rep(0.1, 4), ...){
+overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
     # Check that all GO terms are present in the result variable
     if (!all(go_ids %in% result$GO$go_id)){
         stop("Some go_id(s) are absent from the result variable.")
@@ -336,9 +336,14 @@ overlap_GO <- function(go_ids, result, filename, mar=rep(0.1, 4), ...){
     for (index in 1:length(go_ids)){
         gene_sets[[index]] <- list_genes(go_id=go_ids[[index]], result=result)
     }
-    # Print the venn diagram to the filename
-    venn.diagram(x=gene_sets, filename=filename, category.names = go_ids,
-                    mar=mar, ...)
+    # generate the venn diagram (potentially to a file)
+    venn <- venn.diagram(x=gene_sets, filename=filename,
+                         category.names = go_ids, mar=mar, ...)
+    # If no filename was given
+    if (is.null(filename)){
+        # Print the venn diagram to the screen
+        grid.draw(venn)
+    }
 }
 
 plot_design <- function(

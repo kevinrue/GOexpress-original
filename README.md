@@ -106,8 +106,8 @@ factor available in the phenoData on the expression levels
 of genes associated with a GO term.
 
 * overlap_GO() calls VennDiagram to plot the counts of overlapping genes
-between 2-5 GO terms. Currently this does not display to screen the output goes
-directly to file. 
+between 2-5 GO terms. This can either display to screen or print to directly
+to file.
 
 * rerank() allows to reorder the ranked tables of GO terms and
 genes either by increasing (average) rank or decreasing (average)

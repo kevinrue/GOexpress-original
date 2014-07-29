@@ -301,14 +301,13 @@ plot_design(go_id = "GO:0034134", result = BP.5, eSet=AlvMac, ask = FALSE,
 
 Often, the top-ranked cellular functions identified by pathways analysis and gene-set enrichment analysis tools are found to significantly overlap each other in terms of genes, limiting the number of genes identified by those approaches and blurring the precise cellular function represented by the core gene-set among a list of closely related yet different functions.
 
-Typically, overlapping sets are representated as Venn diagrams. The example below will produce a Venn diagram of the gene-sets associated with the five top-ranked "Biological Process" ontologies, and directly save it as a TIFF image file (no matter the file extension given):
+Typically, overlapping sets are representated as Venn diagrams. The example below will produce a Venn diagram of the gene-sets associated with the five top-ranked "Biological Process" ontologies, and display it on screen, as the filename argument is left to the default \texttt{NULL} value (if a filename is given, the diagram will be printed to a TIFF file , no matter the extension specified):
 
-<<>>=
-overlap_GO(go_ids = head(BP.5$GO$go_id, n=5), result = BP.5,
-           filename = "VennDiagram.tiff")
+<<fig=TRUE>>=
+overlap_GO(go_ids = head(BP.5$GO$go_id, n=5), result = BP.5)
 @
 
-This Venn diagram package was chosen due to its consistent and easily readable layout, despite lacking the possibility to output the figure in the standard "Plot" panel. 
+This method calls the \texttt{venn.diagram} method of the \texttt{VennDiagram} package, offering a high level of control on the resulting Venn diagram. A detailed description of the available arguments are accessible in the corresponding R documentation file.
 
 \subsection[Distribution of scores]{Distribution of scores}
 

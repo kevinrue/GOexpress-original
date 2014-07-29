@@ -1,3 +1,11 @@
+RELEASE 0.99.5:
+
+    UPDATED FEATURES:
+    
+    * VennDiagram can print to screen, if filename argument is set to NULL 
+(Default).
+
+
 RELEASE 0.99.4:
 
     UPDATED FEATURES:
@@ -16,6 +24,7 @@ RELEASE 0.99.4:
     * Restricted lines to 80 characters, and used 4-space tabulations.
 
     * Corrected out-of-date documentation.
+
 
 RELEASE 0.99.3:
 

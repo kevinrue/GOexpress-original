@@ -26,7 +26,8 @@ overlap_GO(go_ids, result, filename, mar = rep(0.1, 4), ...)
     \code{subset_scores()}.
     }
     \item{filename}{
-    The output filename where the Venn diagram will be saved.
+    The output filename where the Venn diagram will be saved. Default is NULL,
+    displaying the Venn diagram on screen.
     }
     \item{mar}{
     The margins around the Venn diagram. Some Venn diagrams place the GO term
