@@ -2,16 +2,20 @@ RELEASE 0.99.4:
 
     UPDATED FEATURES:
     
+    * Use of ExpressionSet instead of numeric named matrix and
+    AnnotatedDataFrame. Better consistency with other Bioconductor packages.
+
+    GENERAL UPDATES:
+
     * Implemented corrections requested following the Bioconductor review.
     Includes typos, consistent terminology through the package code and
     metafiles, additional information in help files, no reference to GitHub as
     an alternate installation option, use of arrow signs instead of equal signs
     for value assignment.
     
-    * Use of ExpressionSet instead of numeric named matrix and
-    AnnotatedDataFrame. Better consistency with other Bioconductor packages.
-    
     * Restricted lines to 80 characters, and used 4-space tabulations.
+
+    * Corrected out-of-date documentation.
 
 RELEASE 0.99.3:
 
