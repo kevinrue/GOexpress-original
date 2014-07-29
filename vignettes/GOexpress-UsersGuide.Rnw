@@ -148,9 +148,9 @@ head(raw_results$mapping) # Gene to gene ontology mapping table (subset)
 
 
 \subsection[Filtering of results]{Filtering of results}
-\label{sec:Fitering}
+\label{sec:Filtering}
 
-In the above raw results of the analysis, all three type (i.e. namespaces) of GO terms are merged in a single ranked table. It is however possible to extract the GO terms corresponding to a single namespace. 
+In the above raw results of the analysis, all three types (i.e. namespaces) of GO terms are merged in a single ranked table. It is however possible to extract the GO terms corresponding to a single namespace. 
 
 <<>>=
 BP <- subset_scores(result = raw_results,
@@ -183,7 +183,7 @@ Furthermore, the inherent hierarchical structure and "granularity" of gene ontol
 
 \subsection[Details of the top-ranking GO terms]{Details of the top-ranking GO terms}
 
-Once the GO terms are scored and ranked (and filtered), the top-ranking GO terms in the filtered object are those most enriched in genes with expression levels clustering best the predefined groups of samples based on the levels of the factor considered (\texttt{raw\_result\$factor}).
+Once the GO terms are scored and ranked (and filtered), the top-ranking GO terms in the filtered object are those most enriched in genes with expression levels clustering best the predefined groups of samples based on the levels of the factor considered (\texttt{raw\_results\$factor}).
 
 In this example, we list the top-10 filtered "Biological Process" GO terms extracted above and their statistics (automatically ranked by increasing average rank of their associated genes):
 
@@ -283,7 +283,7 @@ However, the benefits of this feature are balanced by the fact that genes lackin
 
 \subsection[Comparison of univariate effects on gene expression]{Comparison of univariate effects on gene expression}
 
-While the analysis is restricted to the evaluation of a single factor, it can be helpful to compare the relative impact of all known factors present in the the accompanying \texttt{AnnotatedDataFrame} on the gene expression in the different groups of samples. 
+While the analysis is restricted to the evaluation of a single factor, it can be helpful to compare the relative impact of all known factors present in the the accompanying \texttt{phenoData} on the gene expression in the different groups of samples. 
 
 In other words, given a GO term identifier this feature will generate a plot for each associated gene, where the mean (default; can be changed) expression level will be computed for each level of each factor and compared to one another:
 
