@@ -252,7 +252,7 @@ In the above section, we listed the genes associated with a particular gene onto
 \begin{center}
 <<fig=TRUE>>=
 expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
-                x_var = "Timepoint")
+                x_var = "Timepoint", title.size=1.5)
 @
 \end{center}
 
@@ -263,7 +263,7 @@ To investigate the impact of other factors on the expression level of the same g
 \begin{center}
 <<fig=TRUE>>=
 expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
-                x_var = "Animal")
+                x_var = "Animal", title.size=1.5)
 @
 \end{center}
 
@@ -274,7 +274,7 @@ It is also possible to visualise the expression profile of genes from their asso
 \begin{center}
 <<fig=TRUE>>=
 expression_plot_symbol(gene_symbol = "BIKBA", result = BP.5, eSet=AlvMac,
-                       x_var = "Timepoint")
+                       x_var = "Timepoint", title.size=1.5)
 @
 \end{center}
 
