@@ -9,11 +9,11 @@ Description: The package contains methods to visualise the expression levels
     analysis to identify GO terms enriched in genes with expression levels best
     clustering predefined groups of samples. Annotations for the genes present
     in the expression dataset are obtained from Ensembl through the biomaRt
-    package. The random forest framework is used to evaluate the ability of each
-    gene to cluster samples according to the factor of interest. Finally, GO
-    terms are scored by averaging the rank or score of their respective gene
-    sets to cluster the samples. An ANOVA approach is also available as an
-    alternative statistical framework.
+    package. The random forest framework is used to evaluate the ability of
+    each gene to cluster samples according to the factor of interest. Finally,
+    GO terms are scored by averaging the rank (alternatively, score) of their
+    respective gene sets to cluster the samples. An ANOVA approach is also
+    available as an alternative statistical framework.
 Depends: R (>= 3.0.2), grid, Biobase (>= 2.22.0)
 Imports: biomaRt (>= 2.18.0), stringr (>= 0.6.2), 
     ggplot2 (>= 0.9.0), RColorBrewer (>= 1.0), gplots (>= 2.13.0),

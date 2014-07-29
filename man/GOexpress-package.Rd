@@ -35,16 +35,19 @@ visualise the statistics on a gene- and ontology-basis.
     }
     This package requires only two input variables
     \enumerate{
-    \item A gene-by-sample matrix providing gene expression values for each
-    gene in each sample
-    \item An AnnotatedDataFrame from the Biobase package providing phenotypic
-    information and grouping factors with two or more levels.
+    \item An ExpressionSet containing assayData and phenoData. The former
+    should be a gene-by-sample matrix providing gene expression values for each
+    gene in each sample. The latter should be an AnnotatedDataFrame from the
+    Biobase package providing phenotypic information and grouping factors with
+    two or more levels.
+    \item The name of the grouping factor to investigate, which must be a
+    valid column name in the phenoData.
     }
     Following analysis, visualisation methods include:
     \itemize{
     \item Histogram and quantiles representations of the scores of GO terms
-    \item Filtering of results on various criteria (e.g. number of genes in GO
-    term)
+    \item Filtering of results on various criteria (e.g. number of genes
+    annotated to GO term)
     \item Re-ordering of GO terms and gene result tables based on score or rank
     metric
     \item Table of statistics for genes annotated to a given GO term
@@ -56,7 +59,8 @@ visualise the statistics on a gene- and ontology-basis.
     while grouping samples on another given factor (e.g. Treatment)
     \item Univariate analysis of the expression level of a gene in the
     different groups of each experimental factor.
-    \item Venn diagram of the genes shared between a list of GO terms.
+    \item Venn diagram of the counts of genes shared between a list of GO
+    terms.
     }
 }
 
@@ -101,5 +105,9 @@ data(prefix2dataset)
     Methods
     \code{\link[biomaRt:getBM]{getBM}},
     \code{\link[gplots:heatmap.2]{heatmap.2}},
+    \code{\link[gplots:bluered]{bluered}},
+    \code{\link[gplots:greenred]{greenred}},
+    \code{\link[grid:grid.newpage]{grid.newpage}},
+    \code{\link[grid:grid.layout]{grid.layout}},
     \code{\link[stringr:str_extract]{str_extract}}.
 }
