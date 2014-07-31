@@ -12,7 +12,7 @@ showing the counts of overlapping genes associated with those GO terms.
 }
 
 \usage{
-overlap_GO(go_ids, result, filename, mar = rep(0.1, 4), ...)
+overlap_GO(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...)
 }
 
 \arguments{
