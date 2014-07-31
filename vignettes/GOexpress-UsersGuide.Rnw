@@ -365,7 +365,7 @@ expression level of each gene in each sample:
 \begin{center}
 <<fig=TRUE>>=
 heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
-           cexCol=1)
+           cexCol=1, cex.main=1, main.Lsplit=30)
 @
 \end{center}
 

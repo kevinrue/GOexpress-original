@@ -16,12 +16,13 @@ levels of those genes in a heatmap.
 heatmap_GO(
     go_id, result, eSet, gene_names=TRUE,
     f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
-    trace="none", expr.col=bluered(75), 
+    cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
     row.col=brewer.pal(n=length(unique(pData(
         eSet)[,f])), name=row.col.palette),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
+    main.Lsplit=NULL,
     ...)
 }
 
@@ -59,6 +60,11 @@ heatmap_GO(
     Positive numbers, used as cex.axis in for the row or column axis labeling.
     Defaults are 1.2 and 1, respectively. See \code{heatmap.2()}.
     }
+    \item{cex.main}{
+    Scaling factor of the main title font size. Default is 1. We suggest to 
+    use it in combination with the argument \code{main.Lsplit} for GO terms
+    with long names.
+    }
     \item{trace}{
     Character string indicating whether a solid "trace" line should be drawn
     across each 'row' or down each 'column', both' or 'none'. The distance of
@@ -83,6 +89,12 @@ heatmap_GO(
     }
     \item{main}{
     Main title of the figure. Default is paste(go_id, go_name).
+    }
+    \item{main.Lsplit}{
+    Number of characters after which a new-line character will be inserted in
+    the main title. If this would occur within a word, the new-line character
+    will be inserted before this word. Default is NULL, leaving the title on a
+    single line.
     }
     \item{\dots}{
     Additional arguments passed on to \code{heatmap.2()}.

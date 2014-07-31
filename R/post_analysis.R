@@ -231,12 +231,13 @@ expression_plot_symbol <- function(
 heatmap_GO <- function(
     go_id, result, eSet, gene_names=TRUE,
     f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
-    trace="none", expr.col=bluered(75), 
+    cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
     row.col=brewer.pal(n=length(unique(pData(
         eSet)[,f])), name=row.col.palette),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
+    main.Lsplit=NULL,
     ...){
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
@@ -251,12 +252,29 @@ heatmap_GO <- function(
     else{
         gene_labels <- gene_ids
     }
+    # If requested, split the main title to lines with fewer than a given
+    # count of characters, while respecting space-separated words
+    if (!is.null(main.Lsplit)){
+        if (is.numeric(main.Lsplit)){ 
+            main = string_Lsplit(string=main, line.length=main.Lsplit)
+        }
+        else{
+            stop("main.Lsplit should be a numeric value or NULL.")
+        }
+    }
     # A vector detailing the color of each sample must be prepared
     samples.col <- row.col[as.factor(pData(eSet)[,f])]
+    # Save the current plotting parameters
+    op <- par(no.readonly = TRUE)
+    # whatever happens, restore original setting when leaving function
+    on.exit(par(op))
+    # Change the font size of the title
+    par(cex.main=cex.main)
     # Plot the heatmap of the data
     heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
                 scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
                 trace=trace, RowSideColors=samples.col, col=expr.col, ...)
+    
 }
 
 hist_scores <- function(
@@ -284,6 +302,32 @@ list_genes <- function(go_id, result, data.only=TRUE){
     return(gene_ids)
 }
 
+# Splits a string of characters into multiple substrings, each less than 
+# a given number of characters. New line characters cannot be inserted within
+# words. Words are defined as surrounded by space characters only.
+string_Lsplit <- function (string, line.length){
+    # Get the (ordered) list of words
+    words <- strsplit(x=string, split=" ", )[[1]]
+    # Rebuild the original string, while inserting a newline everytime
+    # the limit is reached
+    # Start with empty title
+    newString <- words[1]
+    # Count of characters since latest newline
+    nc <- nchar(words[1])
+    for (word in words[2:length(words)]){
+        if (nc + nchar(word) > line.length){
+            newString <- paste(newString, word, sep="\n")
+            nc <- nchar(word)
+        }
+        else{
+            newString <- paste(newString, word, sep=" ")
+            nc <- nc + nchar(word) + 1 # for space character !
+        }
+    }
+    return(newString)
+}
+
+# Code borrowed from the web to create a lattice of ggplot2 plots.
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     # source:
     # http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)
