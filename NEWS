@@ -5,6 +5,11 @@ RELEASE 0.99.5:
     * VennDiagram can print to screen, if filename argument is set to NULL 
 (Default).
 
+    * heatmap_GO, cluter_GO, expression_plot_symbol and expression_plot can
+resize title font and wrap the text on several lines.
+
+    * User's Guide updated.
+
 
 RELEASE 0.99.4:
 
