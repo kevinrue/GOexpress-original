@@ -392,7 +392,8 @@ the expression data of the subset of genes associated with the
 
 \begin{center}
 <<fig=TRUE>>=
-cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, cex.main=1)
+cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, cex.main=1,
+           main.Lsplit=30)
 @
 \end{center}
 
@@ -407,7 +408,7 @@ samples may reveal relevant sub-clustering of samples.
 \begin{center}
 <<fig=TRUE>>=
 cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, f = "Time",
-           , cex.main=1)
+           , cex.main=1, main.Lsplit=30)
 @
 \end{center}
 
