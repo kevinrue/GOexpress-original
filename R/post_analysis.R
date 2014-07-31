@@ -37,7 +37,7 @@ expression_plot <- function(
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, title=NULL, title.size=2, axis.title.size=20,
-    axis.text.size=15, legend.text.size=15, legend.title.size=20,
+    axis.text.size=15, legend.title.size=20, legend.text.size=15,
     legend.key.size=30){
     # if the feature identifier is absent from the dataset
     if (!gene_id %in% rownames(eSet)){
@@ -95,7 +95,7 @@ expression_plot_symbol <- function(
     col = brewer.pal(n=length(levels(pData(
         eSet)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15,
-    legend.text.size=20, legend.title.size=20, legend.key.size=30){
+    legend.title.size=20, legend.text.size=20, legend.key.size=30){
     # if the result provided does not look like it should
     if (! "genes" %in% names(result)){
         stop("\"result=\" argument does not look like a GO_analyse output.")

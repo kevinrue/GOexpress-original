@@ -19,7 +19,7 @@ expression_plot(
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, title=NULL, title.size=2, axis.title.size=20,
-    axis.text.size=15, legend.text.size=15, legend.title.size=20,
+    axis.text.size=15, legend.title.size=20, legend.text.size=15,
     legend.key.size=30)
 }
 
@@ -56,12 +56,12 @@ expression_plot(
     }
     \item{col.palette}{
     A valid \code{RColorBrewer} palette name to fetch the colormap from.
+    Default is palette "Accent".
     }
     \item{col}{
     A vector of color names or codes. The number of colors provided must match
-    the number of levels of the grouping factor. Default to a palette with an
-    adequate set of colors. If specified, overrides argument
-    \code{col.palette}.
+    the number of levels of the grouping factor. If specified, overrides
+    argument \code{col.palette}.
     }
     \item{level}{
     The confidence interval level to visualise around the mean of each group.
@@ -72,22 +72,22 @@ expression_plot(
     associated gene.
     }
     \item{title.size}{
-    Changes the font size of the title.
+    Changes the font size of the title. Default is 2.
     }
     \item{axis.title.size}{
-    Changes the font size of the axes title.
+    Changes the font size of the axes title. Defalt is 20.
     }
     \item{axis.text.size}{
-    Changes the font size of the axes text labels.
-    }
-    \item{legend.text.size}{
-    Changes the font size of the legend text labels.
+    Changes the font size of the axes text labels. Default is 15.
     }
     \item{legend.title.size}{
-    Changes the font size of the legend title.
+    Changes the font size of the legend title. Default is 20.
+    }
+    \item{legend.text.size}{
+    Changes the font size of the legend text labels. Default is 15.
     }
     \item{legend.key.size}{
-    Changes the size of the legend keys.
+    Changes the size of the legend keys. Default is 30.
     }
 }
 

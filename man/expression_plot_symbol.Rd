@@ -24,7 +24,7 @@ expression_plot_symbol(
     col = brewer.pal(n=length(levels(pData(
         eSet)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15,
-    legend.text.size=20, legend.title.size=20, legend.key.size=30)
+    legend.title.size=20, legend.text.size=20, legend.key.size=30)
 }
 
 \arguments{
@@ -82,22 +82,22 @@ expression_plot_symbol(
     associated gene.
     }
     \item{title.size}{
-    Changes the font size of the title.
+    Changes the font size of the title. Default is 2.
     }
     \item{axis.title.size}{
-    Changes the font size of the axes title.
+    Changes the font size of the axes title. Defalt is 20.
     }
     \item{axis.text.size}{
-    Changes the font size of the axes text labels.
-    }
-    \item{legend.text.size}{
-    Changes the font size of the legend text labels.
+    Changes the font size of the axes text labels. Default is 15.
     }
     \item{legend.title.size}{
-    Changes the font size of the legend title.
+    Changes the font size of the legend title. Default is 20.
+    }
+    \item{legend.text.size}{
+    Changes the font size of the legend text labels. Default is 15.
     }
     \item{legend.key.size}{
-    Changes the size of the legend keys.
+    Changes the size of the legend keys. Default is 30.
     }
 }
 

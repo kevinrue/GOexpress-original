@@ -6,7 +6,7 @@
 
 \title{GOexpress: Visualise microarray and RNAseq data using gene ontology
 annotations}
-\author{Kévin Rue-Albrecht, Paul A. McGettigan, Belinda Hernández,
+\author{Kévin Rue-Albrecht, Paul A. McGettigan, Belinda Hernández,\\
 Andrew Parnell, Stephen V. Gordon, and David E. MacHugh}
 
 
@@ -453,7 +453,8 @@ over time. Here is one example:
 \begin{center}
 <<fig=TRUE>>=
 expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
-                x_var = "Timepoint", title.size=1.5)
+                x_var = "Timepoint", title.size=1.5,
+                legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
 \end{center}
 
@@ -472,7 +473,8 @@ Here is another valid example separating samples by animal on the X axis.
 \begin{center}
 <<fig=TRUE>>=
 expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
-                x_var = "Animal", title.size=1.5)
+                x_var = "Animal", title.size=1.5,
+                legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
 \end{center}
 
@@ -485,7 +487,8 @@ function presented in the previous subsection:
 \begin{center}
 <<fig=TRUE>>=
 expression_plot_symbol(gene_symbol = "BIKBA", result = BP.5, eSet=AlvMac,
-                       x_var = "Timepoint", title.size=1.5)
+                       x_var = "Timepoint", title.size=1.5,
+                legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
 \end{center}
 
