@@ -380,8 +380,8 @@ samples:
 
 \begin{center}
 <<fig=TRUE>>=
-heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
-           cexCol=1, f="Group")
+heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, f="Group",
+           cexCol=1, cex.main=1, main.Lsplit=30)
 @
 \end{center}
 
