@@ -12,11 +12,11 @@ a given go_id.
 }
 
 \usage{
-cluster_GO(go_id, result, eSet, f=result$factor, 
-           method_dist="euclidean", method_hclust="average", cex=0.8,
-           main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
-           xlab="Distance",
-           ...)
+cluster_GO(
+    go_id, result, eSet, f=result$factor, 
+    method_dist="euclidean", method_hclust="average", cex=0.8,
+    main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
+    xlab="Distance", cex.main=1, main.Lsplit=NULL, ...)
 
 }
 
@@ -56,6 +56,17 @@ cluster_GO(go_id, result, eSet, f=result$factor,
     }
     \item{xlab}{
     A label for the x axis, defaults to "Distance".
+    }
+    \item{cex.main}{
+    Scaling factor of the main title font size. Default is 1. We suggest to 
+    use it in combination with the argument \code{main.Lsplit} for GO terms
+    with long names.
+    }
+    \item{main.Lsplit}{
+    Number of characters after which a new-line character will be inserted in
+    the main title. If this would occur within a word, the new-line character
+    will be inserted before this word. Default is NULL, leaving the title on a
+    single line.
     }
     \item{\dots}{
     Additional parameters passed on to \code{dist()}, \code{hclust()}

@@ -2,17 +2,33 @@ cluster_GO <- function(
     go_id, result, eSet, f=result$factor, 
     method_dist="euclidean", method_hclust="average", cex=0.8,
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
-    xlab="Distance", ...){
+    xlab="Distance", cex.main=1, main.Lsplit=NULL, ...){
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and transform the expression data for those genes
     genes_expr <- t(exprs(eSet)[gene_ids,])
     # Hierarchical clustering using dist and hclust
     # (The clearest method to read the labels and control their size)
-    di <- dist(genes_expr, method=method_dist, ...)
+    di <- dist(genes_expr, method=method_dist)
     cl <- hclust(di, method=method_hclust, ...)
+    # If requested, split the main title to lines with fewer than a given
+    # count of characters, while respecting space-separated words
+    if (!is.null(main.Lsplit)){
+        if (is.numeric(main.Lsplit)){ 
+            main = string_Lsplit(string=main, line.length=main.Lsplit)
+        }
+        else{
+            stop("main.Lsplit should be a numeric value or NULL.")
+        }
+    }
     # Rows are samples, label them according to the user's chosen factor
     sample_labels <- pData(eSet)[,f]
+    # Save the current plotting parameters
+    op <- par(no.readonly = TRUE)
+    # whatever happens, restore original setting when leaving function
+    on.exit(par(op))
+    # Change the font size of the title
+    par(cex.main=cex.main)
     plot(cl, hang=-1, label=sample_labels, cex=cex, main=main, xlab=xlab, ...)
 }
 
@@ -274,7 +290,6 @@ heatmap_GO <- function(
     heatmap.2(genes_expr, labRow=sample_labels, labCol=gene_labels,
                 scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
                 trace=trace, RowSideColors=samples.col, col=expr.col, ...)
-    
 }
 
 hist_scores <- function(
