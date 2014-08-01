@@ -15,7 +15,7 @@ as analyzed by \code{\link[stats:aov]{aov}}().
 \usage{
 plot_design(
     go_id, result, eSet,
-    factors=colnames(pData(eSet)), main="", ...)
+    factors=colnames(pData(eSet)), main="", main.Lsplit=NULL, ...)
 }
 
 \arguments{
@@ -43,6 +43,12 @@ plot_design(
     }
     \item{main}{
     Changes the main title of the plots.
+    }
+    \item{main.Lsplit}{
+    Number of characters after which a new-line character will be inserted in
+    the main title. If this would occur within a word, the new-line character
+    will be inserted before this word. Default is NULL, leaving the title on a
+    single line.
     }
     \item{\dots}{
     Additional arguments which will be passed on to the \code{plot.design}()

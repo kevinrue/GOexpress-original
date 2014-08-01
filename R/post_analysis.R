@@ -15,7 +15,7 @@ cluster_GO <- function(
     # count of characters, while respecting space-separated words
     if (!is.null(main.Lsplit)){
         if (is.numeric(main.Lsplit)){ 
-            main = string_Lsplit(string=main, line.length=main.Lsplit)
+            main <- string_Lsplit(string=main, line.length=main.Lsplit)
         }
         else{
             stop("main.Lsplit should be a numeric value or NULL.")
@@ -195,7 +195,7 @@ expression_plot_symbol <- function(
                     title=titles[i], title.size=title.size,
                     axis.title.size=axis.title.size,
                     axis.text.size=axis.text.size,
-                    axis.text.x=element_text(angle = axis.text.angle),
+                    axis.text.angle=axis.text.angle,
                     legend.text.size=legend.text.size,
                     legend.title.size=legend.title.size,
                     legend.key.size=legend.key.size)
@@ -224,7 +224,7 @@ expression_plot_symbol <- function(
                     title=titles[index], title.size=title.size,
                     axis.title.size=axis.title.size,
                     axis.text.size=axis.text.size,
-                    axis.text.x=element_text(angle = axis.text.angle),
+                    axis.text.angle=axis.text.angle,
                     legend.text.size=legend.text.size,
                     legend.title.size=legend.title.size,
                     legend.key.size=legend.key.size)
@@ -242,7 +242,7 @@ expression_plot_symbol <- function(
             level=level, title=titles, title.size=title.size,
             axis.title.size=axis.title.size,
             axis.text.size=axis.text.size,
-            axis.text.x=element_text(angle = axis.text.angle),
+            axis.text.angle=axis.text.angle,
             legend.text.size=legend.text.size,
             legend.title.size=legend.title.size,
             legend.key.size=legend.key.size)
@@ -277,7 +277,7 @@ heatmap_GO <- function(
     # count of characters, while respecting space-separated words
     if (!is.null(main.Lsplit)){
         if (is.numeric(main.Lsplit)){ 
-            main = string_Lsplit(string=main, line.length=main.Lsplit)
+            main <- string_Lsplit(string=main, line.length=main.Lsplit)
         }
         else{
             stop("main.Lsplit should be a numeric value or NULL.")
@@ -412,7 +412,7 @@ overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
 
 plot_design <- function(
     go_id, result, eSet,
-    factors=colnames(pData(eSet)), main="", ...){
+    factors=colnames(pData(eSet)), main="", main.Lsplit=NULL, ...){
     # if the user changed the default value
     # check that all given factors exist in colnames(eSet)
     if (any(factors != colnames(pData(eSet)))){
@@ -439,6 +439,16 @@ plot_design <- function(
         # genes in the GO term)
         # Smart title is the name of the GO term
         main <- paste(go_id, GO_name)
+        # If requested, split the main title to lines with fewer than a given
+        # count of characters, while respecting space-separated words
+        if (!is.null(main.Lsplit)){
+            if (is.numeric(main.Lsplit)){ 
+                main <- string_Lsplit(string=main, line.length=main.Lsplit)
+            }
+            else{
+                stop("main.Lsplit should be a numeric value or NULL.")
+            }
+        }
     }
     # Perform a plot.design of all the genes in the data frame (= in the GO
     # term and in the dataset)

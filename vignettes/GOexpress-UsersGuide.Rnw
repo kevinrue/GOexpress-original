@@ -474,7 +474,7 @@ Here is another valid example separating samples by animal on the X axis.
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac, 
+expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
     x_var = "Animal", title.size=1.5, axis.text.angle=90,
     legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
@@ -520,8 +520,9 @@ another:
 
 \begin{center}
 <<fig=TRUE>>=
-plot_design(go_id = "GO:0034134", result = BP.5, eSet=AlvMac, ask = FALSE,
-    factors = c("Animal", "Treatment", "Time", "Group"))
+plot_design(go_id = "GO:0034134", result = BP.5, eSet=AlvMac,
+    ask = FALSE, factors = c("Animal", "Treatment", "Time", "Group"),
+    main.Lsplit=30)
 @
 \end{center}
 
