@@ -89,7 +89,6 @@ expression_plot <- function(
     # Return the plot
     return(gg)
 }
-axis.text.x=element_text(angle = -90, hjust = 0)
 
 expression_plot_symbol <- function(
     gene_symbol, result, eSet, x_var, f=result$factor,
@@ -248,6 +247,8 @@ expression_plot_symbol <- function(
             legend.key.size=legend.key.size)
     }
 }
+
+
 
 heatmap_GO <- function(
     go_id, result, eSet, gene_names=TRUE,
