@@ -48,17 +48,18 @@ statistical frameworks for the processing of raw expression data, much of the
 genewise visualisation is left to the end-user. However, data summarisation and
 visualisation can be a daunting task in multifactorial experiments, or require
 large amounts of copy-pasting to investigate the expression profile of a
-handful or genes and cellular pathways. Tested on multiple RNA-seq and
-microarray datasets, \texttt{GOexpress} offers an extendable set of data-driven
-plotting functions readily applicable to the output of widely used analytic
-packages estimating (differential) gene expression. Once the initial analysis
-and filtering of \texttt{GOexpress} results is complete --- literaly two
-command lines ---, each gene and gene ontology is accessible by a single line
-of code to produce high-quality graphics. In short, the \texttt{GOexpress}
-package is a software package developed based on real experimental datasets to
-ease the visualisation and interpretation of multifactorial transcriptomics
-data by bioinformaticians and biologists, while striving to keep it a simple,
-fast, and intuitive toolkit.
+handful or genes and cellular pathways.
+
+Tested on multiple RNA-seq and microarray datasets, \texttt{GOexpress} offers
+an extendable set of data-driven plotting functions readily applicable to the
+output of widely used analytic packages estimating (differential) gene
+expression. Once the initial analysis and filtering of \texttt{GOexpress}
+results is complete --- literaly two command lines ---, each gene and gene
+ontology is accessible by a single line of code to produce high-quality
+graphics. In short, the \texttt{GOexpress} package is a software package
+developed based on real experimental datasets to ease the visualisation and
+interpretation of multifactorial transcriptomics data by bioinformaticians and
+biologists, while striving to keep it a simple, fast, and intuitive toolkit.
 
 Notably, the use of the \texttt{biomaRt} package enables \texttt{GOexpress} to
 support and annotate gene expression matrix from any species and any
@@ -107,7 +108,7 @@ maintainer("GOexpress")
 @
 
 Interesting suggestions for additional package functions, or improvement of
-existing ones is most welcome and may be implemented when time allows.
+existing ones are most welcome and may be implemented when time allows.
 Alternatively, we also encourage users to fork the GitHub repository of the
 project, develop and test their own feature(s), and finally generate a pull
 request to integrate it to the original repository
@@ -286,11 +287,11 @@ the GO terms corresponding to a single namespace.
 
 <<>>=
 BP <- subset_scores(result = raw_results,
-                   namespace = "biological_process")
+    namespace = "biological_process")
 MF <- subset_scores(result = raw_results,
-                   namespace = "MF") # alias for "molecular_function"
+    namespace = "MF") # alias for "molecular_function"
 CC <- subset_scores(result = raw_results,
-                   namespace = "CC") # cellular_component
+    namespace = "CC") # cellular_component
 @
 
 Importantly, an early-identified bias of the scoring function is that GO terms
@@ -313,14 +314,14 @@ GO terms with only a handful of associated genes:
 
 <<>>=
 BP.5 <- subset_scores(result = raw_results,
-                      namespace = "biological_process",
-                      total = 5) # requires 5 or more associated genes
+    namespace = "biological_process",
+    total = 5) # requires 5 or more associated genes
 MF.10 <- subset_scores(result = raw_results,
-                   namespace = "molecular_function",
-                   total = 10)
+    namespace = "molecular_function",
+    total = 10)
 CC.15 <- subset_scores(result = raw_results,
-                   namespace = "cellular_component",
-                   total = 15)
+    namespace = "cellular_component",
+    total = 15)
 @
 
 On the other hand, GO terms associated with thousands of genes have a very
@@ -364,8 +365,8 @@ expression level of each gene in each sample:
 
 \begin{center}
 <<fig=TRUE>>=
-heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
-           cexCol=1, cex.main=1, main.Lsplit=30)
+heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, cexRow=0.4,
+    cexCol=1, cex.main=1, main.Lsplit=30)
 @
 \end{center}
 
@@ -381,7 +382,7 @@ samples:
 \begin{center}
 <<fig=TRUE>>=
 heatmap_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, f="Group",
-           cexCol=1, cex.main=1, main.Lsplit=30)
+    cexCol=1, cex.main=1, main.Lsplit=30)
 @
 \end{center}
 
@@ -392,8 +393,8 @@ the expression data of the subset of genes associated with the
 
 \begin{center}
 <<fig=TRUE>>=
-cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, cex.main=1,
-           main.Lsplit=30)
+cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
+    cex.main=1, cex=0.4, main.Lsplit=30)
 @
 \end{center}
 
@@ -408,7 +409,7 @@ samples may reveal relevant sub-clustering of samples.
 \begin{center}
 <<fig=TRUE>>=
 cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac, f = "Time",
-           , cex.main=1, main.Lsplit=30)
+    cex.main=1, cex=0.4, main.Lsplit=30)
 @
 \end{center}
 
@@ -454,8 +455,8 @@ over time. Here is one example:
 \begin{center}
 <<fig=TRUE>>=
 expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
-                x_var = "Timepoint", title.size=1.5,
-                legend.title.size=10, legend.text.size=10, legend.key.size=15)
+    x_var = "Timepoint", title.size=1.5,
+    legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
 \end{center}
 
@@ -473,9 +474,9 @@ Here is another valid example separating samples by animal on the X axis.
 
 \begin{center}
 <<fig=TRUE>>=
-expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac,
-                x_var = "Animal", title.size=1.5,
-                legend.title.size=10, legend.text.size=10, legend.key.size=15)
+expression_plot(gene_id = "ENSBTAG00000047107", result = BP.5, eSet=AlvMac, 
+    x_var = "Animal", title.size=1.5,
+    legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
 \end{center}
 
@@ -488,8 +489,8 @@ function presented in the previous subsection:
 \begin{center}
 <<fig=TRUE>>=
 expression_plot_symbol(gene_symbol = "BIKBA", result = BP.5, eSet=AlvMac,
-                       x_var = "Timepoint", title.size=1.5,
-                legend.title.size=10, legend.text.size=10, legend.key.size=15)
+    x_var = "Timepoint", title.size=1.5,
+    legend.title.size=10, legend.text.size=10, legend.key.size=15)
 @
 \end{center}
 
@@ -520,7 +521,7 @@ another:
 \begin{center}
 <<fig=TRUE>>=
 plot_design(go_id = "GO:0034134", result = BP.5, eSet=AlvMac, ask = FALSE,
-            factors = c("Animal", "Treatment", "Time", "Group"))
+    factors = c("Animal", "Treatment", "Time", "Group"))
 @
 \end{center}
 
