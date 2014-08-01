@@ -4,6 +4,7 @@
 export("cluster_GO")
 export("expression_plot")
 export("expression_plot_symbol")
+export("expression_profiles")
 export("GO_analyse")
 export("heatmap_GO")
 export("hist_scores")

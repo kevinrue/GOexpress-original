@@ -439,7 +439,8 @@ needed, users may use the function below:
 list_genes(go_id = "GO:0034142", result = BP.5)
 @
 
-\subsection[Expression profile of a gene]{Expression profile of a gene}
+\subsection[Expression profile of a gene by group]{Expression profile of a
+gene by group}
 
 \subsubsection[Using the unique feature identifier]{Using the unique feature
 identifier}
@@ -503,6 +504,45 @@ features associated with the given gene symbol are plotted simultaneously in
 the lattice. Subsequently, each of the sub-figures plotted may be re-plotted by
 itself using the \texttt{index} argument as indicated in the accompanying
 message printed in the R console.
+
+\subsection[Expression profile of a gene by individual sample series]{
+Expression profile of a gene by individual sample series}
+
+\subsubsection[Using the unique feature identifier]{Using the unique feature
+identifier}
+
+It may be useful to track and visualise the expression profile of genes in
+each individual sample series, rather than their average. This could help
+identify outliers within sample groups, or visually compare paired samples, for
+instance.
+
+In the \texttt{AlvMac} dataset, samples from each of the animals were
+subjected to all three treatments in parallel (i.e. paired samples). In the
+figure below, a sample series is defined by a given \texttt{Animal} and a given
+\texttt{Treatment}. Each sample series is then tracked over time:
+
+\begin{center}
+<<echo=FALSE>>=
+AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
+@
+<<fig=TRUE>>=
+expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
+                    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
+                    linetypeF="Animal",
+                    legend.title.size=10, legend.text.size=10,
+                    legend.key.size=15)
+@
+\end{center}
+
+In the figure above, the \texttt{linetypeF} highlights samples from an
+animal which start at unusually high expression values, while they
+progressively return to expression values similar to other samples in their
+respective treatment groups.
+
+If omitted, the \texttt{linetypeF} argument will match the colour
+
+may be omitted for clarity if the identity of each
+
 
 
 \subsection[Comparison of univariate effects on gene expression]{Comparison of

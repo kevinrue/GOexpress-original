@@ -1,14 +1,27 @@
 RELEASE 0.99.5:
 
+    NEW FEATURES:
+
+    * expression_profiles() method plots the expression profiles of individual
+samples series, as opposed to grouped samples series handled by 
+expression_plot functions.
+
     UPDATED FEATURES:
     
     * VennDiagram can print to screen, if filename argument is set to NULL 
 (Default).
 
-    * heatmap_GO and cluter_GO can resize title font and wrap the text on
-several lines.
+    * heatmap_GO, cluter_GO and plot_design can resize title font and wrap the
+text on several lines.
+
+    * expression_plot and expression_plot_symbol can orient X axis labels at
+a given angle.
+
+    GENERAL UPDATES:
 
     * User's Guide updated.
+
+    * List of contributors updated in User's Guide and DESCRIPTION.
 
 
 RELEASE 0.99.4:

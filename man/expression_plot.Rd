@@ -53,7 +53,7 @@ expression_plot(
     ...).
     }
     \item{ylab}{
-    Change axis labels and legend titles.
+    Title of the Y-axis. Default is "log2(cpm)".
     }
     \item{col.palette}{
     A valid \code{RColorBrewer} palette name to fetch the colormap from.
@@ -91,14 +91,8 @@ expression_plot(
     Changes the font size of the legend text labels. Default is 15.
     }
     \item{legend.key.size}{
-    Changes the size of the legend keys. Default is 30.
+    Changes the size of the legend keys (in points). Default is 30.
     }
-}
-
-\details{
-If the \code{result} argument is not specified and no custom title is
-specified either, the function will combine the feature identifier and the
-associated gene name.
 }
 
 \value{
@@ -122,18 +116,16 @@ Kevin Rue-Albrecht
       \item It may not be possible to produce plots where the combination of
       X-axis variable and grouping factor leaves too few replicates to compute
     a confidence interval for each X value. This is a limitation imposed by the
-    ggplot2 package to produce proper statistics and confidence intervals.
+    ggplot2 package to produce proper statistics and confidence intervals. In
+    such cases, it may be preferrable to use the expression_profiles() method.
     }
 }
 
 \seealso{
     Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
     , methods
-    \code{\link[GOexpress:expression_plot_symbol]{
-    expression_plot_symbol}}
-    and
-    \code{\link[GOexpress:expression_plot_symbol]{
-    expression_plot_symbol}}.
+    \code{\link[GOexpress:expression_plot_symbol]{expression_plot_symbol}} and
+  \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
 
 \examples{

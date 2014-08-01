@@ -24,7 +24,7 @@ cluster_GO <- function(
     # Rows are samples, label them according to the user's chosen factor
     sample_labels <- pData(eSet)[,f]
     # Save the current plotting parameters
-    op <- par(no.readonly = TRUE)
+    op <- par(no.readonly=TRUE)
     # whatever happens, restore original setting when leaving function
     on.exit(par(op))
     # Change the font size of the title
@@ -34,8 +34,8 @@ cluster_GO <- function(
 
 expression_plot <- function(
     gene_id, result, eSet, x_var, 
-    f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
-    col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
+    f=result$factor, ylab="log2(cpm)", col.palette="Accent",
+    col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, title=NULL, title.size=2, axis.title.size=20,
     axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=15,
@@ -44,7 +44,7 @@ expression_plot <- function(
     if (!gene_id %in% rownames(eSet)){
         # suggest close matches if any
         matches <- agrep(pattern=gene_id, x=rownames(eSet),
-                        max.distance = 1, fixed=TRUE, value=TRUE)
+                        max.distance=1, fixed=TRUE, value=TRUE)
         if (length(matches) > 0){
             cat(gene_id, "not found in dataset. Did you mean:", fill=TRUE)
             return(matches)
@@ -72,15 +72,15 @@ expression_plot <- function(
                     X=pData(eSet)[,x_var])
     # Generate the plot
     gg <- ggplot(df) +
-        geom_smooth(aes(x=X, y=Expression, group = Factor,
-                                color = Factor, fill=Factor), level=level) +
+        geom_smooth(aes(x=X, y=Expression, group=Factor,
+                                color=Factor, fill=Factor), level=level) +
         labs(title=title, x=x_var, y=ylab) +
         theme(
-            plot.title = element_text(
-                            size = rel(title.size)),
+            plot.title=element_text(
+                            size=rel(title.size)),
             axis.title=element_text(size=axis.title.size),
             axis.text=element_text(size=axis.text.size),
-            axis.text.x=element_text(angle = axis.text.angle),
+            axis.text.x=element_text(angle=axis.text.angle),
             legend.text=element_text(size=legend.text.size),
             legend.title=element_text(size=legend.title.size),
             legend.key.size=unit(legend.key.size, "points")) +
@@ -93,7 +93,7 @@ expression_plot <- function(
 expression_plot_symbol <- function(
     gene_symbol, result, eSet, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
-    col = brewer.pal(n=length(levels(pData(
+    col=brewer.pal(n=length(levels(pData(
         eSet)[,f])), name=col.palette), level=0.95, titles=c(),
     title.size=2, axis.title.size=20, axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=20, legend.key.size=30){
@@ -189,7 +189,7 @@ expression_plot_symbol <- function(
                 plots[[i]] <- expression_plot(
                     gene_id=gene_ids_present[i],
                     eSet=eSet,
-                    x_var=x_var, result=result, f=f, ylab = "log2(cpm)",
+                    x_var=x_var, result=result, f=f, ylab="log2(cpm)",
                     col.palette="Accent", col=col, level=level,
                     title=titles[i], title.size=title.size,
                     axis.title.size=axis.title.size,
@@ -201,7 +201,7 @@ expression_plot_symbol <- function(
             }
             # Plot all the graphs in the optimised lattice, using the
             # feature-based plotting function
-            multiplot(plotlist = plots, cols = columns)
+            multiplot(plotlist=plots, cols=columns)
         }
         # If the user gave a non-zero index
         else{
@@ -218,7 +218,7 @@ expression_plot_symbol <- function(
                 expression_plot(
                     gene_id=gene_ids_present[index],
                     eSet=eSet, x_var=x_var,
-                    result=result, f=f, ylab = "log2(cpm)",
+                    result=result, f=f, ylab="log2(cpm)",
                     col.palette="Accent", col=col, level=level,
                     title=titles[index], title.size=title.size,
                     axis.title.size=axis.title.size,
@@ -237,7 +237,7 @@ expression_plot_symbol <- function(
         expression_plot(
             gene_id=gene_ids_present,
             eSet=eSet, x_var=x_var, 
-            result=result, f=f, ylab = ylab, col.palette="Accent", col = col,
+            result=result, f=f, ylab=ylab, col.palette="Accent", col=col,
             level=level, title=titles, title.size=title.size,
             axis.title.size=axis.title.size,
             axis.text.size=axis.text.size,
@@ -248,7 +248,69 @@ expression_plot_symbol <- function(
     }
 }
 
-
+expression_profiles <- function(
+    gene_id, result, eSet, x_var, seriesF,
+    colourF=result$factor, linetypeF=colourF, line.size=1.5,
+    ylab="log2(cpm)", col.palette="Accent",
+    col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
+                     name=col.palette),
+    lty=1:length(levels(pData(eSet)[,linetypeF])),
+    title=NULL, title.size=2, axis.title.size=20,
+    axis.text.size=15, axis.text.angle=0,
+    legend.title.size=20, legend.text.size=15,
+    legend.key.size=30){
+    # if the feature identifier is absent from the dataset
+    if (!gene_id %in% rownames(eSet)){
+        # suggest close matches if any
+        matches <- agrep(pattern=gene_id, x=rownames(eSet),
+                         max.distance=1, fixed=TRUE, value=TRUE)
+        if (length(matches) > 0){
+            cat(gene_id, "not found in dataset. Did you mean:", fill=TRUE)
+            return(matches)
+        }
+        else{
+            cat(gene_id, "not found in dataset. No close match either.")
+            return()
+        }
+    }
+    # if the result variable provided does not contain the essential slot
+    if (! "genes" %in% names(result)){
+        # return an error and stop
+        stop("\"result=\" argument does not look like a GO_analyse output.")
+    }
+    # If the X variable requested does not exist in the sample annotations
+    if (! x_var %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
+    }
+    # Build the title message from the combination of gene_id and gene_symbol
+    title <- paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
+    # Assemble a data frame containing the necessary information for ggplot
+    df <- data.frame(Expression=exprs(eSet)[gene_id,],
+                    X=pData(eSet)[,x_var],
+                    Profile=pData(eSet)[,seriesF],
+                    LineType=pData(eSet)[,linetypeF],
+                    Colour=pData(eSet)[,colourF])
+    # Generate the plot
+    gg <- ggplot(data=df) +
+        geom_line(aes(x=X, y=Expression, group=Profile, linetype=LineType,
+                    colour=Colour), size=line.size) +
+        labs(title=title, x=x_var, y=ylab) +
+        theme(
+            plot.title=element_text(
+                size=rel(title.size)),
+            axis.title=element_text(size=axis.title.size),
+            axis.text=element_text(size=axis.text.size),
+            axis.text.x=element_text(angle=axis.text.angle),
+            legend.text=element_text(size=legend.text.size), 
+            legend.title=element_text(size=legend.title.size),
+            plot.title=element_text(size=rel(2)),
+            legend.key.size=unit(legend.key.size, "points")) +
+        scale_colour_manual(values=col, name=colourF) + 
+        scale_linetype_manual(values=lty, name=linetypeF)
+    # Return the plot
+    return(gg)
+}
 
 heatmap_GO <- function(
     go_id, result, eSet, gene_names=TRUE,
@@ -287,7 +349,7 @@ heatmap_GO <- function(
     # A vector detailing the color of each sample must be prepared
     samples.col <- row.col[as.factor(pData(eSet)[,f])]
     # Save the current plotting parameters
-    op <- par(no.readonly = TRUE)
+    op <- par(no.readonly=TRUE)
     # whatever happens, restore original setting when leaving function
     on.exit(par(op))
     # Change the font size of the title
@@ -361,7 +423,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
         # ncol: Number of columns of plots
         # nrow: Number of rows needed, calculated from # of cols
         layout <- matrix(seq(1, cols * ceiling(numPlots/cols)), byrow=TRUE,
-                        ncol = cols, nrow = ceiling(numPlots/cols))
+                        ncol=cols, nrow=ceiling(numPlots/cols))
     }
     
     if (numPlots==1) {
@@ -370,16 +432,16 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     } else {
         # Set up the page
         grid.newpage()
-        pushViewport(viewport(layout = grid.layout(nrow(layout),
+        pushViewport(viewport(layout=grid.layout(nrow(layout),
                                                     ncol(layout))))
         
         # Make each plot, in the correct location
         for (i in 1:numPlots) {
             # Get the i,j matrix positions of the regions that contain this
             # subplot
-            matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-            print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                            layout.pos.col = matchidx$col))
+            matchidx <- as.data.frame(which(layout == i, arr.ind=TRUE))
+            print(plots[[i]], vp=viewport(layout.pos.row=matchidx$row,
+                                            layout.pos.col=matchidx$col))
         }
     }
 }
@@ -403,7 +465,7 @@ overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
     }
     # generate the venn diagram (potentially to a file)
     venn <- venn.diagram(x=gene_sets, filename=filename,
-                         category.names = go_ids, mar=mar, ...)
+                         category.names=go_ids, mar=mar, ...)
     # If no filename was given
     if (is.null(filename)){
         # Print the venn diagram to the screen

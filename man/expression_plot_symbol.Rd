@@ -61,7 +61,7 @@ expression_plot_symbol(
     second feature identifier alone, for instance.
     }
     \item{ylab}{
-    Change axis labels and legend titles.
+    Title of the Y-axis. Default is "log2(cpm)".
     }
     \item{col.palette}{
     A valid \code{RColorBrewer} palette name to fetch the colormap from.
@@ -100,7 +100,7 @@ expression_plot_symbol(
     Changes the font size of the legend text labels. Default is 15.
     }
     \item{legend.key.size}{
-    Changes the size of the legend keys. Default is 30.
+    Changes the size of the legend keys (in points). Default is 30.
     }
 }
 
@@ -125,7 +125,9 @@ Kevin Rue-Albrecht
     \item It may not be possible to produce plots where the combination of
     X-axis variable and grouping factor leaves too few replicates to compute
     a confidence interval for each X value. This is a limitation imposed by the
-    ggplot2 package to produce proper statistics and confidence intervals.
+    ggplot2 package to produce proper statistics and confidence intervals. In
+    such cases, it may be preferrable to use the expression_profiles_symbol()
+    method.
     }
 }
 
