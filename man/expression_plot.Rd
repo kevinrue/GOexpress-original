@@ -19,7 +19,8 @@ expression_plot(
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, title=NULL, title.size=2, axis.title.size=20,
-    axis.text.size=15, legend.title.size=20, legend.text.size=15,
+    axis.text.size=15, axis.text.angle=0,
+    legend.title.size=20, legend.text.size=15,
     legend.key.size=30)
 }
 
@@ -79,6 +80,9 @@ expression_plot(
     }
     \item{axis.text.size}{
     Changes the font size of the axes text labels. Default is 15.
+    }
+    \item{axis.text.angle}{
+    Changes the angle of the X axis text labels. Default is 0 (horizontal).
     }
     \item{legend.title.size}{
     Changes the font size of the legend title. Default is 20.

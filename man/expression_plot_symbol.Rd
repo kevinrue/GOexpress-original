@@ -23,7 +23,7 @@ expression_plot_symbol(
     index=0, ylab="log2cpm", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(
         eSet)[,f])), name=col.palette), level=0.95, titles=c(),
-    title.size=2, axis.title.size=20, axis.text.size=15,
+    title.size=2, axis.title.size=20, axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=20, legend.key.size=30)
 }
 
@@ -89,6 +89,9 @@ expression_plot_symbol(
     }
     \item{axis.text.size}{
     Changes the font size of the axes text labels. Default is 15.
+    }
+    \item{axis.text.angle}{
+    Changes the angle of the X axis text labels. Default is 0 (horizontal).
     }
     \item{legend.title.size}{
     Changes the font size of the legend title. Default is 20.

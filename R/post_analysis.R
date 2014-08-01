@@ -37,7 +37,8 @@ expression_plot <- function(
     f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, title=NULL, title.size=2, axis.title.size=20,
-    axis.text.size=15, legend.title.size=20, legend.text.size=15,
+    axis.text.size=15, axis.text.angle=0,
+    legend.title.size=20, legend.text.size=15,
     legend.key.size=30){
     # if the feature identifier is absent from the dataset
     if (!gene_id %in% rownames(eSet)){
@@ -79,6 +80,7 @@ expression_plot <- function(
                             size = rel(title.size)),
             axis.title=element_text(size=axis.title.size),
             axis.text=element_text(size=axis.text.size),
+            axis.text.x=element_text(angle = axis.text.angle),
             legend.text=element_text(size=legend.text.size),
             legend.title=element_text(size=legend.title.size),
             legend.key.size=unit(legend.key.size, "points")) +
@@ -87,14 +89,14 @@ expression_plot <- function(
     # Return the plot
     return(gg)
 }
-
+axis.text.x=element_text(angle = -90, hjust = 0)
 
 expression_plot_symbol <- function(
     gene_symbol, result, eSet, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
     col = brewer.pal(n=length(levels(pData(
         eSet)[,f])), name=col.palette), level=0.95, titles=c(),
-    title.size=2, axis.title.size=20, axis.text.size=15,
+    title.size=2, axis.title.size=20, axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=20, legend.key.size=30){
     # if the result provided does not look like it should
     if (! "genes" %in% names(result)){
@@ -193,6 +195,7 @@ expression_plot_symbol <- function(
                     title=titles[i], title.size=title.size,
                     axis.title.size=axis.title.size,
                     axis.text.size=axis.text.size,
+                    axis.text.x=element_text(angle = axis.text.angle),
                     legend.text.size=legend.text.size,
                     legend.title.size=legend.title.size,
                     legend.key.size=legend.key.size)
@@ -221,6 +224,7 @@ expression_plot_symbol <- function(
                     title=titles[index], title.size=title.size,
                     axis.title.size=axis.title.size,
                     axis.text.size=axis.text.size,
+                    axis.text.x=element_text(angle = axis.text.angle),
                     legend.text.size=legend.text.size,
                     legend.title.size=legend.title.size,
                     legend.key.size=legend.key.size)
@@ -238,6 +242,7 @@ expression_plot_symbol <- function(
             level=level, title=titles, title.size=title.size,
             axis.title.size=axis.title.size,
             axis.text.size=axis.text.size,
+            axis.text.x=element_text(angle = axis.text.angle),
             legend.text.size=legend.text.size,
             legend.title.size=legend.title.size,
             legend.key.size=legend.key.size)
