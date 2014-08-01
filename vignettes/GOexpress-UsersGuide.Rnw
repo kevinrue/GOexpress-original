@@ -689,7 +689,8 @@ different predefined groups of samples.
 Conception and development of the \texttt{GOexpress} package was carried out
 by KR-A with contributions by PAM, under the supervision of SVG and DEM.
 Integration of the random forest statistical frameworks was advised by BH and
-AP. This User's Guide was prepared and edited by KR-A, PAM, DEM.
+AP. This User's Guide was prepared and edited by KR-A, PAM, BH, AP, SVG, and
+DEM.
 
 \subsection[Acknowledgement]{Acknowledgments}
 
