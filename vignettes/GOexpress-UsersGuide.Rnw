@@ -522,10 +522,8 @@ figure below, a sample series is defined by a given \texttt{Animal} and a given
 \texttt{Treatment}. Each sample series is then tracked over time:
 
 \begin{center}
-<<echo=FALSE>>=
-AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
-@
 <<fig=TRUE>>=
+AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
                     eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
                     linetypeF="Animal",
