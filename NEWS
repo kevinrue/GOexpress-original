@@ -6,6 +6,10 @@ RELEASE 0.99.5:
 samples series, as opposed to grouped samples series handled by 
 expression_plot functions.
 
+    * expression_profiles_symbol() method plots the expression profiles of
+individual samples series using a gene name instead of an Ensembl gene
+identifier.
+
     UPDATED FEATURES:
     
     * VennDiagram can print to screen, if filename argument is set to NULL 

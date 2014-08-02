@@ -33,13 +33,12 @@ cluster_GO <- function(
 }
 
 expression_plot <- function(
-    gene_id, result, eSet, x_var, 
-    f=result$factor, ylab="log2(cpm)", col.palette="Accent",
+    gene_id, result, eSet, x_var, f=result$factor,
+    ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, title=NULL, title.size=2, axis.title.size=20,
     axis.text.size=15, axis.text.angle=0,
-    legend.title.size=20, legend.text.size=15,
-    legend.key.size=30){
+    legend.title.size=20, legend.text.size=15, legend.key.size=30){
     # if the feature identifier is absent from the dataset
     if (!gene_id %in% rownames(eSet)){
         # suggest close matches if any
@@ -93,9 +92,9 @@ expression_plot <- function(
 expression_plot_symbol <- function(
     gene_symbol, result, eSet, x_var, f=result$factor,
     index=0, ylab="log2cpm", col.palette="Accent",
-    col=brewer.pal(n=length(levels(pData(
-        eSet)[,f])), name=col.palette), level=0.95, titles=c(),
-    title.size=2, axis.title.size=20, axis.text.size=15, axis.text.angle=0,
+    col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
+    level=0.95, titles=c(), title.size=2, axis.title.size=20,
+    axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=20, legend.key.size=30){
     # if the result provided does not look like it should
     if (! "genes" %in% names(result)){
@@ -189,7 +188,7 @@ expression_plot_symbol <- function(
                 plots[[i]] <- expression_plot(
                     gene_id=gene_ids_present[i],
                     eSet=eSet,
-                    x_var=x_var, result=result, f=f, ylab="log2(cpm)",
+                    x_var=x_var, result=result, f=f, ylab=ylab,
                     col.palette="Accent", col=col, level=level,
                     title=titles[i], title.size=title.size,
                     axis.title.size=axis.title.size,
@@ -218,7 +217,7 @@ expression_plot_symbol <- function(
                 expression_plot(
                     gene_id=gene_ids_present[index],
                     eSet=eSet, x_var=x_var,
-                    result=result, f=f, ylab="log2(cpm)",
+                    result=result, f=f, ylab=ylab,
                     col.palette="Accent", col=col, level=level,
                     title=titles[index], title.size=title.size,
                     axis.title.size=axis.title.size,
@@ -237,7 +236,7 @@ expression_plot_symbol <- function(
         expression_plot(
             gene_id=gene_ids_present,
             eSet=eSet, x_var=x_var, 
-            result=result, f=f, ylab=ylab, col.palette="Accent", col=col,
+            result=result, f=f, ylab=ylab, col.palette=col.palette, col=col,
             level=level, title=titles, title.size=title.size,
             axis.title.size=axis.title.size,
             axis.text.size=axis.text.size,
@@ -310,6 +309,168 @@ expression_profiles <- function(
         scale_linetype_manual(values=lty, name=linetypeF)
     # Return the plot
     return(gg)
+}
+
+expression_profiles_symbol <- function(
+    gene_symbol, result, eSet, x_var, seriesF,
+    colourF=result$factor, linetypeF=colourF, line.size=1.5,
+    ylab="log2(cpm)", col.palette="Accent",
+    col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
+                   name=col.palette),
+    lty=1:length(levels(pData(eSet)[,linetypeF])),
+    titles=c(), title.size=2, axis.title.size=20,
+    axis.text.size=15, axis.text.angle=0,
+    legend.title.size=20, legend.text.size=15,
+    legend.key.size=30){
+    # if the result provided does not look like it should
+    if (! "genes" %in% names(result)){
+        stop("\"result=\" argument does not look like a GO_analyse output.")
+    }
+    # If the X variable requested does not exist in the sample annotations
+    if (! x_var %in% colnames(pData(eSet))){
+        stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
+    }
+    # the GO_analyse result provided contains the annotation of each feature
+    # identifier present in the dataset to a gene name, if any
+    cat("Fetching feature identifier(s) annotated to", gene_symbol, "...",
+        fill=TRUE)
+    mapping <- data.frame(gene_id=rownames(result$genes), 
+                          external_gene_id=result$genes$external_gene_id,
+                          stringsAsFactors=FALSE)
+    # if the gene name is absent from the mapping table
+    if(!gene_symbol %in% mapping$external_gene_id){
+        # suggest close matches if any
+        matches <- agrep(pattern=gene_symbol, x=mapping$external_gene_id,
+                         fixed=TRUE, value=TRUE)
+        # if we do have one or more close matches to the symbol
+        if (length(matches) > 0){
+            # list them to the user for help and stop the function
+            cat(gene_symbol, "not found in dataset. Did you mean:", fill=TRUE)
+            return(matches)
+        }
+        # if we don't have close matches in the dataset, tell the user and stop
+        # the function
+        else{
+            stop(paste(gene_symbol,
+                       "not found in dataset. No close match either."))
+        }
+    }
+    # At this stage we know the gene symbol has at least one corresponding
+    # feature identifier in the Ensembl BioMart, fetch all identifier(s)
+    # corresponding to that gene symbol
+    gene_ids <- mapping[mapping$external_gene_id == gene_symbol, "gene_id"]
+    # However, we still don't know how many of those identifiers are present in
+    # the expression dataset. Remove the feature identifiers absent from our
+    # dataset as we cannot plot them
+    gene_ids_present <- gene_ids[gene_ids %in% rownames(eSet)]
+    # If none of the feature identifiers are present in the dataset
+    if (length(gene_ids_present) == 0){
+        cat("Feature identifiers were found for", gene_symbol, "\n",
+            "but none of them were found in the expression dataset.\n",
+            "Feature identifiers were:")
+        return(gene_ids)
+    }
+    # At this stage we are finally sure that at least one of the feature
+    # identifiers corresponding to the gene name are also present in the
+    # expression dataset. This is the best moment to generate as many titles as
+    # there are feature identifier(s) annotated to the given gene symbol
+    # If the user left the default vector of titles (empty)
+    if (is.null(titles)){
+        # Create a smart title for each plot
+        for (ensembl in gene_ids_present){
+            titles <- c(titles, paste(gene_symbol, " = ", ensembl))
+        }
+    }
+    # If the user changed the default vector of titles
+    else{
+        # if the number of titles does not match the number of plots
+        if(length(titles) != length(gene_ids_present)){
+            # return an error and stop
+            stop("The number of titles (", length(titles),
+                 ") does not match the number of plots (",
+                 length(gene_ids_present), ").")
+        }
+    }
+    # If there are strictly more than 1 gene id associated with the gene symbol
+    if (length(gene_ids_present) > 1){
+        # Tell the user
+        cat("Multiple gene ids found for", gene_symbol, fill=TRUE)
+        cat("Indices are:", fill=TRUE)
+        print(gene_ids_present)
+        # if the user did not change the default index value (0)
+        # the function will plot all Ensembl ids in a lattice
+        if (index==0){
+            # A first time user might not know that how to plot a single plot
+            cat("Use argument \"index=1\" to plot the first gene id alone,",
+                "and so on.", fill=TRUE)
+            # Prepare a grid to plot multiple graphs while optimising the
+            # number of columns and rows
+            columns <- ceiling(sqrt(length(gene_ids_present)))
+            # Store all the plots in a list
+            plots <- list()
+            for (i in seq(1,length(gene_ids_present))){
+                cat("Plotting", gene_ids_present[i], fill=TRUE)
+                plots[[i]] <- expression_profiles(
+                    gene_id=gene_ids_present[i], result=result, eSet=eSet,
+                    x_var=x_var, seriesF=seriesF, colourF=result$factor,
+                    linetypeF=linetypeF, line.size=line.size,
+                    ylab=ylab, col.palette=col.palette,
+                    col=col, lty=lty, title=titles[i], title.size=title.size,
+                    axis.title.size=axis.title.size,
+                    axis.text.size=axis.text.size,
+                    axis.text.angle=axis.text.angle,
+                    legend.title.size=legend.title.size,
+                    legend.text.size=legend.text.size,
+                    legend.key.size=legend.key.size)
+            }
+            # Plot all the graphs in the optimised lattice, using the
+            # feature-based plotting function
+            multiplot(plotlist=plots, cols=columns)
+        }
+        # If the user gave a non-zero index
+        else{
+            # If the index is out of bound
+            if (abs(index) > length(gene_ids_present)){
+                # Return an error
+                print("Index is out of bound.")
+                cat("Indices are:", fill=TRUE)
+            }
+            # If the index is acceptable
+            else{
+                # Plot the corresponding graph
+                cat("Plotting", gene_ids_present[index], fill=TRUE)
+                expression_profiles(
+                    gene_id=gene_ids_present[index], result=result, eSet=eSet,
+                    x_var=x_var, seriesF=seriesF, colourF=result$factor,
+                    linetypeF=linetypeF, line.size=line.size,
+                    ylab=ylab, col.palette=col.palette,
+                    col=col, lty=lty, title=titles[i], title.size=title.size,
+                    axis.title.size=axis.title.size,
+                    axis.text.size=axis.text.size,
+                    axis.text.angle=axis.text.angle,
+                    legend.title.size=legend.title.size,
+                    legend.text.size=legend.text.size,
+                    legend.key.size=legend.key.size)
+            }
+        }
+    }
+    # If there is a unique gene id associated to the gene symbol
+    else{
+        cat("Unique gene id found for", gene_symbol, fill=TRUE)
+        cat("Plotting", gene_ids_present, fill=TRUE)
+        expression_profiles(
+            gene_id=gene_ids_present, result=result, eSet=eSet,
+            x_var=x_var, seriesF=seriesF, colourF=result$factor,
+            linetypeF=linetypeF, line.size=line.size,
+            ylab=ylab, col.palette=col.palette,
+            col=col, lty=lty, title=titles[i], title.size=title.size,
+            axis.title.size=axis.title.size,
+            axis.text.size=axis.text.size,
+            axis.text.angle=axis.text.angle,
+            legend.title.size=legend.title.size,
+            legend.text.size=legend.text.size,
+            legend.key.size=legend.key.size)
+    }
 }
 
 heatmap_GO <- function(

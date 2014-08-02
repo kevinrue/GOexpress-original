@@ -84,7 +84,7 @@ accompanying the corresponding package functions for further details.
 
 Installing \texttt{GOexpress} should be as easy as running the two lines below:
 
-<<>>=
+<<eval=FALSE>>=
 source("http://bioconductor.org/biocLite.R")
 biocLite("GOexpress")
 @
@@ -519,29 +519,53 @@ instance.
 In the \texttt{AlvMac} dataset, samples from each of the animals were
 subjected to all three treatments in parallel (i.e. paired samples). In the
 figure below, a sample series is defined by a given \texttt{Animal} and a given
-\texttt{Treatment}. Each sample series is then tracked over time:
+\texttt{Treatment}. Each sample series is then tracked over time, and coloured
+according to the \texttt{Treatment} factor (default, factor stored in
+\texttt{raw\_results\$factor}):
 
 \begin{center}
 <<fig=TRUE>>=
-AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
+AlvMac$Animal.Treatment = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
-                    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
-                    linetypeF="Animal",
+                    eSet=AlvMac, x_var = "Timepoint",
+                    seriesF="Animal.Treatment", linetypeF="Animal",
                     legend.title.size=10, legend.text.size=10,
                     legend.key.size=15)
 @
 \end{center}
 
-In the figure above, the \texttt{linetypeF} highlights samples from an
-animal which start at unusually high expression values, while they
+In the figure above, the \texttt{linetypeF} helps to highlight samples from an
+animal which start at unusually high expression values, while those samples
 progressively return to expression values similar to other samples in their
 respective treatment groups.
 
-If omitted, the \texttt{linetypeF} argument will match the colour
+If omitted, the \texttt{linetypeF} argument will mirror the \texttt{colourF},
+which can be useful for colour-blind people. Alternatively, a single line-type
+can be applied to all groups using the \texttt{argument} as follows:
 
-may be omitted for clarity if the identity of each
+\begin{center}
+<<fig=TRUE>>=
+expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
+                    eSet=AlvMac, x_var = "Timepoint", lty=rep(1,10),
+                    # use line-type 1 for all 10 groups
+                    seriesF="Animal.Treatment", linetypeF="Animal",
+                    legend.title.size=10, legend.text.size=10,
+                    legend.key.size=15)
+@
+\end{center}
 
+\subsubsection[Using the associated gene name]{Using the associated gene name}
 
+Similarly to the \texttt{expression\_plot} method, an alternative was
+implemented to use gene names instead of Ensembl gene identifiers. An example:
+
+<<fig=TRUE>>=
+expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
+                    linetypeF="Animal", line.size=1.5, eSet=AlvMac,
+                    seriesF="Animal.Treatment", x_var = "Timepoint",
+                    title.size=1.5, legend.title.size=10, legend.text.size=10,
+                    legend.key.size=30)
+@
 
 \subsection[Comparison of univariate effects on gene expression]{Comparison of
 univariate effects on gene expression}

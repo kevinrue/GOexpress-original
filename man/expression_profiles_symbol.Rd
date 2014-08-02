@@ -1,6 +1,6 @@
-\name{expression_profiles}
+\name{expression_profiles_symbol}
 
-\alias{expression_profiles}
+\alias{expression_profiles_symbol}
 
 \title{
 Plots the individual expression profile of a gene in samples series
@@ -15,20 +15,20 @@ in the \code{phenodata}.
 }
 
 \usage{
-expression_profiles(gene_id, result, eSet, x_var, seriesF,
+expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
     colourF = result$factor, linetypeF = colourF, line.size = 1.5,
     ylab = "log2(cpm)", col.palette = "Accent",
     col = brewer.pal(n = length(levels(pData(eSet)[, colourF])),
         name = col.palette),
     lty = 1:length(levels(pData(eSet)[, linetypeF])),
-    title = NULL, title.size = 2, axis.title.size = 20, axis.text.size = 15,
+    titles = c(), title.size = 2, axis.title.size = 20, axis.text.size = 15,
     axis.text.angle = 0, legend.title.size = 20, legend.text.size = 15,
     legend.key.size = 30)
 }
 
 \arguments{
-  \item{gene_id}{
-    An gene or probeset identifier present in \code{rownames(expr_data)}.
+  \item{gene_symbol}{
+    A gene name present in \code{rownames(raw_result$genes)}.
     }
     \item{result}{
     An output of the \code{GO_analyse()} or \code{subset_scores()} function.
@@ -83,8 +83,9 @@ expression_profiles(gene_id, result, eSet, x_var, seriesF,
     \code{linetypeF}. Default line types are
     \code{1:length(levels(pData(eSet)[, linetypeF]))}.
     }
-    \item{title}{
-    Changes the plot title. Default is a combination of the gene id and the
+    \item{titles}{
+    Character vector providing as many titles as there are plots to replace
+    the default titles. Default is a combination of the gene id and the
     associated gene.
     }
     \item{title.size}{
@@ -109,7 +110,7 @@ expression_profiles(gene_id, result, eSet, x_var, seriesF,
     Changes the size of the legend keys (in points). Default is 30.
     }
 }
-    
+
 \details{
 In order to track and visualise individual sample series, each sample in the
 \code{ExpressionSet} should be associated with a unique combination of
@@ -149,16 +150,17 @@ data(raw_results)
 
 AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 
-expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
-                    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
-                    legend.title.size=10, legend.text.size=10,
-                    legend.key.size=15)
+expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
+        linetypeF="Animal", line.size=1.5,
+        eSet=AlvMac, seriesF="Series", x_var = "Timepoint",
+        title.size=1.5, legend.title.size=10, legend.text.size=10,
+        legend.key.size=30)
 
-expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
-                    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
-                    linetypeF="Animal",
-                    legend.title.size=10, legend.text.size=10,
-                    legend.key.size=15)
+expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
+        linetypeF="Animal", line.size=1.5, lty=rep(1,10),
+        eSet=AlvMac, seriesF="Series", x_var = "Timepoint",
+        title.size=1.5, legend.title.size=10, legend.text.size=10,
+        legend.key.size=30)
 }
 
 \keyword{ GOexpress }
