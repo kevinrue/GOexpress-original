@@ -84,7 +84,7 @@ accompanying the corresponding package functions for further details.
 
 Installing \texttt{GOexpress} should be as easy as running the two lines below:
 
-<<eval=FALSE>>=
+<<>>=
 source("http://bioconductor.org/biocLite.R")
 biocLite("GOexpress")
 @
@@ -213,7 +213,7 @@ while respecting the relative distance between the time-points.
 
 \subsection[Main analysis]{Main analysis}
 
-In this example, we search for GO terms enriched in genes best clustering the
+In this example, we search for GO terms enriched in genes that cluster best the
 samples according their \texttt{Treatment} level. But first, let us make sure
 that the \texttt{Treatment} column of \texttt{pData(targets)} is indeed an R
 factor:
@@ -527,7 +527,7 @@ according to the \texttt{Treatment} factor (default, factor stored in
 <<fig=TRUE>>=
 AlvMac$Animal.Treatment = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
-                    eSet=AlvMac, x_var = "Timepoint",
+                    eSet=AlvMac, x_var = "Timepoint", line.size=1,
                     seriesF="Animal.Treatment", linetypeF="Animal",
                     legend.title.size=10, legend.text.size=10,
                     legend.key.size=15)
@@ -550,7 +550,7 @@ expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
                     # use line-type 1 for all 10 groups
                     seriesF="Animal.Treatment", linetypeF="Animal",
                     legend.title.size=10, legend.text.size=10,
-                    legend.key.size=15)
+                    legend.key.size=15, line.size=1)
 @
 \end{center}
 
@@ -561,10 +561,10 @@ implemented to use gene names instead of Ensembl gene identifiers. An example:
 
 <<fig=TRUE>>=
 expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
-                    linetypeF="Animal", line.size=1.5, eSet=AlvMac,
-                    seriesF="Animal.Treatment", x_var = "Timepoint",
+                    x_var = "Timepoint", linetypeF="Animal", line.size=1,
+                    eSet=AlvMac, lty=rep(1,10), seriesF="Animal.Treatment", 
                     title.size=1.5, legend.title.size=10, legend.text.size=10,
-                    legend.key.size=30)
+                    legend.key.size=15)
 @
 
 \subsection[Comparison of univariate effects on gene expression]{Comparison of
@@ -661,7 +661,7 @@ BP.5.byScore <- rerank(result = BP.5, rank.by = "score")
 ontology-based, visualisation functions. Following the integration of those
 various plotting functions at the core of the \texttt{GOexpress} package, the
 need for a ranking of genes and GO terms soon became apparent in order to
-rapidly identify those best clustering the samples according to the
+rapidly identify those that best cluster the samples according to the
 experimental factor studied, resulting in the clearest dendrograms and
 heatmaps. A two-fold procedure was implemented:
 \begin{enumerate}
@@ -684,7 +684,7 @@ heatmaps. A two-fold procedure was implemented:
 
 Importantly, the statistics performed to rank GO terms and genes do \emph{not}
 influence the behaviour of the subsequent plotting functions; heatmaps,
-clustering trees and gene expression profiles are purely driven by the
+dendrograms and gene expression profiles are purely driven by the
 expression data, sample phenotype annotations provided and GO terms ontologies
 imported from the Ensembl BioMart server, without any transformation applied to
 the data. Therefore, users are encouraged to use and suggest alternative
@@ -700,7 +700,7 @@ does each gene in the dataset cluster predefined groups of samples?''. Given a
 number of trees (dendrograms) to build using the samples in the dataset and a
 number of genes to sample from the dataset to build those trees, the
 \texttt{randomForest} R package evaluates the ``importance'' of each gene in
-the clustering of the predefined groups of samples; genes clustering sample
+the clustering of the predefined groups of samples; genes that cluster samples
 well will have a higher importance than genes randomly clustering samples from
 the various groups.  Technically, \texttt{GOexpress} extracts the
 \texttt{MeanDecreaseGini} value from the \texttt{importance} slot of the
