@@ -101,6 +101,14 @@ the Y-axis.
 feature identifier(s) annotated to a gene symbol, given valid variable name for
 the X-axis and a grouping factor for the Y-axis.
 
+* expression_profiles() plots the individual expression profile of given sample
+series while colouring-coding each series according to its group; a more
+detailed alternative to expression_plot().
+
+* expression_profiles_symbol() plots the individual expression profile of given
+sample series while colouring-coding each series according to its group; a more
+detailed alternative to expression_plot_symbol().
+
 * plot_design() plots the univariate effect of each level of each
 factor available in the phenoData on the expression levels
 of genes associated with a GO term.
