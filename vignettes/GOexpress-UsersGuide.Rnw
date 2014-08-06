@@ -181,7 +181,7 @@ library(GOexpress) # load the GOexpress package
 @
 
 Now, the expression matrix and phenotypic data of the \texttt{ExpressionSet}
-container can be access using dedicated methods from the \texttt{Biobase}
+container can be accessed using dedicated methods from the \texttt{Biobase}
 package:
 
 <<>>=
@@ -241,6 +241,13 @@ associated genes:
 <<>>=
 raw_results <- GO_analyse(eSet = AlvMac, f = "Treatment")
 @
+
+At this stage, it is a good idea to save the result variable into an R 
+data-file using the \texttt{save} function. Firstly, because the stochastic
+aspect of the sampling approach implemented by the \texttt{randomForest}
+package may return slightly different scores in each run (as opposed to the
+ANOVA scores). Secondly, because the BioMart web service may occasionally be
+temporarily down, disabling this essential step of the analysis.
 
 Note that the above command does not specify which species the data originated
 from. As mentioned in the output messages, the first feature identifier in the
@@ -597,7 +604,7 @@ advanced functions}
 Often, the top-ranked cellular functions identified by pathway analysis and
 gene-set enrichment analysis tools may significantly overlap each other in
 terms of genes, which limits the number of genes identified by those approaches
-and blurring the precise cellular function represented by the core gene-set
+and blurrs the precise cellular function represented by the core gene-set
 among a list of closely related yet different functions.
 
 Typically, overlapping sets are representated as Venn diagrams. The example
@@ -620,7 +627,7 @@ corresponding R documentation file.
 
 Users might be interested in the general distribution of score and rank
 statistics produced by \texttt{GOexpress}. The distribution of scores may be
-represented as an histogram:
+represented as a histogram:
 
 \begin{center}
 <<fig=TRUE>>=
@@ -638,7 +645,7 @@ quantiles_scores(result = BP.5)
 \subsection[Reordering by score]{Reordering by score}
 
 While scores are more prone to extreme outlier values and may slightly
-fluctuate between multiple runs of the random forest algorithm, ranks of genes
+fluctuate between multiple runs of the random forest algorithm; ranks of genes
 and subsequently average ranks of GO terms are less prone to such variations
 and may be more reliable estimators of the importance of genes and cellular
 functions. Therefore, the default behaviour of \texttt{GOexpress} is to use the
@@ -696,29 +703,25 @@ in section \ref{sec:Filtering}.
 \subsection[Random Forest]{Random Forest}
 
 We implemented the Random Forest framework to answer the question: ``How well
-does each gene in the dataset cluster predefined groups of samples?''. Given a
-number of trees (dendrograms) to build using the samples in the dataset and a
-number of genes to sample from the dataset to build those trees, the
-\texttt{randomForest} R package evaluates the ``importance'' of each gene in
-the clustering of the predefined groups of samples; genes that cluster samples
-well will have a higher importance than genes randomly clustering samples from
-the various groups.  Technically, \texttt{GOexpress} extracts the
-\texttt{MeanDecreaseGini} value from the \texttt{importance} slot of the
+does each gene in the dataset cluster predefined groups of samples?''. The
+random forest consists of multiple decision trees. Each tree is built based on
+a bootstrap sample (sample with replacement) of observations and a random
+sample of variables. The \texttt{randomForest} package first calculates the
+Gini index (Breiman et al, 1984) for each node in each tree. The Gini index
+is a measure of homogeneity from 0 (homogeneous) to 1 (heterogeneous). The
+decrease in the Gini index resulting from a split on a variable is then
+calculated for each node and averaged for each variable over all the trees in
+the model. The variable with the biggest mean decrease in the Gini index is
+then considered the most important. Technically, \texttt{GOexpress} extracts
+the \texttt{MeanDecreaseGini} value from the \texttt{importance} slot of the
 \texttt{randomForest} output and uses this value as the score for each gene.
-This score cannot be less than 0 (random clustering). The higher the mean
-decrease in Gini, the greater the power of the corresponding gene to partition
-the data into the predefined groups, with fewer ``out-of-bag'' (i.e.
-incorrectly clustered) samples.
 
 A key feature of the Random Forest framework is the implicit handling of
 interactions between genes, given a sufficient number of trees generated and
-genes sampled. Indeed, at each node in the dendrogram genes are sampled from
-the expression data and tested for their individual capacity to improve the
-partitioning reached using a particular gene set. For combinations of genes
-clustering well the predefined groups of samples, all the relevant genes will
-be given an accordingly high importance (i.e. score). The larger the number of
-trees and genes sampled, the more complete the coverage of interactions will
-be.
+genes sampled. Indeed, at each node in the decision tree, genes are sampled
+from the expression data and tested for their individual capacity to improve
+the partitioning reached in the previous node. The larger the number of trees
+and genes sampled, the more complete the coverage of interactions will be.
 
 \subsection[One-way Analysis of Variance (ANOVA)]{One-way Analysis of Variance
 (ANOVA)}
@@ -727,7 +730,7 @@ We implemented the ANOVA statistical framework to answer the question: "How
 different is the expression level of each gene in the dataset in the different
 groups of samples?". Given the expression level of a gene in all the samples,
 the one-way ANOVA determines the ratio of the variance between the groups
-compared to the variance within the groups, summarised in as an F statistic
+compared to the variance within the groups, summarised as an F statistic
 that \texttt{GOexpress} uses as a score for each gene. Simply put, if samples
 from the same groups show gene expression values similar to each other while
 samples from different groups show different levels of expression, those genes
@@ -735,7 +738,7 @@ will produce a higher score. This score cannot be less than 0 (variance between
 groups insignificant to variance within groups), while very large ratios can
 easily be reached for genes markedly different between groups.
 
-Contrary to the Random Forest framework, the Analysis of Variance makes
+Contrary to the random forest framework, the Analysis of Variance makes
 important assumptions on the data: namely, the independence of observations,
 the normality of residuals, and the equality of variances in all groups. While
 the former two are the responsibility of the user to verify, the latter is
@@ -743,7 +746,9 @@ taken care of by \texttt{GOexpress}. Indeed, the \texttt{oneway.test} method of
 the package \texttt{stats} is used with parameter \texttt{var.equal} set to to
 \texttt{FALSE}. While this reduces the sensitivity of the test, all genes are
 affected by this correction based on the relative amount of variance in the
-different predefined groups of samples.
+different predefined groups of samples. Finally, it is once again important to
+note that the ANOVA only evaluates univariate changes, while the random forest
+framework implicitely allows for interactions between genes.
 
 
 \section[Notes]{Notes}
