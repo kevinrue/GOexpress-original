@@ -49,8 +49,7 @@ expression_plot <- function(
             return(matches)
         }
         else{
-            cat(gene_id, "not found in dataset. No close match either.")
-            return()
+            stop(gene_id, "not found in dataset. No close match either.")
         }
     }
     # if the result variable provided does not contain the essential slot
@@ -268,8 +267,7 @@ expression_profiles <- function(
             return(matches)
         }
         else{
-            cat(gene_id, "not found in dataset. No close match either.")
-            return()
+            stop(gene_id, "not found in dataset. No close match either.")
         }
     }
     # if the result variable provided does not contain the essential slot
