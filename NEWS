@@ -12,14 +12,17 @@ identifier.
 
     UPDATED FEATURES:
     
-    * VennDiagram can print to screen, if filename argument is set to NULL 
+    * overlap_GO can print to screen, if filename argument is set to NULL 
 (Default).
 
     * heatmap_GO, cluter_GO and plot_design can resize title font and wrap the
-text on several lines.
+text on multiple lines.
 
     * expression_plot and expression_plot_symbol can orient X axis labels at
 a given angle.
+
+    * replaced return(NULL) statement by stop() when no close match is found to
+a gene name in the family of expression_plot functions.
 
     GENERAL UPDATES:
 
