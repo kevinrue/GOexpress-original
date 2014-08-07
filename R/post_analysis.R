@@ -251,7 +251,7 @@ expression_profiles <- function(
     colourF=result$factor, linetypeF=colourF, line.size=1.5,
     ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
-                     name=col.palette),
+                    name=col.palette),
     lty=1:length(levels(pData(eSet)[,linetypeF])),
     title=NULL, title.size=2, axis.title.size=20,
     axis.text.size=15, axis.text.angle=0,
@@ -261,7 +261,7 @@ expression_profiles <- function(
     if (!gene_id %in% rownames(eSet)){
         # suggest close matches if any
         matches <- agrep(pattern=gene_id, x=rownames(eSet),
-                         max.distance=1, fixed=TRUE, value=TRUE)
+                            max.distance=1, fixed=TRUE, value=TRUE)
         if (length(matches) > 0){
             cat(gene_id, "not found in dataset. Did you mean:", fill=TRUE)
             return(matches)
@@ -314,7 +314,7 @@ expression_profiles_symbol <- function(
     colourF=result$factor, linetypeF=colourF, line.size=1.5,
     ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
-                   name=col.palette),
+                    name=col.palette),
     lty=1:length(levels(pData(eSet)[,linetypeF])),
     titles=c(), title.size=2, axis.title.size=20,
     axis.text.size=15, axis.text.angle=0,
@@ -333,13 +333,13 @@ expression_profiles_symbol <- function(
     cat("Fetching feature identifier(s) annotated to", gene_symbol, "...",
         fill=TRUE)
     mapping <- data.frame(gene_id=rownames(result$genes), 
-                          external_gene_id=result$genes$external_gene_id,
-                          stringsAsFactors=FALSE)
+                            external_gene_id=result$genes$external_gene_id,
+                            stringsAsFactors=FALSE)
     # if the gene name is absent from the mapping table
     if(!gene_symbol %in% mapping$external_gene_id){
         # suggest close matches if any
         matches <- agrep(pattern=gene_symbol, x=mapping$external_gene_id,
-                         fixed=TRUE, value=TRUE)
+                            fixed=TRUE, value=TRUE)
         # if we do have one or more close matches to the symbol
         if (length(matches) > 0){
             # list them to the user for help and stop the function
@@ -350,7 +350,7 @@ expression_profiles_symbol <- function(
         # the function
         else{
             stop(paste(gene_symbol,
-                       "not found in dataset. No close match either."))
+                        "not found in dataset. No close match either."))
         }
     }
     # At this stage we know the gene symbol has at least one corresponding
@@ -385,8 +385,8 @@ expression_profiles_symbol <- function(
         if(length(titles) != length(gene_ids_present)){
             # return an error and stop
             stop("The number of titles (", length(titles),
-                 ") does not match the number of plots (",
-                 length(gene_ids_present), ").")
+                    ") does not match the number of plots (",
+                    length(gene_ids_present), ").")
         }
     }
     # If there are strictly more than 1 gene id associated with the gene symbol
@@ -624,7 +624,7 @@ overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
     }
     # generate the venn diagram (potentially to a file)
     venn <- venn.diagram(x=gene_sets, filename=filename,
-                         category.names=go_ids, mar=mar, ...)
+                            category.names=go_ids, mar=mar, ...)
     # If no filename was given
     if (is.null(filename)){
         # Print the venn diagram to the screen
@@ -654,7 +654,7 @@ plot_design <- function(
     GO_name <- result$GO[result$GO$go_id == go_id, "name_1006"]
     # Prepare a temporary data frame plot.design-friendly
     df <- data.frame(t(exprs(AlvMac)[gene_ids_present,]),
-                    pData(eSet)[,factors])
+                        pData(eSet)[,factors])
     # If no custom title was given
     if (main == ""){
         # Generate a smart one (careful: the same title will be used for all
@@ -753,9 +753,9 @@ subset_scores <- function(result, ...){
             }
             else{
                 stop("Valid values for filter ", filter, " are ",
-                     "\"biological_process\", \"BP\",",
-                     "\"molecular_function\", \"MF\",",
-                     "\"cellular_component\", and\"CC\".")
+                        "\"biological_process\", \"BP\",",
+                        "\"molecular_function\", \"MF\",",
+                        "\"cellular_component\", and\"CC\".")
             }
         }
         ## other filter names cause an error
@@ -772,7 +772,8 @@ subset_scores <- function(result, ...){
     result$GO <- result$GO[filtered$merge,]
     ## Subset the gene/GO mapping to keep only the GO terms left in the score
     ## table
-    result$mapping <- result$mapping[result$mapping$go_id %in% result$GO$go_id,]
+    result$mapping <- result$mapping[result$mapping$go_id %in%
+                                            result$GO$go_id,]
     ## Subset the anova table to keep only the genes annotated to the genes
     ## left in the mapping table
     result$genes <- result$genes[rownames(result$genes) %in%

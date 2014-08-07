@@ -86,21 +86,21 @@ GO_analyse <- function(eSet, f, biomart_dataset="",
                 cat("Loading requested microarray", microarray,
                     "from detected dataset", biomart_dataset, "...", fill=TRUE)
                 mart <- useMart(biomart="ensembl",
-                               dataset=biomart_dataset)
+                                dataset=biomart_dataset)
                 # Leave microarray to the current valid value
             }
             # if the microarray does not exist in the dataset
             else if(sum(microarray2dataset$microarray == microarray) == 0){
-                stop("Microarray name not recognised.
-                     See data(microarray2dataset).")
+                stop("Microarray name not recognised. ",
+                        "See data(microarray2dataset).")
             }
             # if the microarray name exists in multiple datasets
             else{
                 cat("Multiple datasets possible:", fill=TRUE)
                 print(microarray2dataset[microarray2dataset$microarray ==
                     microarray, c("dataset", "microarray")])
-                stop("Cannot guess dataset.
-                     Please use \"biomart_dataset=\" argument.")
+                stop("Cannot guess dataset. ",
+                        "Please use \"biomart_dataset=\" argument.")
             }
             }
     }
@@ -418,7 +418,7 @@ microarray_from_probeset <- function(sample_gene){
         # return (dataset, microarray) to the main function to build mapping
         # tables
         return(microarray2dataset[microarray2dataset$prefix == matches[1],
-                                  c("dataset","microarray")])
+                                    c("dataset","microarray")])
     }
     # If the sample gene was not recognised in the unique ones,
     # check whether it may be an ambiguous probeset identifier
@@ -438,7 +438,7 @@ microarray_from_probeset <- function(sample_gene){
         cat(sample_gene, "matches pattern", matches[1],
             "found in multiple microarrays:", fill=TRUE)
         print(microarray2dataset[microarray2dataset$prefix == matches[1], 
-                                    c("dataset","microarray")], row.names=FALSE)
+                c("dataset","microarray")], row.names=FALSE)
         return(FALSE)
     }
     # if no known microarray pattern matches, return FALSE
