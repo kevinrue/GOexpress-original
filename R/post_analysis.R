@@ -627,6 +627,8 @@ overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
                             category.names=go_ids, mar=mar, ...)
     # If no filename was given
     if (is.null(filename)){
+        # Erases the current window if any
+        grid.newpage()
         # Print the venn diagram to the screen
         grid.draw(venn)
     }
