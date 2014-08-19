@@ -16,14 +16,15 @@ in the \code{phenodata}.
 
 \usage{
 expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
-    colourF = result$factor, linetypeF = colourF, line.size = 1.5,
-    ylab = "log2(cpm)", col.palette = "Accent",
-    col = brewer.pal(n = length(levels(pData(eSet)[, colourF])),
-        name = col.palette),
-    lty = 1:length(levels(pData(eSet)[, linetypeF])),
-    titles = c(), title.size = 2, axis.title.size = 20, axis.text.size = 15,
-    axis.text.angle = 0, legend.title.size = 20, legend.text.size = 15,
-    legend.key.size = 30)
+    colourF=result$factor, linetypeF=colourF, line.size=1.5,
+    index=0, ylab="log2(cpm)", col.palette="Accent",
+    col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
+                    name=col.palette),
+    lty=1:length(levels(pData(eSet)[,linetypeF])),
+    titles=c(), title.size=2, axis.title.size=20,
+    axis.text.size=15, axis.text.angle=0,
+    legend.title.size=20, legend.text.size=15,
+    legend.key.size=30)
 }
 
 \arguments{
@@ -63,6 +64,11 @@ expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
     }
     \item{line.size}{
     The width of the plotted lines. Default is 1.5.
+    }
+    \item{index}{
+    In the case where multiple gene or probeset identifiers are associated with
+    the gene name, \code{index=2} will plot the expression profile of the
+    second feature identifier alone, for instance.
     }
     \item{ylab}{
     Title of the Y-axis. Default is "log2(cpm)".

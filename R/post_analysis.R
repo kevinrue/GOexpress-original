@@ -312,7 +312,7 @@ expression_profiles <- function(
 expression_profiles_symbol <- function(
     gene_symbol, result, eSet, x_var, seriesF,
     colourF=result$factor, linetypeF=colourF, line.size=1.5,
-    ylab="log2(cpm)", col.palette="Accent",
+    index=0, ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
                     name=col.palette),
     lty=1:length(levels(pData(eSet)[,linetypeF])),
