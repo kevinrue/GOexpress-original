@@ -1,3 +1,11 @@
+RELEASE 0.99.6:
+
+    UPDATED FEATURES:
+
+    * expression_profiles_symbol() method was missing the "index" argument to
+select the feature identifier to plot alone.
+
+
 RELEASE 0.99.5:
 
     NEW FEATURES:
