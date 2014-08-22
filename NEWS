@@ -1,3 +1,10 @@
+RELEASE 0.99.7:
+
+    UPDATED FEATURES:
+
+    * fixed a typo in the code of heatmap_GO which made it crash for any other
+dataset than the example dataset.
+
 RELEASE 0.99.6:
 
     UPDATED FEATURES:

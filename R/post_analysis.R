@@ -485,7 +485,7 @@ heatmap_GO <- function(
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and format the expression data for those genes
-    genes_expr <- t(exprs(AlvMac)[gene_ids,])
+    genes_expr <- t(exprs(eSet)[gene_ids,])
     # Rows are samples, label them according to the user's choson factor
     sample_labels <- pData(eSet)[,f]
     # Columns are features, label them by identifier or name
@@ -655,7 +655,7 @@ plot_design <- function(
                                     data.only=TRUE)
     GO_name <- result$GO[result$GO$go_id == go_id, "name_1006"]
     # Prepare a temporary data frame plot.design-friendly
-    df <- data.frame(t(exprs(AlvMac)[gene_ids_present,]),
+    df <- data.frame(t(exprs(eSet)[gene_ids_present,]),
                         pData(eSet)[,factors])
     # If no custom title was given
     if (main == ""){
