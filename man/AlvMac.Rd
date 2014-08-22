@@ -68,7 +68,7 @@ assign uniquely aligned paired-end reads in a stranded manner to the exons of
 genes within the \emph{Bos taurus} reference genome annotation (\emph{B.
 taurus} UMD3.1.71 genome annotation). The gene count outputs were further
 processed using the edgeR Bioconductor package.
- 
+
 The gene expression quantitation pipeline within the edgeR package was
 customised to: (1) filter out all bovine rRNA genes; (2) filter out genes
 displaying expression levels below the minimally-set threshold of one count per

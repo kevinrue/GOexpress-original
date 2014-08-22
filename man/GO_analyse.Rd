@@ -24,9 +24,9 @@ allowing to visualise the statistics on a gene- and ontology-basis.
 
 \usage{
 GO_analyse(eSet, f, biomart_dataset="",
-                      microarray="", method="randomForest", rank.by="rank",
-                      do.trace=100, ntree=1000,
-                      mtry=ceiling(2*sqrt(nrow(eSet))), ...)
+                    microarray="", method="randomForest", rank.by="rank",
+                    do.trace=100, ntree=1000,
+                    mtry=ceiling(2*sqrt(nrow(eSet))), ...)
 }
 
 \arguments{

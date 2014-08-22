@@ -113,8 +113,8 @@ Kevin Rue-Albrecht
 \section{Warning}{
     Common issues:
     \itemize{
-      \item It may not be possible to produce plots where the combination of
-      X-axis variable and grouping factor leaves too few replicates to compute
+    \item It may not be possible to produce plots where the combination of
+    X-axis variable and grouping factor leaves too few replicates to compute
     a confidence interval for each X value. This is a limitation imposed by the
     ggplot2 package to produce proper statistics and confidence intervals. In
     such cases, it may be preferrable to use the expression_profiles() method.
@@ -125,7 +125,7 @@ Kevin Rue-Albrecht
     Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
     , methods
     \code{\link[GOexpress:expression_plot_symbol]{expression_plot_symbol}} and
-  \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
+    \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
 
 \examples{
@@ -134,17 +134,17 @@ data(raw_results)
 
 # Expression by gene identifier (TNIP3)
 expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Timepoint",
-                           result=raw_results)
-                           
+                result=raw_results)
+
 # Same gene, plotted by animal and grouped by treatment (merging time points)
 expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Animal",
-                           result=raw_results,
-                           f="Treatment")
-                           
+                result=raw_results,
+                f="Treatment")
+
 # Same gene, plotted by animal and grouped by time-point (merging treatments)
 expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Animal",
-                           result=raw_results,
-                           f="Time")
+                result=raw_results,
+                f="Time")
 }
 
 \keyword{ GOexpress }

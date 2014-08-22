@@ -132,9 +132,9 @@ Kevin Rue-Albrecht
 }
 
 \seealso{
-  Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
-  , methods \code{\link[GOexpress:expression_plot]{expression_plot}} and
-  \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
+    Packages \code{\link[Biobase]{Biobase}} and \code{\link[ggplot2]{ggplot2}}
+    , methods \code{\link[GOexpress:expression_plot]{expression_plot}} and
+    \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
 }
 
 \examples{
@@ -143,17 +143,17 @@ data(raw_results)
 
 # Expression by gene identifier (TNIP3)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Timepoint",
-                           result=raw_results)
+                        result=raw_results)
                            
 # Same gene, plotted by animal and grouped by treatment (merging time points)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Animal",
-                           result=raw_results,
-                           f="Treatment")
-                           
+                        result=raw_results,
+                        f="Treatment")
+
 # Same gene, plotted by animal and grouped by time-point (merging treatments)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Animal",
-                           result=raw_results,
-                           f="Time")
+                        result=raw_results,
+                        f="Time")
 }
 
 \keyword{ GOexpress }

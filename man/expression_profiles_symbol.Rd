@@ -28,7 +28,7 @@ expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
 }
 
 \arguments{
-  \item{gene_symbol}{
+    \item{gene_symbol}{
     A gene name present in \code{rownames(raw_result$genes)}.
     }
     \item{result}{

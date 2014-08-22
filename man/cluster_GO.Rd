@@ -95,7 +95,7 @@ cluster_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cex=0.7)
 
 # Re-label sample by another factor
 cluster_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cex=0.7,
-                      f="Group")
+            f="Group")
 
 }
 

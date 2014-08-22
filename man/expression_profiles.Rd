@@ -27,7 +27,7 @@ expression_profiles(gene_id, result, eSet, x_var, seriesF,
 }
 
 \arguments{
-  \item{gene_id}{
+    \item{gene_id}{
     An gene or probeset identifier present in \code{rownames(expr_data)}.
     }
     \item{result}{
