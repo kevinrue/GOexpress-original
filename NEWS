@@ -331,8 +331,8 @@ INITIAL RELEASE 0.1:
     absent from the expression dataset are ignored.
     
     * get_mart_dataset() returns a connection to the appropriate BioMart
-    dataset  of the Ensembl server based on the gene name of the first gene in the
-    expression dataset. The choice of the dataset can be overriden by the user
+    dataset of the Ensembl server based on the gene name of the first gene in
+    the expression dataset. The choice of the dataset can be overriden by the user
     if a valid BioMart Ensembl dataset is specified.
     
     * subset_scores() filters the table of scored GO terms in the
