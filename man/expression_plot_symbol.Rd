@@ -46,19 +46,19 @@ expression_plot_symbol(
     }
     \item{x_var}{
     A column name in \code{phenodata} to plot on the X-axis. If representing
-    time on the X-axis, users should store the time-points as numeric values in
-    the \code{AnnotatedDataFrame} to adequately space the time-points.
+    time on the X-axis, users should store the time-points as numeric values
+    in the \code{AnnotatedDataFrame} to adequately space the time-points.
     }
     \item{f}{
     A column name in \code{phenodata} to group the samples when representing
     mean and confidence interval. The factor specified in the initial
-    \code{GO_analyse()} call is used by default. Unexpected grouping factors of
-    samples can reveal interesting trends (e.g. "Animal", "Tissue", "CellType",
-    ...).
+    \code{GO_analyse()} call is used by default. Unexpected grouping factors
+    of samples can reveal interesting trends (e.g. "Animal", "Tissue",
+    "CellType", ...).
     }
     \item{index}{
-    In the case where multiple gene or probeset identifiers are associated with
-    the gene name, \code{index=2} will plot the expression profile of the
+    In the case where multiple gene or probeset identifiers are associated
+    with the gene name, \code{index=2} will plot the expression profile of the
     second feature identifier alone, for instance.
     }
     \item{ylab}{
@@ -125,10 +125,10 @@ Kevin Rue-Albrecht
     \itemize{
     \item It may not be possible to produce plots where the combination of
     X-axis variable and grouping factor leaves too few replicates to compute
-    a confidence interval for each X value. This is a limitation imposed by the
-    ggplot2 package to produce proper statistics and confidence intervals. In
-    such cases, it may be preferrable to use the expression_profiles_symbol()
-    method.
+    a confidence interval for each X value. This is a limitation imposed by
+    the ggplot2 package to produce proper statistics and confidence intervals.
+    In such cases, it may be preferrable to use the
+    expression_profiles_symbol() method.
     }
 }
 
