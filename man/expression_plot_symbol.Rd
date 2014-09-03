@@ -12,9 +12,10 @@ X-axis variable from the \code{AnnotatedDataFrame} while representing the mean
 and confidence interval of groups of samples defined by levels of a valid
 grouping factor from the AnnotatedDataFrame.
 
-In the case of a gene name represented by multiple gene or probeset identifiers
-in the dataset, a lattice of plots will be produced. Each of the plots in this
-lattice can subsequently be plotted separately using its associated index.
+In the case of a gene name represented by multiple gene or probeset
+identifiers in the dataset, a lattice of plots will be produced. Each of the
+plots in this lattice can subsequently be plotted separately using its
+associated index.
 }
 
 \usage{
