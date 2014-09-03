@@ -144,7 +144,7 @@ data(raw_results)
 # Expression by gene identifier (TNIP3)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Timepoint",
                         result=raw_results)
-                           
+
 # Same gene, plotted by animal and grouped by treatment (merging time points)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Animal",
                         result=raw_results,
