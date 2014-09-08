@@ -3,13 +3,6 @@ GOexpress
 
 Visualise microarray and RNAseq data with gene ontology annotations.
 
-Please star this project (top-right corner of the GitHub) if you 
-are using it, you should not be spammed with updates but it will give
-us an idea of our user community.
-
-If you do wish to receive updates on the evolution of GOexpress, please
-click "Watch", also in the top-right corner of the GitHub.
-
 # OVERVIEW
 
 This package was designed for the analysis of bioinformatics
@@ -30,7 +23,7 @@ valid column name in the phenoData.
 
 The analysis scores all Gene Ontology (GO) terms represented
 in the BioMart dataset of the species studied. A random forest
-(simple one-way ANOVA is also available) is generated on the 
+(one-way ANOVA is also available) is generated on the 
 grouping factor for each gene present in the expression dataset. Genes
 associated with the GO term in the BioMart but absent from the dataset
 are assigned a score of 0 and a rank of number(genes)+1. GO terms are
@@ -47,7 +40,7 @@ given GO term can be listed, with or without descriptive information.
 Hierarchical clustering of the samples can be performed based on the
 expression levels of genes associated with a given GO term. Heatmaps
 accompanied by hierarchical clustering of samples and genes can be
-drawn and customised. The expression profile of genes can be plotted
+drawn. The expression profile of genes can be plotted
 against any factor while grouping samples on another factor. The 
 univariate effect of all factors can be visualised on the expression
 level of genes associated with a GO term. The counts of overlapping genes

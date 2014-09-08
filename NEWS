@@ -1,3 +1,16 @@
+RELEASE 0.99.8:
+
+    FEATURES:
+
+    * Resaved R data files to reduced package disk size. No more WARNING in
+R CMD check.
+
+    GENERAL UPDATES:
+
+    # Removed reference to GitHub in the README file. The weblink is given
+in the DESCRIPTION file anyway if users are interested.
+
+
 RELEASE 0.99.7:
 
     UPDATED FEATURES:
