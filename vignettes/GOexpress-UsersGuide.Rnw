@@ -209,7 +209,9 @@ Note that in the training dataset, the \texttt{Time} column of
 \texttt{pData(targets)} is an R factor while the \texttt{Timepoint} column is
 a numeric vector. The fomer is useful for grouping the samples for the
 analysis, while the latter is better suited to plot gene expression profiles
-while respecting the relative distance between the time-points.
+while respecting the relative distance between the time-points. See
+section \ref{sec:expressionPlots} for examples using of a numeric value or a
+factor as the variable of the X-axis.
 
 \subsection[Main analysis]{Main analysis}
 
@@ -451,6 +453,7 @@ gene by group}
 
 \subsubsection[Using the unique feature identifier]{Using the unique feature
 identifier}
+\label{sec:expressionPlots}
 
 In the above section, we listed the genes associated with a particular gene
 ontology. In our example, the respective score and rank of each gene estimates
