@@ -1,6 +1,20 @@
+RELEASE 0.99.9:
+
+    BUG FIXES:
+
+    * expression_plot_symbol and expression_profiles symbol used the default
+value of col.palette and colourF instead of forwarding the user-defined one
+to the expression_plot and expression_profiles functions.
+
+    GENERAL UPDATES:
+
+    * Added cross-reference in UsersGuide to point at examples of usages of
+factor and numeric values for the expression plots
+
+
 RELEASE 0.99.8:
 
-    FEATURES:
+    GENERAL UPDATES:
 
     * Resaved R data files to reduced package disk size. No more WARNING in
 R CMD check.
