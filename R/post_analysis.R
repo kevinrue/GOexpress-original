@@ -188,7 +188,7 @@ expression_plot_symbol <- function(
                     gene_id=gene_ids_present[i],
                     eSet=eSet,
                     x_var=x_var, result=result, f=f, ylab=ylab,
-                    col.palette="Accent", col=col, level=level,
+                    col.palette=col.palette, col=col, level=level,
                     title=titles[i], title.size=title.size,
                     axis.title.size=axis.title.size,
                     axis.text.size=axis.text.size,
@@ -217,7 +217,7 @@ expression_plot_symbol <- function(
                     gene_id=gene_ids_present[index],
                     eSet=eSet, x_var=x_var,
                     result=result, f=f, ylab=ylab,
-                    col.palette="Accent", col=col, level=level,
+                    col.palette=col.palette, col=col, level=level,
                     title=titles[index], title.size=title.size,
                     axis.title.size=axis.title.size,
                     axis.text.size=axis.text.size,
@@ -410,7 +410,7 @@ expression_profiles_symbol <- function(
                 cat("Plotting", gene_ids_present[i], fill=TRUE)
                 plots[[i]] <- expression_profiles(
                     gene_id=gene_ids_present[i], result=result, eSet=eSet,
-                    x_var=x_var, seriesF=seriesF, colourF=result$factor,
+                    x_var=x_var, seriesF=seriesF, colourF=colourF,
                     linetypeF=linetypeF, line.size=line.size,
                     ylab=ylab, col.palette=col.palette,
                     col=col, lty=lty, title=titles[i], title.size=title.size,
@@ -439,7 +439,7 @@ expression_profiles_symbol <- function(
                 cat("Plotting", gene_ids_present[index], fill=TRUE)
                 expression_profiles(
                     gene_id=gene_ids_present[index], result=result, eSet=eSet,
-                    x_var=x_var, seriesF=seriesF, colourF=result$factor,
+                    x_var=x_var, seriesF=seriesF, colourF=colourF,
                     linetypeF=linetypeF, line.size=line.size,
                     ylab=ylab, col.palette=col.palette,
                     col=col, lty=lty, title=titles[i], title.size=title.size,
@@ -458,7 +458,7 @@ expression_profiles_symbol <- function(
         cat("Plotting", gene_ids_present, fill=TRUE)
         expression_profiles(
             gene_id=gene_ids_present, result=result, eSet=eSet,
-            x_var=x_var, seriesF=seriesF, colourF=result$factor,
+            x_var=x_var, seriesF=seriesF, colourF=colourF,
             linetypeF=linetypeF, line.size=line.size,
             ylab=ylab, col.palette=col.palette,
             col=col, lty=lty, title=titles[i], title.size=title.size,
