@@ -602,7 +602,8 @@ plot_design(go_id = "GO:0034134", result = BP.5, eSet=AlvMac,
 \section[Additional controls and advanced functions]{Additional controls and
 advanced functions}
 
-\subsection[Overlapping genes between GO terms]{Overlapping genes between GO terms}
+\subsection[Overlapping genes between GO terms]{Overlapping genes between GO
+terms}
 
 Often, the top-ranked cellular functions identified by pathway analysis and
 gene-set enrichment analysis tools may significantly overlap each other in

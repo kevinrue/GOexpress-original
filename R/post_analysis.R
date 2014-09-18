@@ -7,7 +7,7 @@ cluster_GO <- function(
     # function
     if (! all(c("factor","GO") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If the GO identifier is not present in the results
     if (! go_id %in% result$GO$go_id){
@@ -367,7 +367,7 @@ expression_profiles_symbol <- function(
     # function
     if (! all(c("factor","genes") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-             Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If the X variable requested does not exist in the sample annotations
     if (! x_var %in% colnames(pData(eSet))){
@@ -549,7 +549,7 @@ heatmap_GO <- function(
     # function
     if (! all(c("factor","GO","genes") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-             Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If the GO identifier is not present in the results
     if (! go_id %in% result$GO$go_id){
@@ -601,7 +601,7 @@ hist_scores <- function(
     # function
     if (! all(c("GO") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     hist(result$GO$ave_score, main=main, xlab=xlab, ...)
 }
@@ -611,7 +611,7 @@ list_genes <- function(go_id, result, data.only=TRUE){
     # function
     if (! all(c("mapping","genes") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-             Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If the go_id requested is not present in the dataset
     if (!go_id %in% result$mapping$go_id){
@@ -671,7 +671,7 @@ overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
     # function
     if (! all(c("GO") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # Check that all GO terms are present in the result variable
     if (!all(go_ids %in% result$GO$go_id)){
@@ -708,7 +708,7 @@ plot_design <- function(
     # function
     if (! all(c("GO") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If the GO identifier is not present in the results
     if (! go_id %in% result$GO$go_id){
@@ -763,7 +763,7 @@ quantiles_scores <- function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
     # function
     if (! all(c("GO") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If user changes to "quartiles=TRUE" then the following will be true
     if (quartiles){
@@ -780,7 +780,7 @@ rerank <- function(result, rank.by="rank"){
     # function
     if (! all(c("GO","genes") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # Reorder the GO and gene tables accordin to the user's choice
     if (rank.by == "rank"){
@@ -828,7 +828,7 @@ subset_scores <- function(result, ...){
     # function
     if (! all(c("GO", "mapping", "genes") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # Save the list of filter and value for easier referencing
     filters <- list(...)
@@ -909,7 +909,7 @@ table_genes <- function(go_id, result, data.only=FALSE){
     # function
     if (! all(c("mapping","genes") %in% names(result))){
         stop("\"result=\" argument misses required slots.
-         Is it a GO_analyse() output?")
+    Is it a GO_analyse() output?")
     }
     # If the go_id requested is not present in the dataset
     if (!go_id %in% result$mapping$go_id){
