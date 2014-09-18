@@ -3,6 +3,17 @@ cluster_GO <- function(
     method_dist="euclidean", method_hclust="average", cex=0.8,
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
     xlab="Distance", cex.main=1, main.Lsplit=NULL, ...){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("factor","GO") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
+    # If the GO identifier is not present in the results
+    if (! go_id %in% result$GO$go_id){
+        # Return an error and stop
+        stop("\"go_id=\" argument is not a valid factor in pData(eSet).")
+    }
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and transform the expression data for those genes
@@ -52,15 +63,21 @@ expression_plot <- function(
             stop(gene_id, "not found in dataset. No close match either.")
         }
     }
-    # if the result variable provided does not contain the essential slot
-    if (! "genes" %in% names(result)){
-        # return an error and stop
-        stop("\"result=\" argument does not look like a GO_analyse output.")
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("factor","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+    Is it a GO_analyse() output?")
     }
     # If the X variable requested does not exist in the sample annotations
     if (! x_var %in% colnames(pData(eSet))){
         # Return an error and stop
         stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the factor requested does not exist in the sample annotations
+    if (! f %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"f=\" argument is not a valid factor in pData(eSet).")
     }
     # Build the title message from the combination of gene_id and gene_symbol
     title <- paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
@@ -95,13 +112,20 @@ expression_plot_symbol <- function(
     level=0.95, titles=c(), title.size=2, axis.title.size=20,
     axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=20, legend.key.size=30){
-    # if the result provided does not look like it should
-    if (! "genes" %in% names(result)){
-        stop("\"result=\" argument does not look like a GO_analyse output.")
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("factor","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+    Is it a GO_analyse() output?")
     }
+    # 
     # If the X variable requested does not exist in the sample annotations
     if (! x_var %in% colnames(pData(eSet))){
         stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the factor requested does not exist in the sample annotations
+    if (! f %in% colnames(pData(eSet))){
+        stop("\"f=\" argument is not a valid factor in pData(eSet).")
     }
     # the GO_analyse result provided contains the annotation of each feature
     # identifier
@@ -270,15 +294,34 @@ expression_profiles <- function(
             stop(gene_id, "not found in dataset. No close match either.")
         }
     }
-    # if the result variable provided does not contain the essential slot
-    if (! "genes" %in% names(result)){
-        # return an error and stop
-        stop("\"result=\" argument does not look like a GO_analyse output.")
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("factor","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+    Is it a GO_analyse() output?")
     }
     # If the X variable requested does not exist in the sample annotations
     if (! x_var %in% colnames(pData(eSet))){
         # Return an error and stop
         stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the series factor requested does not exist in the sample
+    # annotations
+    if (! seriesF %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"seriesF=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the colour factor requested does not exist in the sample
+    # annotations
+    if (! colourF %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"colourF=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the linetype factor requested does not exist in the sample
+    # annotations
+    if (! linetypeF %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"linetypeF=\" argument is not a valid factor in pData(eSet).")
     }
     # Build the title message from the combination of gene_id and gene_symbol
     title <- paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
@@ -320,13 +363,33 @@ expression_profiles_symbol <- function(
     axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=15,
     legend.key.size=30){
-    # if the result provided does not look like it should
-    if (! "genes" %in% names(result)){
-        stop("\"result=\" argument does not look like a GO_analyse output.")
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("factor","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+             Is it a GO_analyse() output?")
     }
     # If the X variable requested does not exist in the sample annotations
     if (! x_var %in% colnames(pData(eSet))){
         stop("\"x_var=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the series factor requested does not exist in the sample
+    # annotations
+    if (! seriesF %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"seriesF=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the colour factor requested does not exist in the sample
+    # annotations
+    if (! colourF %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"colourF=\" argument is not a valid factor in pData(eSet).")
+    }
+    # If the linetype factor requested does not exist in the sample
+    # annotations
+    if (! linetypeF %in% colnames(pData(eSet))){
+        # Return an error and stop
+        stop("\"linetypeF=\" argument is not a valid factor in pData(eSet).")
     }
     # the GO_analyse result provided contains the annotation of each feature
     # identifier present in the dataset to a gene name, if any
@@ -482,6 +545,17 @@ heatmap_GO <- function(
                                 "name_1006"]),
     main.Lsplit=NULL,
     ...){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("factor","GO","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+             Is it a GO_analyse() output?")
+    }
+    # If the GO identifier is not present in the results
+    if (! go_id %in% result$GO$go_id){
+        # Return an error and stop
+        stop("\"go_id=\" argument is not a valid factor in pData(eSet).")
+    }
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and format the expression data for those genes
@@ -523,10 +597,22 @@ hist_scores <- function(
     result,
     main=paste("Distribution of average scores in",
                 deparse(substitute(result))), xlab="Average score", ...){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("GO") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
     hist(result$GO$ave_score, main=main, xlab=xlab, ...)
 }
 
 list_genes <- function(go_id, result, data.only=TRUE){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("mapping","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+             Is it a GO_analyse() output?")
+    }
     # If the go_id requested is not present in the dataset
     if (!go_id %in% result$mapping$go_id){
         # return an error and stop
@@ -542,31 +628,6 @@ list_genes <- function(go_id, result, data.only=TRUE){
     }
     # return the list of gene_ids associated with it
     return(gene_ids)
-}
-
-# Splits a string of characters into multiple substrings, each less than 
-# a given number of characters. New line characters cannot be inserted within
-# words. Words are defined as surrounded by space characters only.
-string_Lsplit <- function (string, line.length){
-    # Get the (ordered) list of words
-    words <- strsplit(x=string, split=" ", )[[1]]
-    # Rebuild the original string, while inserting a newline everytime
-    # the limit is reached
-    # Start with empty title
-    newString <- words[1]
-    # Count of characters since latest newline
-    nc <- nchar(words[1])
-    for (word in words[2:length(words)]){
-        if (nc + nchar(word) > line.length){
-            newString <- paste(newString, word, sep="\n")
-            nc <- nchar(word)
-        }
-        else{
-            newString <- paste(newString, word, sep=" ")
-            nc <- nc + nchar(word) + 1 # for space character !
-        }
-    }
-    return(newString)
 }
 
 # Code borrowed from the web to create a lattice of ggplot2 plots.
@@ -606,6 +667,12 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 
 overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("GO") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
     # Check that all GO terms are present in the result variable
     if (!all(go_ids %in% result$GO$go_id)){
         stop("Some go_id(s) are absent from the result variable.")
@@ -637,6 +704,17 @@ overlap_GO <- function(go_ids, result, filename=NULL, mar=rep(0.1, 4), ...){
 plot_design <- function(
     go_id, result, eSet,
     factors=colnames(pData(eSet)), main="", main.Lsplit=NULL, ...){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("GO") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
+    # If the GO identifier is not present in the results
+    if (! go_id %in% result$GO$go_id){
+        # Return an error and stop
+        stop("\"go_id=\" argument is not a valid factor in pData(eSet).")
+    }
     # if the user changed the default value
     # check that all given factors exist in colnames(eSet)
     if (any(factors != colnames(pData(eSet)))){
@@ -681,6 +759,12 @@ plot_design <- function(
 
 quantiles_scores <- function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
                             quartiles=FALSE){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("GO") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
     # If user changes to "quartiles=TRUE" then the following will be true
     if (quartiles){
         quantile(x=result$GO$ave_score)
@@ -692,6 +776,12 @@ quantiles_scores <- function(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
 }
 
 rerank <- function(result, rank.by="rank"){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("GO","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
     # Reorder the GO and gene tables accordin to the user's choice
     if (rank.by == "rank"){
         result$GO <- result$GO[order(result$GO$ave_rank),]
@@ -708,7 +798,38 @@ rerank <- function(result, rank.by="rank"){
     return(result)
 }
 
+# Splits a string of characters into multiple substrings, each less than 
+# a given number of characters. New line characters cannot be inserted within
+# words. Words are defined as surrounded by space characters only.
+string_Lsplit <- function (string, line.length){
+    # Get the (ordered) list of words
+    words <- strsplit(x=string, split=" ", )[[1]]
+    # Rebuild the original string, while inserting a newline everytime
+    # the limit is reached
+    # Start with empty title
+    newString <- words[1]
+    # Count of characters since latest newline
+    nc <- nchar(words[1])
+    for (word in words[2:length(words)]){
+        if (nc + nchar(word) > line.length){
+            newString <- paste(newString, word, sep="\n")
+            nc <- nchar(word)
+        }
+        else{
+            newString <- paste(newString, word, sep=" ")
+            nc <- nc + nchar(word) + 1 # for space character !
+        }
+    }
+    return(newString)
+}
+
 subset_scores <- function(result, ...){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("GO", "mapping", "genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
     # Save the list of filter and value for easier referencing
     filters <- list(...)
     # prepares a table where the filtering results will be saved
@@ -784,6 +905,12 @@ subset_scores <- function(result, ...){
 }
 
 table_genes <- function(go_id, result, data.only=FALSE){
+    # if the result provided does not contain the slots required for this
+    # function
+    if (! all(c("mapping","genes") %in% names(result))){
+        stop("\"result=\" argument misses required slots.
+         Is it a GO_analyse() output?")
+    }
     # If the go_id requested is not present in the dataset
     if (!go_id %in% result$mapping$go_id){
         # return an error and stop

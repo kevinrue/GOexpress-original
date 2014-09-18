@@ -1,5 +1,12 @@
 RELEASE 0.99.9:
 
+    UPDATED FEATURES:
+
+    * all post analysis functions were given more sanity checks to verify
+that the "result" argument contains the required slots of a GO_analyse()
+output and the the arguments pointing at a phenotypic data column are valid
+column names.
+
     BUG FIXES:
 
     * expression_plot_symbol and expression_profiles symbol used the default
