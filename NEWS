@@ -1,3 +1,14 @@
+RELEASE 0.99.10:
+
+    GENERAL UPDATES:
+
+    * Replaced \format by \value sections to the following man pages:
+AlvMac.Rd, microarray2dataset.Rd, prefix2dataset.Rd, raw_results.Rd
+to avoid having an empty value section, as recommended by the Bioconductor
+package tracker. Hopefully, it does not require a non-empty \format section
+as well...    
+
+
 RELEASE 0.99.9:
 
     UPDATED FEATURES:

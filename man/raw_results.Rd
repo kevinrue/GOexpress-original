@@ -17,7 +17,7 @@ applied to the sample input data \code{data(AlvMac)}.
 
 \usage{data(raw_results)}
 
-\format{
+\value{
     A list of 7 slots summarising the input and results of the analysis:
     \describe{
     \item{ GO }{A table ranking all GO terms related to genes in the expression

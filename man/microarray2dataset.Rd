@@ -17,7 +17,7 @@ corresponding species.
 
 \usage{data(microarray2dataset)}
 
-\format{
+\value{
     A data frame with 105 observations on the following 5 variables.
     \describe{
     \item{\code{dataset}}{BioMart species dataset.}

@@ -26,7 +26,7 @@ Treatment, Timepoint, Animal).
 
 \usage{data(AlvMac)}
 
-\format{
+\value{
 \code{assayData} is a matrix of expression levels for 100 genes (rows) measured
 in 117 samples (columns).
     \describe{

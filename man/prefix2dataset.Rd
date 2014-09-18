@@ -17,7 +17,7 @@ This table maps each known unique prefix to the corresponding species.
 
 \usage{data(prefix2dataset)}
 
-\format{
+\value{
     A data frame with 66 rows.
     \describe{
         \item{\code{prefix}}{Unique prefix.}
