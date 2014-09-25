@@ -34,7 +34,7 @@ subset_scores(result, ...)
 
 \details{
 It is critical to filter out GO terms with very few genes (e.g. less than 5
-genes), as the scoring function is biased for those GO terms (see UsersGuide). 
+genes), as the scoring function is biased for those GO terms (see UsersGuide).
 
 In addition, it is useful to retain only GO terms of one type (i.e. namespace)
 among the three possible: "biological process", "molecular function", and
@@ -79,13 +79,13 @@ ontologies.
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # have an overview of the result variable
-str(raw_results)
+str(AlvMac_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_results <- subset_scores(result=raw_results, total_count=5,
+filtered_results <- subset_scores(result=AlvMac_results, total_count=5,
     namespace="BP")
 
 # have an overview of the filtered result variable

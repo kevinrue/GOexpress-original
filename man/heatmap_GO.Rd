@@ -14,12 +14,11 @@ levels of those genes in a heatmap.
 
 \usage{
 heatmap_GO(
-    go_id, result, eSet, gene_names=TRUE,
-    f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
+    go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
+    scale="none", cexCol=1.2, cexRow=0.5, 
     cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
-    row.col=brewer.pal(n=length(unique(pData(
-        eSet)[,f])), name=row.col.palette),
+    row.col=c(),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
     main.Lsplit=NULL,
@@ -36,20 +35,25 @@ heatmap_GO(
     }
     \item{eSet}{
     \code{ExpressionSet} of the \code{Biobase} package including a
-    gene-by-sample expression matrix in the \code{AssayData} slot, and a
+    gene-by-sample expression matrix in the \code{assayData} slot, and a
     phenotypic information data-frame in the \code{phenodata} slot. In the
     expression matrix, row names are Ensembl gene identifiers or probeset
     identifiers, and column names are sample identifiers. In the phentypic
     data-frame, row names are sample idenfifiers, column names are grouping
     factors and phenotypic traits usable for the one-way ANOVA. 
     }
+    \item{f}{
+    The grouping factor in \code{phenodata} to label the samples by.
+    }
+    \item{subset}{
+    A named list to subset \code{eSet}. Names must be column names existing
+    in colnames(pData(eSet)). Values must be vectors of values existing in
+    the corresponding column of pData(eSet).
+    }
     \item{gene_names}{
     A boolean value. Default is TRUE, to label genes by their associated gene
     name. If FALSE, labels the genes by their feature identifier in the
     expression dataset (i.e. Ensembl gene identifier or microarray probeset).
-    }
-    \item{f}{
-    The grouping factor in \code{phenodata} to label the samples by.
     }
     \item{scale}{
     Character indicating if the values should be centered and scaled in either
@@ -72,8 +76,8 @@ heatmap_GO(
     the measurement. Defaults to 'none'.
     }
     \item{expr.col}{
-    Character vector indicating the colors to represent the different levels of
-    gene expression. Defaults to a colormap of 75 shades ranging from blue 
+    Character vector indicating the colors to represent the different levels
+    of gene expression. Defaults to a colormap of 75 shades ranging from blue
     (low) to red (high) and centered around white. If using differential
     expression data, you should probably use \code{greenred(75)} instead.
     }
@@ -83,9 +87,9 @@ heatmap_GO(
     }
     \item{row.col}{
     A vector of color names or codes. The number of colors provided must match
-    the number of levels of the grouping factor. Default to an palette of up to
-    9 colors marking the different levels of the predefined grouping factor on
-    the left side of the heatmap.
+    the number of levels of the grouping factor. Default to an palette of up
+    to 9 colors marking the different levels of the predefined grouping factor
+    on the left side of the heatmap.
     }
     \item{main}{
     Main title of the figure. Default is paste(go_id, go_name).
@@ -117,19 +121,19 @@ heatmap_GO(
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # Heatmap the top-ranked GO term (toll-like receptor 4 signaling pathway) as
 # example
-heatmap_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac)
+heatmap_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac)
 
 # Same with larger sample labels on the right hand side.
-heatmap_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cexRow=1)
+heatmap_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac, cexRow=1)
 
 # Change the color-coding to green-black-red gradient (more appropriate for
 # differential expression values)
 library(gplots)
-heatmap_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac,
+heatmap_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac,
     expr.col=greenred(75))
 }
 

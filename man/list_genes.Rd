@@ -24,9 +24,9 @@ list_genes(go_id, result, data.only=TRUE)
     \code{subset_scores()}.
     }
     \item{data.only}{
-    Whether to return only the feature identifiers present in the given dataset
-    or alternatively returns all feature identifiers associated with the GO
-    term in the Ensembl BioMart. Default is TRUE.
+    Whether to return only the feature identifiers present in the given
+    dataset or alternatively returns all feature identifiers associated with
+    the GO term in the Ensembl BioMart. Default is TRUE.
     }
 }
 
@@ -45,11 +45,11 @@ with the GO term.
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # List of genes associated with the GO term "toll-like receptor 4 signaling
 # pathway"
-list_genes(result=raw_results, go_id="GO:0034142")
+list_genes(result=AlvMac_results, go_id="GO:0034142")
 }
 
 \keyword{ GOexpress }

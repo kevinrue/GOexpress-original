@@ -20,17 +20,17 @@ associated index.
 
 \usage{
 expression_plot_symbol(
-    gene_symbol, result, eSet, x_var, f=result$factor,
+    gene_symbol, result, eSet, x_var, f=result$factor, subset=NULL,
     index=0, ylab="log2cpm", col.palette="Accent",
-    col = brewer.pal(n=length(levels(pData(
-        eSet)[,f])), name=col.palette), level=0.95, titles=c(),
-    title.size=2, axis.title.size=20, axis.text.size=15, axis.text.angle=0,
+    col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
+    level=0.95, titles=c(), title.size=2, axis.title.size=20,
+    axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=20, legend.key.size=30)
 }
 
 \arguments{
     \item{gene_symbol}{
-    A gene name present in \code{rownames(raw_result$genes)}.
+    A gene name present in \code{rownames(AlvMac_results$genes)}.
     }
     \item{result}{
     An output of the \code{GO_analyse()} or \code{subset_scores()} function.
@@ -55,6 +55,11 @@ expression_plot_symbol(
     \code{GO_analyse()} call is used by default. Unexpected grouping factors
     of samples can reveal interesting trends (e.g. "Animal", "Tissue",
     "CellType", ...).
+    }
+    \item{subset}{
+    A named list to subset \code{eSet}. Names must be column names existing
+    in colnames(pData(eSet)). Values must be vectors of values existing in
+    the corresponding column of pData(eSet).
     }
     \item{index}{
     In the case where multiple gene or probeset identifiers are associated
@@ -140,20 +145,20 @@ Kevin Rue-Albrecht
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # Expression by gene identifier (TNIP3)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Timepoint",
-                        result=raw_results)
+                        result=AlvMac_results)
 
 # Same gene, plotted by animal and grouped by treatment (merging time points)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Animal",
-                        result=raw_results,
+                        result=AlvMac_results,
                         f="Treatment")
 
 # Same gene, plotted by animal and grouped by time-point (merging treatments)
 expression_plot_symbol(gene_symbol="PIK3AP1", eSet=AlvMac, x_var="Animal",
-                        result=raw_results,
+                        result=AlvMac_results,
                         f="Time")
 }
 

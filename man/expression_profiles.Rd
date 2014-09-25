@@ -15,15 +15,17 @@ in the \code{phenodata}.
 }
 
 \usage{
-expression_profiles(gene_id, result, eSet, x_var, seriesF,
-    colourF = result$factor, linetypeF = colourF, line.size = 1.5,
-    ylab = "log2(cpm)", col.palette = "Accent",
-    col = brewer.pal(n = length(levels(pData(eSet)[, colourF])),
-        name = col.palette),
-    lty = 1:length(levels(pData(eSet)[, linetypeF])),
-    title = NULL, title.size = 2, axis.title.size = 20, axis.text.size = 15,
-    axis.text.angle = 0, legend.title.size = 20, legend.text.size = 15,
-    legend.key.size = 30)
+expression_profiles(
+    gene_id, result, eSet, x_var, seriesF, subset=NULL,
+    colourF=result$factor, linetypeF=colourF, line.size=1.5,
+    ylab="log2(cpm)", col.palette="Accent",
+    col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
+                    name=col.palette),
+    lty=1:length(levels(pData(eSet)[,linetypeF])),
+    title=NULL, title.size=2, axis.title.size=20,
+    axis.text.size=15, axis.text.angle=0,
+    legend.title.size=20, legend.text.size=15,
+    legend.key.size=30)
 }
 
 \arguments{
@@ -44,13 +46,18 @@ expression_profiles(gene_id, result, eSet, x_var, seriesF,
     }
     \item{x_var}{
     A column name in \code{phenodata} to plot on the X-axis. If representing
-    time on the X-axis, users should store the time-points as numeric values in
-    the \code{AnnotatedDataFrame} to adequately space the time-points.
+    time on the X-axis, users should store the time-points as numeric values
+    in the \code{AnnotatedDataFrame} to adequately space the time-points.
     }
     \item{seriesF}{
     A column name in \code{phenodata} to track samples of an identical series
     across the X-axis. The combination of \code{seriesF} and \code{x_var}
     should uniquely identify each sample in \code{eSet}.
+    }
+    \item{subset}{
+    A named list to subset \code{eSet}. Names must be column names existing
+    in colnames(pData(eSet)). Values must be vectors of values existing in
+    the corresponding column of pData(eSet).
     }
     \item{colourF}{
     A column name in \code{phenodata} to colour the corresponding groups of
@@ -145,16 +152,16 @@ that plotted on the X-axis. See below for an example on the training dataset.
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 
-expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
+expression_profiles(gene_id = "ENSBTAG00000047107", result = AlvMac_results,
                     eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
                     legend.title.size=10, legend.text.size=10,
                     legend.key.size=15)
 
-expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
+expression_profiles(gene_id = "ENSBTAG00000047107", result = AlvMac_results,
                     eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
                     linetypeF="Animal",
                     legend.title.size=10, legend.text.size=10,

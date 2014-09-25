@@ -44,10 +44,10 @@ The name reorder() was not used to avoid conflict with package \code{stats}.
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # Re-rank the GO terms and genes based on the actual score instead of the rank
-reranked.byScore <- rerank(result=raw_results, rank.by="score")
+reranked.byScore <- rerank(result=AlvMac_results, rank.by="score")
 }
 
 \keyword{ GOexpress }

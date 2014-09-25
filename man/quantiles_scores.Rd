@@ -27,8 +27,8 @@ quantiles_scores(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
     }
     \item{probs}{
     Numeric vector of probabilities with values in [0,1]. (Values up
-    to 2e-14 outside that range are accepted and moved to the nearby endpoint.)
-    See \code{quantile}
+    to 2e-14 outside that range are accepted and moved to the nearby
+    endpoint.) See \code{quantile}
     }
     \item{quartiles}{
     A numeric vector of the percentiles for which the scores are desired. 
@@ -49,10 +49,10 @@ quantiles_scores(result, probs=c(0.9, 0.95, 0.99, 0.999, 0.9999),
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # filter for Biological Processes associated with 10+ genes
-filtered_results <- subset_scores(result=raw_results, total_count=5,
+filtered_results <- subset_scores(result=AlvMac_results, total_count=5,
     namespace="BP")
 
 # Quantiles of scores

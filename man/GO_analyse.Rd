@@ -7,19 +7,19 @@ Identifies gene ontologies clustering samples according to predefined factor.
 }
 
 \description{
-Combines local gene expression data with online Gene Ontology (GO) resources to
-visualise and rank ontologies enriched for genes best clustering predefined
+Combines local gene expression data with online Gene Ontology (GO) resources
+to visualise and rank ontologies enriched for genes best clustering predefined
 groups of samples based on gene expression levels. 
 
-Using the \code{biomaRt} package, this method semi-automatically retrieves gene
-ontology annotations from Ensembl for the species corresponding to the
+Using the \code{biomaRt} package, this method semi-automatically retrieves
+gene ontology annotations from Ensembl for the species corresponding to the
 expression dataset  prior to performing the analysis. A random forest analysis
 is performed to evaluate the ability of each gene to cluster samples according
 to a predefined grouping factor (one-way ANOVA available as an alteranative).
 Each GO term is scored and ranked according to the average rank
-(alternatively, average power) of all associated genes to cluster the samples
-according to the factor. The ranked list of GO terms is returned, with tools
-allowing to visualise the statistics on a gene- and ontology-basis.
+(alternatively, average power) of all associated genes to cluster the
+samples according to the factor. The ranked list of GO terms is returned,
+with tools allowing to visualise the statistics on a gene- and ontology-basis.
 }
 
 \usage{
@@ -45,8 +45,8 @@ GO_analyse(eSet, f, biomart_dataset="",
     }
     \item{biomart_dataset}{
     The BioMart Ensembl dataset corresponding to the species studied.
-    Automatically detected if not specified. Use data(prefix2dataset) for valid
-    values.
+    Automatically detected if not specified. Use data(prefix2dataset) for
+    valid values.
     }
     \item{microarray}{
     The identifier in the Ensembl BioMart corresponding to the microarray
@@ -109,9 +109,9 @@ One-way ANOVA does not have additional arguments.
 }
 
 \details{
-    The current scoring functions strongly favor GO terms associated with fewer
-    genes at the top of the ranking. This bias may actually be seen as a
-    valuable feature which enables the user to browse through GO terms of
+    The current scoring functions strongly favor GO terms associated with
+    fewer genes at the top of the ranking. This bias may actually be seen as
+    a valuable feature which enables the user to browse through GO terms of
     increasing "granularity", i.e. associated with increasingly large sets of
     genes, although consequently being increasingly vague and blurry (e.g.
     "protein binding" molecular function associated with over 6,000 genes).
@@ -164,7 +164,7 @@ data(AlvMac)
 
 # Run the analysis on factor "Treatment"
 # Factor must be one of the column names in pData(targets)
-raw_results <- GO_analyse(eSet=AlvMac, f="Treatment")
+AlvMac_results <- GO_analyse(eSet=AlvMac, f="Treatment")
 }
 
 \keyword{ GOexpress }

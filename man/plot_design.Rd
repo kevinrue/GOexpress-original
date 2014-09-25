@@ -70,10 +70,10 @@ plot_design(
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # Univariate plot
-plot_design(go_id="GO:0034142", eSet=AlvMac, result=raw_results)
+plot_design(go_id="GO:0034142", eSet=AlvMac, result=AlvMac_results)
 }
 
 \keyword{ GOexpress }

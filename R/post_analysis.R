@@ -1,5 +1,5 @@
 cluster_GO <- function(
-    go_id, result, eSet, f=result$factor, 
+    go_id, result, eSet, f=result$factor, subset=NULL,
     method_dist="euclidean", method_hclust="average", cex=0.8,
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
     xlab="Distance", cex.main=1, main.Lsplit=NULL, ...){
@@ -13,6 +13,10 @@ cluster_GO <- function(
     if (! go_id %in% result$GO$go_id){
         # Return an error and stop
         stop("\"go_id=\" argument is not a valid factor in pData(eSet).")
+    }
+    # Subset the data to the given values of the given factors, if existing
+    if (!is.null(subset)){
+        eSet <- subEset(eSet=eSet, subset=subset)
     }
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
@@ -44,10 +48,10 @@ cluster_GO <- function(
 }
 
 expression_plot <- function(
-    gene_id, result, eSet, x_var, f=result$factor,
+    gene_id, result, eSet, x_var, f=result$factor, subset=NULL,
     ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
-    level=0.95, title=NULL, title.size=2, axis.title.size=20,
+    level=0.95, title=NULL, title.size=2, axis.title.size=20, 
     axis.text.size=15, axis.text.angle=0,
     legend.title.size=20, legend.text.size=15, legend.key.size=30){
     # if the feature identifier is absent from the dataset
@@ -79,6 +83,10 @@ expression_plot <- function(
         # Return an error and stop
         stop("\"f=\" argument is not a valid factor in pData(eSet).")
     }
+    # Subset the data to the given values of the given factors, if existing
+    if (!is.null(subset)){
+        eSet <- subEset(eSet=eSet, subset=subset)
+    }
     # Build the title message from the combination of gene_id and gene_symbol
     title <- paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
     # Assemble a data frame containing the necessary information for ggplot
@@ -106,7 +114,7 @@ expression_plot <- function(
 }
 
 expression_plot_symbol <- function(
-    gene_symbol, result, eSet, x_var, f=result$factor,
+    gene_symbol, result, eSet, x_var, f=result$factor, subset=NULL,
     index=0, ylab="log2cpm", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
     level=0.95, titles=c(), title.size=2, axis.title.size=20,
@@ -127,6 +135,10 @@ expression_plot_symbol <- function(
     if (! f %in% colnames(pData(eSet))){
         stop("\"f=\" argument is not a valid factor in pData(eSet).")
     }
+    # Subset the data to the given values of the given factors, if existing
+    if (!is.null(subset)){
+        eSet <- subEset(eSet=eSet, subset=subset)
+    }
     # the GO_analyse result provided contains the annotation of each feature
     # identifier
     # present in the dataset to a gene name, if any
@@ -146,8 +158,8 @@ expression_plot_symbol <- function(
             cat(gene_symbol, "not found in dataset. Did you mean:", fill=TRUE)
             return(matches)
         }
-        # if we don't have close matches in the dataset, tell the user and stop
-        # the function
+        # if we don't have close matches in the dataset, tell the user and
+        # stop the function
         else{
             stop(paste(gene_symbol,
                         "not found in dataset. No close match either."))
@@ -157,9 +169,9 @@ expression_plot_symbol <- function(
     # feature identifier in the Ensembl BioMart, fetch all identifier(s)
     # corresponding to that gene symbol
     gene_ids <- mapping[mapping$external_gene_id == gene_symbol, "gene_id"]
-    # However, we still don't know how many of those identifiers are present in
-    # the expression dataset. Remove the feature identifiers absent from our
-    # dataset as we cannot plot them
+    # However, we still don't know how many of those identifiers are present
+    # in the expression dataset. Remove the feature identifiers absent from
+    # our dataset as we cannot plot them
     gene_ids_present <- gene_ids[gene_ids %in% rownames(eSet)]
     # If none of the feature identifiers are present in the dataset
     if (length(gene_ids_present) == 0){
@@ -170,8 +182,8 @@ expression_plot_symbol <- function(
     }
     # At this stage we are finally sure that at least one of the feature
     # identifiers corresponding to the gene name are also present in the
-    # expression dataset. This is the best moment to generate as many titles as
-    # there are feature identifier(s) annotated to the given gene symbol
+    # expression dataset. This is the best moment to generate as many titles
+    # as there are feature identifier(s) annotated to the given gene symbol
     # If the user left the default vector of titles (empty)
     if (is.null(titles)){
         # Create a smart title for each plot
@@ -189,7 +201,8 @@ expression_plot_symbol <- function(
                     length(gene_ids_present), ").")
         }
     }
-    # If there are strictly more than 1 gene id associated with the gene symbol
+    # If there are strictly more than 1 gene id associated with the gene
+    # symbol
     if (length(gene_ids_present) > 1){
         # Tell the user
         cat("Multiple gene ids found for", gene_symbol, fill=TRUE)
@@ -271,7 +284,7 @@ expression_plot_symbol <- function(
 }
 
 expression_profiles <- function(
-    gene_id, result, eSet, x_var, seriesF,
+    gene_id, result, eSet, x_var, seriesF, subset=NULL,
     colourF=result$factor, linetypeF=colourF, line.size=1.5,
     ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
@@ -323,6 +336,10 @@ expression_profiles <- function(
         # Return an error and stop
         stop("\"linetypeF=\" argument is not a valid factor in pData(eSet).")
     }
+    # Subset the data to the given values of the given factors, if existing
+    if (!is.null(subset)){
+        eSet <- subEset(eSet=eSet, subset=subset)
+    }
     # Build the title message from the combination of gene_id and gene_symbol
     title <- paste(gene_id, " = ", result$genes[gene_id,]$external_gene_id)
     # Assemble a data frame containing the necessary information for ggplot
@@ -353,7 +370,7 @@ expression_profiles <- function(
 }
 
 expression_profiles_symbol <- function(
-    gene_symbol, result, eSet, x_var, seriesF,
+    gene_symbol, result, eSet, x_var, seriesF, subset=NULL,
     colourF=result$factor, linetypeF=colourF, line.size=1.5,
     index=0, ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
@@ -391,6 +408,10 @@ expression_profiles_symbol <- function(
         # Return an error and stop
         stop("\"linetypeF=\" argument is not a valid factor in pData(eSet).")
     }
+    # Subset the data to the given values of the given factors, if existing
+    if (!is.null(subset)){
+        eSet <- subEset(eSet=eSet, subset=subset)
+    }
     # the GO_analyse result provided contains the annotation of each feature
     # identifier present in the dataset to a gene name, if any
     cat("Fetching feature identifier(s) annotated to", gene_symbol, "...",
@@ -409,8 +430,8 @@ expression_profiles_symbol <- function(
             cat(gene_symbol, "not found in dataset. Did you mean:", fill=TRUE)
             return(matches)
         }
-        # if we don't have close matches in the dataset, tell the user and stop
-        # the function
+        # if we don't have close matches in the dataset, tell the user and
+        # stop the function
         else{
             stop(paste(gene_symbol,
                         "not found in dataset. No close match either."))
@@ -420,9 +441,9 @@ expression_profiles_symbol <- function(
     # feature identifier in the Ensembl BioMart, fetch all identifier(s)
     # corresponding to that gene symbol
     gene_ids <- mapping[mapping$external_gene_id == gene_symbol, "gene_id"]
-    # However, we still don't know how many of those identifiers are present in
-    # the expression dataset. Remove the feature identifiers absent from our
-    # dataset as we cannot plot them
+    # However, we still don't know how many of those identifiers are present
+    # in the expression dataset. Remove the feature identifiers absent from
+    # our dataset as we cannot plot them
     gene_ids_present <- gene_ids[gene_ids %in% rownames(eSet)]
     # If none of the feature identifiers are present in the dataset
     if (length(gene_ids_present) == 0){
@@ -433,8 +454,8 @@ expression_profiles_symbol <- function(
     }
     # At this stage we are finally sure that at least one of the feature
     # identifiers corresponding to the gene name are also present in the
-    # expression dataset. This is the best moment to generate as many titles as
-    # there are feature identifier(s) annotated to the given gene symbol
+    # expression dataset. This is the best moment to generate as many titles
+    # as there are feature identifier(s) annotated to the given gene symbol
     # If the user left the default vector of titles (empty)
     if (is.null(titles)){
         # Create a smart title for each plot
@@ -452,7 +473,8 @@ expression_profiles_symbol <- function(
                     length(gene_ids_present), ").")
         }
     }
-    # If there are strictly more than 1 gene id associated with the gene symbol
+    # If there are strictly more than 1 gene id associated with the gene
+    # symbol
     if (length(gene_ids_present) > 1){
         # Tell the user
         cat("Multiple gene ids found for", gene_symbol, fill=TRUE)
@@ -535,12 +557,11 @@ expression_profiles_symbol <- function(
 }
 
 heatmap_GO <- function(
-    go_id, result, eSet, gene_names=TRUE,
-    f=result$factor, scale="none", cexCol=1.2, cexRow=0.5, 
+    go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
+    scale="none", cexCol=1.2, cexRow=0.5, 
     cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
-    row.col=brewer.pal(n=length(unique(pData(
-        eSet)[,f])), name=row.col.palette),
+    row.col=c(),
     main=paste(go_id, result$GO[result$GO$go_id == go_id,
                                 "name_1006"]),
     main.Lsplit=NULL,
@@ -555,6 +576,21 @@ heatmap_GO <- function(
     if (! go_id %in% result$GO$go_id){
         # Return an error and stop
         stop("\"go_id=\" argument is not a valid factor in pData(eSet).")
+    }
+    
+    # Subset the data to the given values of the given factors, if existing
+    if (!is.null(subset)){
+        eSet <- subEset(eSet=eSet, subset=subset)
+    }
+    # Also update the RowSideColors of the heatmap.2 to a shorter vector
+    # becaue the number of samples has been reduced
+    # NOTE: if the user wants to provide his own color array he should
+    # either give the exact number of colors as he expects in the
+    # subsetted ExpressionSet, or rather use the row.col.palette 
+    # argument to provide the palette, rather than the array of colors
+    if (length(row.col) != ncol(eSet)){
+        row.col <- brewer.pal(n = length(unique(pData(eSet)[,f])),
+                                name = row.col.palette)
     }
     # Fetch the list of genes associated with the go_id
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)

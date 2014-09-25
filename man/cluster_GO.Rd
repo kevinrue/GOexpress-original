@@ -13,7 +13,7 @@ a given go_id.
 
 \usage{
 cluster_GO(
-    go_id, result, eSet, f=result$factor, 
+    go_id, result, eSet, f=result$factor, subset=NULL,
     method_dist="euclidean", method_hclust="average", cex=0.8,
     main=paste(go_id, result$GO[result$GO$go_id == go_id, "name_1006"]),
     xlab="Distance", cex.main=1, main.Lsplit=NULL, ...)
@@ -39,6 +39,11 @@ cluster_GO(
     }
     \item{f}{
     The grouping factor in \code{phenodata} to label the samples by.
+    }
+    \item{subset}{
+    A named list to subset \code{eSet}. Names must be column names existing
+    in colnames(pData(eSet)). Values must be vectors of values existing in
+    the corresponding column of pData(eSet).
     }
     \item{method_dist}{
     The method used to calculate distance between samples. See the 
@@ -88,13 +93,13 @@ cluster_GO(
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # Hierarchical clustering of samples based on the same GO term
-cluster_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cex=0.7)
+cluster_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac, cex=0.7)
 
 # Re-label sample by another factor
-cluster_GO(go_id="GO:0034142", result=raw_results, eSet=AlvMac, cex=0.7,
+cluster_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac, cex=0.7,
             f="Group")
 
 }

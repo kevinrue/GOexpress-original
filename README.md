@@ -28,9 +28,9 @@ grouping factor for each gene present in the expression dataset. Genes
 associated with the GO term in the BioMart but absent from the dataset
 are assigned a score of 0 and a rank of number(genes)+1. GO terms are
 scored and ranked on the average rank (alternatively, score) of
-associated genes. Note that to compute the average, the denominator used is the
-total number of genes associated with the GO term, even those absent from the
-dataset.
+associated genes. Note that to compute the average, the denominator used is
+the total number of genes associated with the GO term, even those absent from
+the dataset.
 
 Functions are provided to investigate and visualise the results of
 the above analysis. The score table can be filtered for GO terms over
@@ -91,16 +91,16 @@ identifier, given valid variable name for the X-axis and a grouping factor for
 the Y-axis.
 
 * expression_plot_symbol() plots the expression profile corresponding to
-feature identifier(s) annotated to a gene symbol, given valid variable name for
-the X-axis and a grouping factor for the Y-axis.
+feature identifier(s) annotated to a gene symbol, given valid variable name
+for the X-axis and a grouping factor for the Y-axis.
 
-* expression_profiles() plots the individual expression profile of given sample
-series while colouring-coding each series according to its group; a more
-detailed alternative to expression_plot().
+* expression_profiles() plots the individual expression profile of given
+sample series while colouring-coding each series according to its group; a
+more detailed alternative to expression_plot().
 
-* expression_profiles_symbol() plots the individual expression profile of given
-sample series while colouring-coding each series according to its group; a more
-detailed alternative to expression_plot_symbol().
+* expression_profiles_symbol() plots the individual expression profile of
+given sample series while colouring-coding each series according to its
+group; a more detailed alternative to expression_plot_symbol().
 
 * plot_design() plots the univariate effect of each level of each
 factor available in the phenoData on the expression levels
@@ -113,3 +113,7 @@ to file.
 * rerank() allows to reorder the ranked tables of GO terms and
 genes either by increasing (average) rank or decreasing (average)
 score.
+
+* subEset() allows to subset an ExpressionSet to only the samples with
+a particular set of values in given columns of their phenotypic data (e.g.
+only samples from "2H" and "6H" in their "Time" information).

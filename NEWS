@@ -1,12 +1,32 @@
+RELEASE 0.99.11:
+
+    NEW FEATURES:
+
+    * The new subEset() method subsets an ExpressionSet given a list where
+    item names are column names of the phenoData slots and item values are
+    vectors of values corresponding to sample to retain (e.g.
+    list(Time=c("2H", "6H")) will retain samples with value "2H" or "6H" in
+    the "Time" column of the phenoData slot).
+
+    UPDATED FEATURES:
+
+    * All relevant visualisation methods have been added an argument to
+    subset samples to plot to those with a given set of values for a given
+    column in the phenoData (uses the new function subEset described above).
+
+    * The example analysis results was renamed from "raw_results" to
+    "AlvMac_results", so that it can now loaded running data(AlvMac_results).
+    The new name is meant to be more specific to the package.
+
 RELEASE 0.99.10:
 
     GENERAL UPDATES:
 
     * Replaced \format by \value sections to the following man pages:
-AlvMac.Rd, microarray2dataset.Rd, prefix2dataset.Rd, raw_results.Rd
-to avoid having an empty value section, as recommended by the Bioconductor
-package tracker. Hopefully, it does not require a non-empty \format section
-as well...
+    AlvMac.Rd, microarray2dataset.Rd, prefix2dataset.Rd, raw_results.Rd
+    to avoid having an empty value section, as recommended by the Bioconductor
+    package tracker. Hopefully, it does not require a non-empty \format
+    section as well...
 
     * Restricted lines to less than 80 characters and indentation by multiple
 of four space characters.
@@ -17,20 +37,20 @@ RELEASE 0.99.9:
     UPDATED FEATURES:
 
     * all post analysis functions were given more sanity checks to verify
-that the "result" argument contains the required slots of a GO_analyse()
-output and the the arguments pointing at a phenotypic data column are valid
-column names.
+    that the "result" argument contains the required slots of a GO_analyse()
+    output and the the arguments pointing at a phenotypic data column are
+    valid column names.
 
     BUG FIXES:
 
     * expression_plot_symbol and expression_profiles symbol used the default
-value of col.palette and colourF instead of forwarding the user-defined one
-to the expression_plot and expression_profiles functions.
+    value of col.palette and colourF instead of forwarding the user-defined
+    one to the expression_plot and expression_profiles functions.
 
     GENERAL UPDATES:
 
     * Added cross-reference in UsersGuide to point at examples of usages of
-factor and numeric values for the expression plots
+    factor and numeric values for the expression plots
 
 
 RELEASE 0.99.8:
@@ -43,7 +63,7 @@ R CMD check.
     GENERAL UPDATES:
 
     # Removed reference to GitHub in the README file. The weblink is given
-in the DESCRIPTION file anyway if users are interested.
+    in the DESCRIPTION file anyway if users are interested.
 
 
 RELEASE 0.99.7:
@@ -51,7 +71,7 @@ RELEASE 0.99.7:
     UPDATED FEATURES:
 
     * fixed a typo in the code of heatmap_GO which made it crash for any other
-dataset than the example dataset.
+    dataset than the example dataset.
 
 RELEASE 0.99.6:
 
@@ -66,26 +86,26 @@ RELEASE 0.99.5:
     NEW FEATURES:
 
     * expression_profiles() method plots the expression profiles of individual
-samples series, as opposed to grouped samples series handled by 
-expression_plot functions.
+    samples series, as opposed to grouped samples series handled by 
+    expression_plot functions.
 
     * expression_profiles_symbol() method plots the expression profiles of
-individual samples series using a gene name instead of an Ensembl gene
-identifier.
+    individual samples series using a gene name instead of an Ensembl gene
+    identifier.
 
     UPDATED FEATURES:
     
     * overlap_GO can print to screen, if filename argument is set to NULL 
-(Default).
+    (Default).
 
     * heatmap_GO, cluter_GO and plot_design can resize title font and wrap the
-text on multiple lines.
+    text on multiple lines.
 
     * expression_plot and expression_plot_symbol can orient X axis labels at
-a given angle.
+    a given angle.
 
-    * replaced return(NULL) statement by stop() when no close match is found to
-a gene name in the family of expression_plot functions.
+    * replaced return(NULL) statement by stop() when no close match is found
+    to a gene name in the family of expression_plot functions.
 
     GENERAL UPDATES:
 
@@ -105,9 +125,9 @@ RELEASE 0.99.4:
 
     * Implemented corrections requested following the Bioconductor review.
     Includes typos, consistent terminology through the package code and
-    metafiles, additional information in help files, no reference to GitHub as
-    an alternate installation option, use of arrow signs instead of equal signs
-    for value assignment.
+    metafiles, additional information in help files, no reference to GitHub
+    as an alternate installation option, use of arrow signs instead of equal
+    signs for value assignment.
     
     * Restricted lines to 80 characters, and used 4-space tabulations.
 
@@ -222,8 +242,8 @@ RELEASE 0.6.1:
     variable.
     
     * list_genes() and table_genes() methods now allow to chose whether
-    to return all feature identifiers associated with a GO term, or only those
-    also present in the expression dataset.
+    to return all feature identifiers associated with a GO term, or only
+    those also present in the expression dataset.
 
 
 RELEASE 0.5.5:

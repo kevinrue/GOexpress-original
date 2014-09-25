@@ -45,10 +45,10 @@ fields, thanks to the decrease in cost of high-throughput transcriptomics
 platforms and the barcoding/multiplexing of samples on the RNA-seq platform.
 While much effort has been (correctly!) spent on the development of adequate
 statistical frameworks for the processing of raw expression data, much of the
-genewise visualisation is left to the end-user. However, data summarisation and
-visualisation can be a daunting task in multifactorial experiments, or require
-large amounts of copy-pasting to investigate the expression profile of a
-handful or genes and cellular pathways.
+genewise visualisation is left to the end-user. However, data summarisation
+and visualisation can be a daunting task in multifactorial experiments, or
+require large amounts of copy-pasting to investigate the expression profile of
+a handful or genes and cellular pathways.
 
 Tested on multiple RNA-seq and microarray datasets, \texttt{GOexpress} offers
 an extendable set of data-driven plotting functions readily applicable to the
@@ -70,19 +70,21 @@ microarray platform present in the Ensembl BioMart:
 \subsection[Purpose of this document]{Purpose of this document}
 
 This User's Guide was intended as a helpful description of the main features
-implemented in the \texttt{GOexpress} package, as well as a tutorial taking the
-user through a typical analysis pipeline that \texttt{GOexpress} was designed
-for. While an example usage will be provided for each function of the package,
-the many arguments of each function cannot realistically be demonstrated in
-this Guide, and we kindly ask users to also read the individual R vignettes
-accompanying the corresponding package functions for further details.
+implemented in the \texttt{GOexpress} package, as well as a tutorial taking
+the user through a typical analysis pipeline that \texttt{GOexpress} was
+designed for. While an example usage will be provided for each function of the
+package, the many arguments of each function cannot realistically be
+demonstrated in this Guide, and we kindly ask users to also read the
+individual R vignettes accompanying the corresponding package functions for
+further details.
 
 
 \section[Before you start]{Before you start}
 
 \subsection[Installation]{Installation}
 
-Installing \texttt{GOexpress} should be as easy as running the two lines below:
+Installing \texttt{GOexpress} should be as easy as running the two lines
+below:
 
 <<>>=
 source("http://bioconductor.org/biocLite.R")
@@ -100,8 +102,8 @@ maintainer with a copy of the error message and the command run.
 Despite our efforts to repeatedly test the \texttt{GOexpress} package on
 in-house datasets of both microarray and RNA-seq platforms, and of human and
 bovine origin, many of the species and microarrays present in the Ensembl
-BioMart have not been tested yet. Do contact the package maintainer if you feel
-that the error is on our part:
+BioMart have not been tested yet. Do contact the package maintainer if you
+feel that the error is on our part:
 
 <<echo=TRUE>>=
 maintainer("GOexpress")
@@ -144,16 +146,16 @@ conditions); genes lowly expressed are removed to limit the False Discovery
 Rate (FDR) of differentially expressed genes induced by the larger variability
 of expression at the lower end of the dynamic range. 
 
-\texttt{GOexpress} requires this prefiltered normalised expression matrix to be
-accompanied by an \texttt{AnnotatedDataFrame} object of the \texttt{Biobase}
-package providing phenotypic information for each of those samples (e.g. unique
-identifier, treatment, time-point). \texttt{GOexpress} expects those two
-variables in an \texttt{ExpressionSet} container of the \texttt{Biobase}
-package, both simplifying the manipulation of the data and, most importantly,
-ensuring interoperatibility with other packages that handle Bioconductor
-\texttt{ExpressionSet} objects. The other fields of the \texttt{ExpressionSet}
-container may be left empty as \texttt{GOexpress} does not currently access
-them.
+\texttt{GOexpress} requires this prefiltered normalised expression matrix to
+be accompanied by an \texttt{AnnotatedDataFrame} object of the
+\texttt{Biobase} package providing phenotypic information for each of those
+samples (e.g. unique identifier, treatment, time-point). \texttt{GOexpress}
+expects those two variables in an \texttt{ExpressionSet} container of the
+\texttt{Biobase} package, both simplifying the manipulation of the data and,
+most importantly, ensuring interoperatibility with other packages that handle
+Bioconductor \texttt{ExpressionSet} objects. The other fields of the
+\texttt{ExpressionSet} container may be left empty as \texttt{GOexpress}
+does not currently access them.
 
 To use the analytic part of the \texttt{GOexpress} package, the phenotypic
 data-frame --- \texttt{phenodata} slot of the \texttt{ExpressionSet} --- must
@@ -215,14 +217,14 @@ factor as the variable of the X-axis.
 
 \subsection[Main analysis]{Main analysis}
 
-In this example, we search for GO terms enriched in genes that cluster best the
-samples according their \texttt{Treatment} level. But first, let us make sure
-that the \texttt{Treatment} column of \texttt{pData(targets)} is indeed an R
-factor:
+In this example, we search for GO terms enriched in genes that cluster best
+the samples according their \texttt{Treatment} level. But first, let us make
+sure that the \texttt{Treatment} column of \texttt{pData(targets)} is indeed
+an R factor:
 
 <<>>=
-is.factor(pData(AlvMac)$Treatment) # assertion test
-pData(AlvMac)$Treatment # visual inspection
+is.factor(AlvMac$Treatment) # assertion test
+AlvMac$Treatment # visual inspection
 @
 
 In this case, it is already a properly formatted factor. If that was not the
@@ -232,7 +234,7 @@ to order the different levels of a factor, for an example see factor
 \texttt{Time}):
 
 <<>>=
-pData(AlvMac)$Treatment <- factor(pData(AlvMac)$Treatment)
+AlvMac$Treatment <- factor(AlvMac$Treatment)
 @
 
 Now, we use the random forest statistical framework to score each gene on its
@@ -241,7 +243,7 @@ method will score each GO term by aggregating the average rank of its
 associated genes:
 
 <<>>=
-raw_results <- GO_analyse(eSet = AlvMac, f = "Treatment")
+AlvMac_results <- GO_analyse(eSet = AlvMac, f = "Treatment")
 @
 
 At this stage, it is a good idea to save the result variable into an R 
@@ -279,11 +281,11 @@ The output variable of the analysis summarises the parameters of the analysis
 and can easily be browsed with standard R methods:
 
 <<>>=
-names(raw_results) # Data slot names
-str(raw_results) # Details of data slots
-head(raw_results$GO, n=5) # Ranked table of GO terms (subset)
-head(raw_results$genes, n=5) # Ranked table of genes (subset)
-head(raw_results$mapping) # Gene to gene ontology mapping table (subset)
+names(AlvMac_results) # Data slot names
+str(AlvMac_results) # Details of data slots
+head(AlvMac_results$GO, n=5) # Ranked table of GO terms (subset)
+head(AlvMac_results$genes, n=5) # Ranked table of genes (subset)
+head(AlvMac_results$mapping) # Gene to gene ontology mapping table (subset)
 @
 
 
@@ -291,15 +293,15 @@ head(raw_results$mapping) # Gene to gene ontology mapping table (subset)
 \label{sec:Filtering}
 
 In the above raw results of the analysis, all three types (i.e. namespaces) of
-GO terms are merged in a single ranked table. It is however possible to extract
-the GO terms corresponding to a single namespace. 
+GO terms are merged in a single ranked table. It is however possible to
+extract the GO terms corresponding to a single namespace. 
 
 <<>>=
-BP <- subset_scores(result = raw_results,
+BP <- subset_scores(result = AlvMac_results,
     namespace = "biological_process")
-MF <- subset_scores(result = raw_results,
+MF <- subset_scores(result = AlvMac_results,
     namespace = "MF") # alias for "molecular_function"
-CC <- subset_scores(result = raw_results,
+CC <- subset_scores(result = AlvMac_results,
     namespace = "CC") # cellular_component
 @
 
@@ -322,13 +324,13 @@ Using the above filtering function, it is straightforward to filter out those
 GO terms with only a handful of associated genes:
 
 <<>>=
-BP.5 <- subset_scores(result = raw_results,
+BP.5 <- subset_scores(result = AlvMac_results,
     namespace = "biological_process",
     total = 5) # requires 5 or more associated genes
-MF.10 <- subset_scores(result = raw_results,
+MF.10 <- subset_scores(result = AlvMac_results,
     namespace = "molecular_function",
     total = 10)
-CC.15 <- subset_scores(result = raw_results,
+CC.15 <- subset_scores(result = AlvMac_results,
     namespace = "cellular_component",
     total = 15)
 @
@@ -341,10 +343,10 @@ ranking scores.
 Furthermore, the inherent hierarchical structure and ``granularity'' of gene
 ontology terms can easily be browsed by using increasingly large values of the
 \texttt{total} filter. Note that this filter retains only GO terms associated
-with a minimal given count of genes in the Ensembl BioMart. It is also possible
-to use the \texttt{data} argument to filter for GO terms associated with a
-certain count of genes in the given expression dataset, although this approach
-is obviously more data-dependent and less robust.
+with a minimal given count of genes in the Ensembl BioMart. It is also
+possible to use the \texttt{data} argument to filter for GO terms associated
+with a certain count of genes in the given expression dataset, although this
+approach is obviously more data-dependent and less robust.
 
 \subsection[Details of the top-ranking GO terms]{Details of the top-ranking GO
 terms}
@@ -407,13 +409,14 @@ cluster_GO(go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
 @
 \end{center}
 
-Similarly to the \texttt{heatmap\_GO} method above, among the various arguments
-of the \texttt{cluster\_GO} function, the argument \texttt{f} can be used to
-specify an alternative column present in \texttt{pData(targets)} to label the
-samples in the dendrogram according to that phenotypic information. Obviously,
-if the same set of genes is being used, the clustering of samples will remain
-the same no matter the column chosen; however, the alternative labelling of
-samples may reveal relevant sub-clustering of samples.
+Similarly to the \texttt{heatmap\_GO} method above, among the various
+arguments of the \texttt{cluster\_GO} function, the argument \texttt{f} can
+be used to specify an alternative column present in \texttt{pData(targets)}
+to label the samples in the dendrogram according to that phenotypic
+information. Obviously, if the same set of genes is being used, the
+clustering of samples will remain the same no matter the column chosen;
+however, the alternative labelling of samples may reveal relevant
+sub-clustering of samples.
 
 \begin{center}
 <<fig=TRUE>>=
@@ -435,10 +438,10 @@ table_genes(go_id = "GO:0034142", result = BP.5)
 
 Note that the default behaviour of the above function is to return a table of
 all the genes associated with the GO term based on the annotations retrieved
-from the Ensembl BioMart. For obvious reasons, genes present in the BioMart but
-absent from the expression dataset will be absent from the score table and
-consequently lack annotations. It is possible to restrict the above table to
-only genes present in the expression dataset using the \texttt{data.only}
+from the Ensembl BioMart. For obvious reasons, genes present in the BioMart
+but absent from the expression dataset will be absent from the score table
+and consequently lack annotations. It is possible to restrict the above table
+to only genes present in the expression dataset using the \texttt{data.only}
 argument.
 
 If only the feature identifiers associated with a given GO identifier are
@@ -476,12 +479,13 @@ That column does not encode a factor, but a numeric vector. This difference
 enables the plotting function to respect the relative distance between the
 time-points for an output more representative of the actual time-scale.
 
-To investigate the impact of other factors on the expression level of the same
-gene, users are encouraged to use the \texttt{f} and \texttt{x\_var} arguments
-to specify alternate grouping factor and X variable, respectively. Note that
-the \texttt{geom\_smooth} of the \texttt{ggplot2} package may fail if a minimal
-number of replicates is not available to calculate proper confidence intervals.
-Here is another valid example separating samples by animal on the X axis.
+To investigate the impact of other factors on the expression level of the
+same gene, users are encouraged to use the \texttt{f} and \texttt{x\_var}
+arguments to specify alternate grouping factor and X variable, respectively.
+Note that the \texttt{geom\_smooth} of the \texttt{ggplot2} package may fail
+if a minimal number of replicates is not available to calculate proper
+confidence intervals. Here is another valid example separating samples by
+animal on the X axis.
 
 \begin{center}
 <<fig=TRUE>>=
@@ -511,8 +515,8 @@ some gene symbols are associated with multiple Ensembl gene identifiers and
 probesets (e.g. `RPL36A'). In the latter case, we turned the ambiguity into an
 additional useful feature: a lattice is created, and each of the multiple
 features associated with the given gene symbol are plotted simultaneously in
-the lattice. Subsequently, each of the sub-figures plotted may be re-plotted by
-itself using the \texttt{index} argument as indicated in the accompanying
+the lattice. Subsequently, each of the sub-figures plotted may be re-plotted
+by itself using the \texttt{index} argument as indicated in the accompanying
 message printed in the R console.
 
 \subsection[Expression profile of a gene by individual sample series]{
@@ -523,20 +527,20 @@ identifier}
 
 It may be useful to track and visualise the expression profile of genes in
 each individual sample series, rather than their average. This could help
-identify outliers within sample groups, or visually compare paired samples, for
-instance.
+identify outliers within sample groups, or visually compare paired samples,
+for instance.
 
 In the \texttt{AlvMac} dataset, samples from each of the animals were
 subjected to all three treatments in parallel (i.e. paired samples). In the
-figure below, a sample series is defined by a given \texttt{Animal} and a given
-\texttt{Treatment}. Each sample series is then tracked over time, and coloured
-according to the \texttt{Treatment} factor (default, factor stored in
-\texttt{raw\_results\$factor}):
+figure below, a sample series is defined by a given \texttt{Animal} and a
+given \texttt{Treatment}. Each sample series is then tracked over time, and
+coloured according to the \texttt{Treatment} factor (default, factor stored
+in \texttt{raw\_results\$factor}):
 
 \begin{center}
 <<fig=TRUE>>=
-AlvMac$Animal.Treatment = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
-expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
+AlvMac$Animal.Treatment <- paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
+expression_profiles(gene_id = "ENSBTAG00000047107", result = AlvMac_results,
                     eSet=AlvMac, x_var = "Timepoint", line.size=1,
                     seriesF="Animal.Treatment", linetypeF="Animal",
                     legend.title.size=10, legend.text.size=10,
@@ -555,7 +559,7 @@ can be applied to all groups using the \texttt{argument} as follows:
 
 \begin{center}
 <<fig=TRUE>>=
-expression_profiles(gene_id = "ENSBTAG00000047107", result = raw_results,
+expression_profiles(gene_id = "ENSBTAG00000047107", result = AlvMac_results,
                     eSet=AlvMac, x_var = "Timepoint", lty=rep(1,10),
                     # use line-type 1 for all 10 groups
                     seriesF="Animal.Treatment", linetypeF="Animal",
@@ -570,7 +574,7 @@ Similarly to the \texttt{expression\_plot} method, an alternative was
 implemented to use gene names instead of Ensembl gene identifiers. An example:
 
 <<fig=TRUE>>=
-expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
+expression_profiles_symbol(gene_symbol="TNIP3", result = AlvMac_results,
                     x_var = "Timepoint", linetypeF="Animal", line.size=1,
                     eSet=AlvMac, lty=rep(1,10), seriesF="Animal.Treatment", 
                     title.size=1.5, legend.title.size=10, legend.text.size=10,
@@ -602,14 +606,45 @@ plot_design(go_id = "GO:0034134", result = BP.5, eSet=AlvMac,
 \section[Additional controls and advanced functions]{Additional controls and
 advanced functions}
 
+\subsection[Subsetting an ExpressionSet to specific sample groups]{Subsetting
+an ExpressionSet to specific sample groups}
+
+It is straightforward to subset an \texttt{ExpressionSet} by extracting
+given columns (i.e. samples) and rows (i.e. gene features). Nevertheless,
+the \texttt{randomForest} package is quite sensitive to the definition of R
+factors; for instance, the \texttt{randomForest} package will crash if a
+factor is declared to have 3 levels (e.g. "A", "B", and "C"), while the
+\texttt{ExpressionSet} only contains samples for two of them (e.g. "A" and
+"B"). A simple fix is to update the known levels of the factor after having
+subsetted the \texttt{ExpressionSet}:
+
+<<>>=
+AlvMac$Time <- factor(AlvMac$Time)
+@
+
+Note that this operation preservers the order of ordered factors.
+
+However, subsetting an \texttt{ExpressionSet} by rows and columns does not
+automatically update the known levels of each factor to the remaining levels.
+For this task, the method \texttt{subEset} takes a named list, where item
+names must be column names from the \texttt{phenoData} slots and item values
+must be present in the corresponding columns, to return a subset of the
+original \texttt{ExpressionSet} and return only the samples which match those
+values:
+
+<<>>=
+subEset(eSet=AlvMac, subset=list(Time=c("2H","6H","24H"),
+                                    Treatment=c("CN","MB")))
+@
+
 \subsection[Overlapping genes between GO terms]{Overlapping genes between GO
 terms}
 
 Often, the top-ranked cellular functions identified by pathway analysis and
 gene-set enrichment analysis tools may significantly overlap each other in
-terms of genes, which limits the number of genes identified by those approaches
-and blurrs the precise cellular function represented by the core gene-set
-among a list of closely related yet different functions.
+terms of genes, which limits the number of genes identified by those
+approaches and blurrs the precise cellular function represented by the core
+gene-set among a list of closely related yet different functions.
 
 Typically, overlapping sets are representated as Venn diagrams. The example
 below will produce a Venn diagram of the gene-sets associated with the five
@@ -652,9 +687,9 @@ While scores are more prone to extreme outlier values and may slightly
 fluctuate between multiple runs of the random forest algorithm; ranks of genes
 and subsequently average ranks of GO terms are less prone to such variations
 and may be more reliable estimators of the importance of genes and cellular
-functions. Therefore, the default behaviour of \texttt{GOexpress} is to use the
-rank and average rank metrics to order genes and GO terms, respectively, in the
-returned score tables.
+functions. Therefore, the default behaviour of \texttt{GOexpress} is to use
+the rank and average rank metrics to order genes and GO terms, respectively,
+in the returned score tables.
 
 It is however possible to re-order the tables in the output variable according
 to the score metric (or revert back to the original one) as in the example
@@ -676,29 +711,31 @@ rapidly identify those that best cluster the samples according to the
 experimental factor studied, resulting in the clearest dendrograms and
 heatmaps. A two-fold procedure was implemented:
 \begin{enumerate}
-    \item Using the available expression data, each gene present in the dataset
-    is scored, evaluating its ability to cluster the predefined groups of
-    samples. Genes are ranked according to their respective score; ties are
-    resolved by assigning the lowest rank R to all G genes, giving the rank G+n
-    to the next gene(s). The genewise scoring functions implemented are
-    described in the following subsections, and all were validated on in-house
-    datasets cross-checked with widely validated analytic pipelines (e.g.
-    Ingenuity\textregistered Pathway Analysis, SIGORA)
-    \item Using the above ranks and scores, each GO term in the Ensembl BioMart
-    is assigned the mean score and the mean rank of all the genes associated
-    with it in the BioMart. Genes present in the BioMart but absent from the
-    given dataset are assigned a score of 0 (minimum valid score; indicates no
-    power to discriminates the predefined groups of sample) and a rank equal to
-    the number of genes present in the entire dataset plus one (worst rank,
-    while preserving discrete continuity of the ranking).
+    \item Using the available expression data, each gene present in the
+    dataset is scored, evaluating its ability to cluster the predefined
+    groups of samples. Genes are ranked according to their respective score;
+    ties are resolved by assigning the lowest rank R to all G genes, giving
+    the rank G+n to the next gene(s). The genewise scoring functions
+    implemented are described in the following subsections, and all were
+    validated on in-house datasets cross-checked with widely validated
+    analytic pipelines (e.g. Ingenuity\textregistered Pathway Analysis,
+    SIGORA)
+    \item Using the above ranks and scores, each GO term in the Ensembl
+    BioMart is assigned the mean score and the mean rank of all the genes
+    associated with it in the BioMart. Genes present in the BioMart but
+    absent from the given dataset are assigned a score of 0 (minimum valid
+    score; indicates no power to discriminates the predefined groups of
+    sample) and a rank equal to the number of genes present in the entire
+    dataset plus one (worst rank, while preserving discrete continuity of
+    the ranking).
 \end{enumerate}
 
 Importantly, the statistics performed to rank GO terms and genes do \emph{not}
 influence the behaviour of the subsequent plotting functions; heatmaps,
 dendrograms and gene expression profiles are purely driven by the
 expression data, sample phenotype annotations provided and GO terms ontologies
-imported from the Ensembl BioMart server, without any transformation applied to
-the data. Therefore, users are encouraged to use and suggest alternative
+imported from the Ensembl BioMart server, without any transformation applied
+to the data. Therefore, users are encouraged to use and suggest alternative
 relevant scoring and ranking strategies, which could prioritise GO terms and
 genes in different ways. A current acknowledged bias is the higher scoring of
 GO terms associated with fewer genes, which shows some advantages as discussed
@@ -738,21 +775,22 @@ compared to the variance within the groups, summarised as an F statistic
 that \texttt{GOexpress} uses as a score for each gene. Simply put, if samples
 from the same groups show gene expression values similar to each other while
 samples from different groups show different levels of expression, those genes
-will produce a higher score. This score cannot be less than 0 (variance between
-groups insignificant to variance within groups), while very large ratios can
-easily be reached for genes markedly different between groups.
+will produce a higher score. This score cannot be less than 0 (variance
+between groups insignificant to variance within groups), while very large
+ratios can easily be reached for genes markedly different between groups.
 
 Contrary to the random forest framework, the Analysis of Variance makes
 important assumptions on the data: namely, the independence of observations,
 the normality of residuals, and the equality of variances in all groups. While
 the former two are the responsibility of the user to verify, the latter is
-taken care of by \texttt{GOexpress}. Indeed, the \texttt{oneway.test} method of
-the package \texttt{stats} is used with parameter \texttt{var.equal} set to to
-\texttt{FALSE}. While this reduces the sensitivity of the test, all genes are
-affected by this correction based on the relative amount of variance in the
-different predefined groups of samples. Finally, it is once again important to
-note that the ANOVA only evaluates univariate changes, while the random forest
-framework implicitely allows for interactions between genes.
+taken care of by \texttt{GOexpress}. Indeed, the \texttt{oneway.test} method
+of the package \texttt{stats} is used with parameter \texttt{var.equal} set
+to to \texttt{FALSE}. While this reduces the sensitivity of the test, all
+genes are affected by this correction based on the relative amount of
+variance in the different predefined groups of samples. Finally, it is once
+again important to note that the ANOVA only evaluates univariate changes,
+while the random forest framework implicitely allows for interactions between
+genes.
 
 
 \section[Notes]{Notes}
@@ -762,19 +800,20 @@ framework implicitely allows for interactions between genes.
 Conception and development of the \texttt{GOexpress} package was carried out
 by KR-A with contributions by PAM, under the supervision of SVG and DEM.
 Integration of the random forest statistical frameworks was advised by BH and
-AP. This User's Guide was prepared by KR-A, and edited by PAM, BH, AP, SVG, and
-DEM.
+AP. This User's Guide was prepared by KR-A, and edited by PAM, BH, AP, SVG,
+and DEM.
 
 \subsection[Acknowledgement]{Acknowledgments}
 
 Special thanks to Dr. David Magee for helpful advice on statistics, to Dr.
 Nicolas Nalpas and Dr. Kate Killick for testing and feedback. My thanks to the
 Bioconductor staff and in particular to Hervé Pagès for the helpful feedback
-which improved the standards of the code and documentation. Last but not least,
-thanks to the University College Dublin "OpenSequencing" and the "Virtual
-Institute of Bioinformatics and Evolution" (VIBE) communities where I first
-presented raw versions of \texttt{GOexpress} and got valuable feedback and
-advice in return, underlying a significant number of updated and new features.
+which improved the standards of the code and documentation. Last but not
+least, thanks to the University College Dublin "OpenSequencing" and the
+"Virtual Institute of Bioinformatics and Evolution" (VIBE) communities where
+I first presented raw versions of \texttt{GOexpress} and got valuable feedback
+and advice in return, underlying a significant number of updated and new
+features.
 
 
 \end{document}

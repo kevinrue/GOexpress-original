@@ -14,9 +14,9 @@ information about the samples.
 The expression data is saved in the \code{assayData} slot of the
 \code{ExpressionSet}. It is a gene-by-sample matrix, containing a subset of
 data from an \emph{in vitro} stimulation of bovine macrophages with different
-mycobacterial strains. Column names are sample names, and row names are Ensembl
-gene identifiers of the \emph{Bos taurus} species. Each cell contains the
-log2-transformed normalised expression level of each gene in each sample.
+mycobacterial strains. Column names are sample names, and row names are
+Ensembl gene identifiers of the \emph{Bos taurus} species. Each cell contains
+the log2-transformed normalised expression level of each gene in each sample.
 
 The phenotypic information is saved in the \code{phenoData} slot of the
 \code{ExpressionSet}. Row names are sample names and columns contain
@@ -27,8 +27,8 @@ Treatment, Timepoint, Animal).
 \usage{data(AlvMac)}
 
 \value{
-\code{assayData} is a matrix of expression levels for 100 genes (rows) measured
-in 117 samples (columns).
+\code{assayData} is a matrix of expression levels for 100 genes (rows)
+measured in 117 samples (columns).
     \describe{
     \item{\code{row.names}}{Ensembl gene identifiers (\emph{Bos taurus})}.
     \item{\code{col.names}}{Sample identifiers}.
@@ -71,8 +71,8 @@ processed using the edgeR Bioconductor package.
 
 The gene expression quantitation pipeline within the edgeR package was
 customised to: (1) filter out all bovine rRNA genes; (2) filter out genes
-displaying expression levels below the minimally-set threshold of one count per
-million [CPM] in at least ten individual libraries (number of biological
+displaying expression levels below the minimally-set threshold of one count
+per million [CPM] in at least ten individual libraries (number of biological
 replicates); (3) calculate normalisation factors for each library using the
 trimmed mean of M-values method; (4) log2-transform CPM values based on the
 normalised library size.
@@ -82,8 +82,8 @@ dataset of 12,121 genes. All 7 genes associated with the GO term "GO:0034142"
 (i.e. "toll-like receptor 4 signaling pathway") were kept, plus another random
 93 random genes, making a total of 100 genes measured in 117 samples. Samples
 include all 10 biological replicates collected at four different time-points,
-see \code{data(targets)}. The TLR4 pathway was found in the full dataset as the
-top-ranking biological pathway discriminating the different mycobacterial
+see \code{data(targets)}. The TLR4 pathway was found in the full dataset as
+the top-ranking biological pathway discriminating the different mycobacterial
 infections (unpublished observations).
 }
 

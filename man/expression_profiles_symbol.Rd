@@ -15,7 +15,8 @@ in the \code{phenodata}.
 }
 
 \usage{
-expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
+expression_profiles_symbol(
+    gene_symbol, result, eSet, x_var, seriesF, subset=NULL,
     colourF=result$factor, linetypeF=colourF, line.size=1.5,
     index=0, ylab="log2(cpm)", col.palette="Accent",
     col=brewer.pal(n=length(levels(pData(eSet)[,colourF])),
@@ -29,7 +30,7 @@ expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
 
 \arguments{
     \item{gene_symbol}{
-    A gene name present in \code{rownames(raw_result$genes)}.
+    A gene name present in \code{rownames(AlvMac_results$genes)}.
     }
     \item{result}{
     An output of the \code{GO_analyse()} or \code{subset_scores()} function.
@@ -45,13 +46,18 @@ expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
     }
     \item{x_var}{
     A column name in \code{phenodata} to plot on the X-axis. If representing
-    time on the X-axis, users should store the time-points as numeric values in
-    the \code{AnnotatedDataFrame} to adequately space the time-points.
+    time on the X-axis, users should store the time-points as numeric values
+    in the \code{AnnotatedDataFrame} to adequately space the time-points.
     }
     \item{seriesF}{
     A column name in \code{phenodata} to track samples of an identical series
     across the X-axis. The combination of \code{seriesF} and \code{x_var}
     should uniquely identify each sample in \code{eSet}.
+    }
+    \item{subset}{
+    A named list to subset \code{eSet}. Names must be column names existing
+    in colnames(pData(eSet)). Values must be vectors of values existing in
+    the corresponding column of pData(eSet).
     }
     \item{colourF}{
     A column name in \code{phenodata} to colour the corresponding groups of
@@ -66,9 +72,9 @@ expression_profiles_symbol(gene_symbol, result, eSet, x_var, seriesF,
     The width of the plotted lines. Default is 1.5.
     }
     \item{index}{
-    In the case where multiple gene or probeset identifiers are associated with
-    the gene name, \code{index=2} will plot the expression profile of the
-    second feature identifier alone, for instance.
+    In the case where multiple gene or probeset identifiers are associated
+    with the gene name, \code{index=2} will plot the expression profile of
+    the second feature identifier alone, for instance.
     }
     \item{ylab}{
     Title of the Y-axis. Default is "log2(cpm)".
@@ -152,17 +158,17 @@ that plotted on the X-axis. See below for an example on the training dataset.
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 
-expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
+expression_profiles_symbol(gene_symbol="TNIP3", result = AlvMac_results,
         linetypeF="Animal", line.size=1.5,
         eSet=AlvMac, seriesF="Series", x_var = "Timepoint",
         title.size=1.5, legend.title.size=10, legend.text.size=10,
         legend.key.size=30)
 
-expression_profiles_symbol(gene_symbol="TNIP3", result = raw_results,
+expression_profiles_symbol(gene_symbol="TNIP3", result = AlvMac_results,
         linetypeF="Animal", line.size=1.5, lty=rep(1,10),
         eSet=AlvMac, seriesF="Series", x_var = "Timepoint",
         title.size=1.5, legend.title.size=10, legend.text.size=10,

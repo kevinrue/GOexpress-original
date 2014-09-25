@@ -14,6 +14,7 @@ export("overlap_GO")
 export("plot_design")
 export("quantiles_scores")
 export("rerank")
+export("subEset")
 export("subset_scores")
 export("table_genes")
 

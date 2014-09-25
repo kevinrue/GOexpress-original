@@ -9,19 +9,18 @@ Plots the expression profile of a gene by levels of a factor
 \description{
 This function will plot the expression profile of a gene across a valid
 X-axis variable in the \code{phenodata} while representing the mean
-and confidence interval of groups of samples defined by levels of another valid
-grouping factor in the \code{phenodata}.
+and confidence interval of groups of samples defined by levels of another
+valid grouping factor in the \code{phenodata}.
 }
 
 \usage{
 expression_plot(
-    gene_id, result, eSet, x_var, 
-    f=result$factor, ylab = "log2(cpm)", col.palette="Accent",
-    col = brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
-    level=0.95, title=NULL, title.size=2, axis.title.size=20,
+    gene_id, result, eSet, x_var, f=result$factor, subset=NULL,
+    ylab="log2(cpm)", col.palette="Accent",
+    col=brewer.pal(n=length(levels(pData(eSet)[,f])), name=col.palette),
+    level=0.95, title=NULL, title.size=2, axis.title.size=20, 
     axis.text.size=15, axis.text.angle=0,
-    legend.title.size=20, legend.text.size=15,
-    legend.key.size=30)
+    legend.title.size=20, legend.text.size=15, legend.key.size=30)
 }
 
 \arguments{
@@ -42,15 +41,20 @@ expression_plot(
     }
     \item{x_var}{
     A column name in \code{phenodata} to plot on the X-axis. If representing
-    time on the X-axis, users should store the time-points as numeric values in
-    the \code{AnnotatedDataFrame} to adequately space the time-points.
+    time on the X-axis, users should store the time-points as numeric values
+    in the \code{AnnotatedDataFrame} to adequately space the time-points.
     }
     \item{f}{
     A column name in \code{phenodata} to group the samples when representing
     mean and confidence interval. The factor specified in the initial
-    \code{GO_analyse()} call is used by default. Unexpected grouping factors of
-    samples can reveal interesting trends (e.g. "Animal", "Tissue", "CellType",
-    ...).
+    \code{GO_analyse()} call is used by default. Unexpected grouping factors
+    of samples can reveal interesting trends (e.g. "Animal", "Tissue",
+    "CellType", ...).
+    }
+    \item{subset}{
+    A named list to subset \code{eSet}. Names must be column names existing
+    in colnames(pData(eSet)). Values must be vectors of values existing in
+    the corresponding column of pData(eSet).
     }
     \item{ylab}{
     Title of the Y-axis. Default is "log2(cpm)".
@@ -115,9 +119,10 @@ Kevin Rue-Albrecht
     \itemize{
     \item It may not be possible to produce plots where the combination of
     X-axis variable and grouping factor leaves too few replicates to compute
-    a confidence interval for each X value. This is a limitation imposed by the
-    ggplot2 package to produce proper statistics and confidence intervals. In
-    such cases, it may be preferrable to use the expression_profiles() method.
+    a confidence interval for each X value. This is a limitation imposed by
+    the ggplot2 package to produce proper statistics and confidence
+    intervals. In such cases, it may be preferrable to use the
+    expression_profiles() method.
     }
 }
 
@@ -130,20 +135,20 @@ Kevin Rue-Albrecht
 
 \examples{
 # load the sample output data
-data(raw_results)
+data(AlvMac_results)
 
 # Expression by gene identifier (TNIP3)
 expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Timepoint",
-                result=raw_results)
+                result=AlvMac_results)
 
 # Same gene, plotted by animal and grouped by treatment (merging time points)
 expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Animal",
-                result=raw_results,
+                result=AlvMac_results,
                 f="Treatment")
 
 # Same gene, plotted by animal and grouped by time-point (merging treatments)
 expression_plot(gene_id="ENSBTAG00000047107", eSet=AlvMac, x_var="Animal",
-                result=raw_results,
+                result=AlvMac_results,
                 f="Time")
 }
 
