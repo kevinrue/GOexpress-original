@@ -257,6 +257,7 @@ associated genes:
 
 \label{sec:GOanalyse}
 <<>>=
+set.seed(4543) # set random seed for reproducibility
 AlvMac_results <- GO_analyse(
     eSet = AlvMac, f = "Treatment")
 @
