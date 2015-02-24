@@ -16,11 +16,13 @@ levels of those genes in a heatmap.
 heatmap_GO(
     go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
     scale="none", cexCol=1.2, cexRow=0.5, 
+    row.labels=NULL,
     cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
     row.col=c(),
-    main=paste(go_id, result$GO[result$GO$go_id == go_id,
-                                "name_1006"]),
+    main=paste(
+        go_id, result$GO[result$GO$go_id == go_id,"name_1006"]
+        ),
     main.Lsplit=NULL,
     ...)
 }
@@ -63,6 +65,10 @@ heatmap_GO(
     \item{cexCol, cexRow}{
     Positive numbers, used as cex.axis in for the row or column axis labeling.
     Defaults are 1.2 and 1, respectively. See \code{heatmap.2()}.
+    }
+    \item{labRow}{
+    A character vector of names to label the rows (samples) with. Default are
+    the values of the factor \code{f}. See \code{heatmap.2()}.
     }
     \item{cex.main}{
     Scaling factor of the main title font size. Default is 1. We suggest to 

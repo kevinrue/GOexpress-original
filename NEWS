@@ -1,3 +1,12 @@
+CHANGES IN VERSION 1.1.6
+--------------------------
+
+UPDATED FEATURES:
+
+    o Allow user to override row_labels in heatmap_GO. This way, the 
+color-coding of the sample can be kept, while better description of the
+samples can be used to label them, instead of the phenodata values.
+
 CHANGES IN VERSION 1.1.5
 --------------------------
 

@@ -662,6 +662,7 @@ expression_profiles_symbol <- function(
 heatmap_GO <- function(
     go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
     scale="none", cexCol=1.2, cexRow=0.5, 
+    labRow=NULL,
     cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
     row.col=c(),
@@ -681,13 +682,12 @@ heatmap_GO <- function(
         # Return an error and stop
         stop("go_id: ", go_id, " was not found in result$mapping$go_id.")
     }
-    
     # Subset the data to the given values of the given factors, if existing
     if (!is.null(subset)){
         eSet <- subEset(eSet=eSet, subset=subset)
     }
     # Also update the RowSideColors of the heatmap.2 to a shorter vector
-    # becaue the number of samples has been reduced
+    # because the number of samples has been reduced
     # NOTE: if the user wants to provide his own color array he should
     # either give the exact number of colors as he expects in the
     # subsetted ExpressionSet, or rather use the row.col.palette 
@@ -702,8 +702,22 @@ heatmap_GO <- function(
     gene_ids <- list_genes(go_id=go_id, result=result, data.only=TRUE)
     # Fetch and format the expression data for those genes
     genes_expr <- t(exprs(eSet)[gene_ids,])
-    # Rows are samples, label them according to the user's choson factor
-    sample_labels <- pData(eSet)[,f]
+    # Rows are samples, if the user didn't provide custom labels
+    if (is.null(labRow)){
+        # label them according to the user's choson factor
+        labRow <- pData(eSet)[,f]
+    }
+    else{
+        # If the user provided row labels, they have to match the number of
+        # samples
+        if (length(labRow) != ncol(eSet)){
+            stop(
+                "The number of custom row labels provided (",
+                length(labRow),
+                ") does not match the number of samples (",
+                ncol(eSet), ".")
+        }
+    }
     # Columns are features, label them by identifier or name
     if (gene_names){
         gene_labels <- result$genes[gene_ids, "external_gene_name"]
@@ -731,7 +745,7 @@ heatmap_GO <- function(
     par(cex.main=cex.main)
     # Plot the heatmap of the data
     heatmap.2(
-        genes_expr, labRow=sample_labels, labCol=gene_labels,
+        genes_expr, labRow=labRow, labCol=gene_labels,
         scale=scale, cexCol=cexCol, cexRow=cexRow, main=main,
         trace=trace, RowSideColors=samples.col, col=expr.col,
         ...)
