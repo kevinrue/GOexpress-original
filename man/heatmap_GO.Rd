@@ -16,7 +16,7 @@ levels of those genes in a heatmap.
 heatmap_GO(
     go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
     scale="none", cexCol=1.2, cexRow=0.5, 
-    row.labels=NULL,
+    labRow=NULL,
     cex.main=1, trace="none", expr.col=bluered(75), 
     row.col.palette="Accent",
     row.col=c(),
