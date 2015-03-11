@@ -139,8 +139,10 @@ heatmap_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac, cexRow=1)
 # Change the color-coding to green-black-red gradient (more appropriate for
 # differential expression values)
 library(gplots)
-heatmap_GO(go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac,
-    expr.col=greenred(75))
+heatmap_GO(
+    go_id="GO:0034142", result=AlvMac_results, eSet=AlvMac,
+    expr.col=greenred(75)
+    )
 }
 
 \keyword{ GOexpress }

@@ -1,7 +1,7 @@
 Package: GOexpress
 Title: Visualise microarray and RNAseq data using gene ontology annotations
 Version: 1.1.6
-Date: 2014-02-13
+Date: 2014-03-11
 Authors@R: c(
     person(given="Kevin", family="Rue-Albrecht",
     role = c("aut", "cre"), email = "kevin.rue@ucdconnect.ie"),
@@ -23,10 +23,10 @@ Description: The package contains methods to visualise the expression profile
     rank (alternatively, score) of their respective gene sets to cluster
     the samples. An ANOVA approach is also available as an alternative
     statistical framework.
-Depends: R (>= 3.0.2), grid, Biobase (>= 2.22.0)
+Depends: R (>= 3.0.2), grid, Biobase (>= 2.22.0), VennDiagram (>= 1.6.5)
 Imports: biomaRt (>= 2.18.0), stringr (>= 0.6.2), 
     ggplot2 (>= 0.9.0), RColorBrewer (>= 1.0), gplots (>= 2.13.0),
-    VennDiagram (>= 1.6.5), randomForest (>= 4.6)
+    randomForest (>= 4.6)
 Suggests: RCurl (>= 1.95), BiocStyle
 License: GPL (>= 3)
 biocViews: Software, GeneExpression, Transcription, DifferentialExpression,

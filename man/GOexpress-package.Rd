@@ -11,26 +11,24 @@ Visualise microarray and RNAseq data with gene ontology annotations.
 }
 
 \description{
-Combines local gene expression data with online Gene Ontology (GO) resources
-to visualise and rank ontologies enriched for genes best clustering
-predefined groups of samples based on gene expression levels. Using the
-\code{biomaRt} package, \code{GOexpress} semi-automatically retrieves gene
-ontology annotations from Ensembl for the species corresponding to the
-expression dataset prior to performing the analysis. A random forest analysis
-is performed to evaluate the ability of each gene to cluster samples
-according to a predefined grouping factor (one-way ANOVA available as an
-alteranative). Each GO term is scored and ranked according to the average
-rank (alternatively, average power) of all associated genes to cluster the
-samples according to the factor. The ranked list of GO terms is returned,
-with tools allowing to visualise the statistics on a gene- and ontology-basis.
+Integrates gene expression data with gene ontology annotations to score and
+visualise genes and gene ontologies best clustering groups of experimental
+samples. Supports custom annotations, or alternatively provides an interface
+to the Ensembl annotations using the \code{biomaRt} package. The default
+scoring approach is based on the random forest framework, while a one-way
+ANOVA is available as an alteranative. GO term are scored and ranked
+according to the average rank (alternatively, average power) of all
+associated genes. P-values can be generated to assess the significance of
+GO term ranking. The ranked list of GO terms is returned, with tools
+allowing to visualise the statistics on a gene- and ontology-basis.
 }
 
 \details{
     \tabular{ll}{
     Package: \tab GOexpress\cr
     Type: \tab Package\cr
-    Version: \tab 1.1.5\cr
-    Date: \tab 2014-12-13\cr
+    Version: \tab 1.1.6\cr
+    Date: \tab 2014-03-11\cr
     License: \tab  GPL (>= 3)\cr
     }
     This package requires only two input variables

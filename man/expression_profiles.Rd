@@ -166,16 +166,16 @@ data(AlvMac_results)
 
 AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 
-expression_profiles(gene_id = "ENSBTAG00000047107", result = AlvMac_results,
-                    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
-                    legend.title.size=10, legend.text.size=10,
-                    legend.key.size=15)
+expression_profiles(
+    gene_id = "ENSBTAG00000047107", result = AlvMac_results,
+    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
+    legend.title.size=10, legend.text.size=10, legend.key.size=15)
 
-expression_profiles(gene_id = "ENSBTAG00000047107", result = AlvMac_results,
-                    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
-                    linetypeF="Animal",
-                    legend.title.size=10, legend.text.size=10,
-                    legend.key.size=15)
+expression_profiles(
+    gene_id = "ENSBTAG00000047107", result = AlvMac_results,
+    eSet=AlvMac, x_var = "Timepoint", seriesF="Series",
+    linetypeF="Animal", 
+    legend.title.size=10, legend.text.size=10, legend.key.size=15)
 }
 
 \keyword{ GOexpress }
