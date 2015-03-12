@@ -461,7 +461,7 @@ GO_analyse <- function(
                 all_genes <- getBM(
                     attributes=c(
                         microarray,
-                        "external_gene_name",
+                        "external_gene_name", # since Ensembl release 76
                         "description"
                     ),
                     filters=microarray,

@@ -15,6 +15,7 @@ levels of those genes in a heatmap.
 \usage{
 heatmap_GO(
     go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
+    NA.names=FALSE, margins=c(7 ,5),
     scale="none", cexCol=1.2, cexRow=0.5, 
     labRow=NULL,
     cex.main=1, trace="none", expr.col=bluered(75), 
@@ -56,6 +57,18 @@ heatmap_GO(
     A boolean value. Default is TRUE, to label genes by their associated gene
     name. If FALSE, labels the genes by their feature identifier in the
     expression dataset (i.e. Ensembl gene identifier or microarray probeset).
+    }
+    \item{NA.names}{
+    A boolean value. Default is TRUE. If labelling genes by their associated
+    gene name (see argument \code{gene_names}), whether to display the
+    gene feature identifier for gene features without associated gene name.
+    }
+    \item{margins}{
+    A numeric vector of length 2 specifying the number of lines of margins to
+    apply for the bottom and right margins, respectively.
+    Defaults are 7 (bottom) and 5 (right), if only gene names are present,
+    or 13 (bottom) and 5 (right) if any gene feature identifier is present.
+    See \code{heatmap.2()}.
     }
     \item{scale}{
     Character indicating if the values should be centered and scaled in either

@@ -16,6 +16,14 @@ NEW FEATURES:
     the chance of seeing a GO term reach a particular rank (or score).
     Features a fancy progres bar shamelessly adapted from StackOverflow.
 
+    o heatmap_GO now semi-autmoatically resizes the bottom and right margins
+    to accomodate large gene and sample labels, respectively. The user may
+    control those margins using the "margins" argument of the function.
+
+    o heatmap_GO default call now shows the gene feature identifier for those
+    missing an annotated gene name, when gene names are requested (also
+    the default).
+
     o A rank.by slot is now created by the GO_analyse() function in the result
     object to state the metric used to order the result tables.
 

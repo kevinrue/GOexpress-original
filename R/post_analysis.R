@@ -661,6 +661,7 @@ expression_profiles_symbol <- function(
 
 heatmap_GO <- function(
     go_id, result, eSet, f=result$factor, subset=NULL, gene_names=TRUE,
+    NA.names=FALSE, margins=c(7 ,5),
     scale="none", cexCol=1.2, cexRow=0.5, 
     labRow=NULL,
     cex.main=1, trace="none", expr.col=bluered(75), 
@@ -721,9 +722,17 @@ heatmap_GO <- function(
     # Columns are features, label them by identifier or name
     if (gene_names){
         gene_labels <- result$genes[gene_ids, "external_gene_name"]
+        # Default: if sopme feature identifiers have no associated gene name
+        # fill the blanks with the feature identifier
+        if (any(gene_labels == '') & !NA.names){
+            gene_labels[gene_labels == ''] <- gene_ids[gene_labels == '']
+            margins=c(13,5)
+        }
+        # if the user prefers to leave blank gene names, do nothing
     }
     else{
         gene_labels <- gene_ids
+        margins=c(13,5)
     }
     # If requested, split the main title to lines with fewer than a given
     # count of characters, while respecting space-separated words
