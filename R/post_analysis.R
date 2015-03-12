@@ -1144,44 +1144,123 @@ subset_scores <- function(result, ...){
     Is it a pValue_GO() output?')
         }
     }
+    # Deal with supported synonyms
+    names(filters) <- replace(
+        names(filters), names(filters) == 'data', 'data_count')
+    names(filters) <- replace(
+        names(filters), names(filters) == 'total', 'total_count')
+    names(filters) <- replace(
+        names(filters), names(filters) == 'rank', 'ave_rank')
+    names(filters) <- replace(
+        names(filters), names(filters) == 'score', 'ave_score')
+    names(filters) <- replace(
+        names(filters), names(filters) == 'namespace', 'namespace_1003')
+    names(filters) <- replace(
+        names(filters), names(filters) == 'P', 'p.val')
+    names(filters) <- replace(
+        names(filters), names(filters) == 'p', 'p.val')
+    # Create/update a "filter.GO" slot in the result object
+    if (is.null(result$filters.GO)){
+        result$filters.GO <- list()
+    }
     # prepares a table where the filtering results will be saved
     filtered <- data.frame(row.names=result$GO$go_id)
     # For each filter (careful about the direction of testing)
     for (filter in names(filters)){
         # Save the filter status of each row for this filter
-        ## Filter on the total count of genes associated with the GO term
-        if (filter %in% c('total_count', 'total')){
-            filtered[,filter] <- result$GO[,"total_count"] >= filters[filter]
+        # Also: warn the user if applying conflicting filters to a previously
+        # filtered object
+        # All filters for superiror/equal values
+        if (filter %in% c('total_count', 'data_count', 'ave_score')){
+            # If the filter was not applied yet, add it
+            if (!filter %in% names(result$filters.GO)){
+                result$filters.GO[[filter]] <- filters[[filter]]
+            }
+            # If the filter was applied already on the result object
+            else{
+                # if the result object was already filtered for an
+                # equal or larger value
+                if (result$filters.GO[[filter]] >= filters[[filter]]){
+                    warning(
+                        'result object was already filter for an equal or ',
+                        'higher cutoff of filter ', filter, ': ',
+                        result$filters.GO[[filter]], '. Ignoring filter.'
+                        )
+                    next
+                }
+                # if filtering for a higher value than previously
+                else{
+                    # update the filter
+                    result$filters.GO[[filter]] <- filters[[filter]]
+                }
+            }
+            filtered[,filter] <- result$GO[,filter] >= filters[[filter]]
         }
-        ## Filter on the count of genes in the dataset associated with the GO
-        ## term
-        else if (filter %in% c("data_count", "data")){
-            filtered[,filter] <- result$GO[,"data_count"] >= filters[filter]
-        }
-        ## Filters on the average rank of the genes associated to the GO term
-        else if (filter %in% c("ave_rank")){
-            filtered[,filter] <- result$GO[,filter] <= filters[filter]
-        }
-        ## Filters on the average score of the genes associated to the GO term
-        else if (filter %in% c("ave_score")){
-            #cat(filter, "equal or lower than", filters[[filter]], fill=TRUE)
-            filtered[,filter] <- result$GO[,filter] >= filters[filter]
+        # All filters for superiror/equal values
+        else if (filter %in% c('ave_rank', 'p.val')){
+            # If the filter was not applied yet, add it
+            if (!filter %in% names(result$filters.GO)){
+                result$filters.GO[[filter]] <- filters[[filter]]
+            }
+            # If the filter was applied already on the result object
+            else{
+                # if the result object was already filtered for an
+                # equal or lower value
+                if (result$filters.GO[[filter]] <= filters[[filter]]){
+                    warning(
+                        'result object was already filter for an equal or ',
+                        'lower cutoff of filter ', filter, ': ',
+                        result$filters.GO[[filter]], '. Ignoring filter.'
+                        )
+                    next
+                }
+                # if filtering for a lower value than previously
+                else{
+                    # update the filter
+                    result$filters.GO[[filter]] <- filters[[filter]]
+                }
+            }
+            filtered[,filter] <- result$GO[,filter] <= filters[[filter]]
         }
         ## Filters on the namespace of the GO term
-        else if (filter %in% c("namespace_1003", "namespace")){
-            #cat(filter, "equal to", filters[[filter]], fill=TRUE)
+        else if (filter == 'namespace_1003'){
+            # If the filter was not applied yet, add it
+            if (!filter %in% names(result$filters.GO)){
+                result$filters.GO[[filter]] <- filters[[filter]]
+            }
+            # If the filter was applied already on the result object
+            else{
+                # if filtering for the same ontology
+                if (result$filters.GO[[filter]] == filters[[filter]]){
+                    # ignore the 
+                    note(
+                        'result object was already filter for the same',
+                        'namespace.'
+                        )
+                    next
+                }
+                # if filtering for a different ontology:
+                # the new one is not present anyway
+                else{
+                    stop(
+                        'result object was already filter for a different ',
+                        'namespace: ', result$filters.GO[[filter]],
+                        '. No more data for namespace: ', filters[[filter]]
+                        )
+                }
+            }
             # GO namespace filtering should offer shortcuts
-            if (filters[filter] %in% c("biological_process", "BP")){
+            if (filters[[filter]] %in% c('biological_process', 'BP')){
                 filtered[,filter] <- result$GO$namespace_1003 ==
-                    "biological_process"
+                    'biological_process'
             }
-            else if (filters[filter] %in% c("molecular_function", "MF")){
+            else if (filters[[filter]] %in% c('molecular_function', 'MF')){
                 filtered[,filter] <- result$GO$namespace_1003 ==
-                    "molecular_function"
+                    'molecular_function'
             }
-            else if (filters[filter] %in% c("cellular_component", "CC")){
+            else if (filters[[filter]] %in% c('cellular_component', 'CC')){
                 filtered[,filter] <- result$GO$namespace_1003 ==
-                    "cellular_component"
+                    'cellular_component'
             }
             else{
                 stop(
@@ -1191,10 +1270,6 @@ subset_scores <- function(result, ...){
                     "'cellular_component', and'CC'."
                     )
             }
-        }
-        ## Filters on the p-value
-        else if (filter %in% c("p.val")){
-            filtered[,filter] <- result$GO[,filter] <= filters[filter]
         }
         ## other filter names cause an error
         else{

@@ -171,7 +171,7 @@ that plotted on the X-axis. See below for an example on the training dataset.
 # load the sample output data
 data(AlvMac_results)
 
-AlvMac$Series = paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
+AlvMac$Series <- paste(AlvMac$Animal, AlvMac$Treatment, sep="_")
 
 expression_profiles_symbol(
     gene_symbol="TNIP3", result = AlvMac_results,

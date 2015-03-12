@@ -27,6 +27,11 @@ NEW FEATURES:
     o A rank.by slot is now created by the GO_analyse() function in the result
     object to state the metric used to order the result tables.
 
+    o a filters.GO slot stating the filters and cutoffs applied to the result
+    object is now created or updated by successive uses of the subset_scores()
+    function. Warnings and notes are displayed if conflicting filters and
+    cutoffs are applied on a previously filtered result object.
+
     o rerank() function now supports re-ordering by P-value. Note that this
     is only applicable to the output of the pValue_GO() function mentioned
     above.
