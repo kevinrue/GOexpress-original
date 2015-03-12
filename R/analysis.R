@@ -250,8 +250,8 @@ GO_analyse <- function(
                 "Non-NULL GO_genes argument: Ignoring 'biomart_dataset' ",
                 "and 'microarray' arguments."
                 )
-            biomart_dataset = ""
-            microarray = ""
+            biomart_dataset <- ""
+            microarray <- ""
         }
         mart <- NULL
     }
@@ -332,7 +332,7 @@ GO_analyse <- function(
         if (! "name_1006" %in% colnames(all_GO)){
             # Allow the header "name" but internally convert it to name_1006
             if ("name" %in% colnames(all_GO)){
-                colnames(all_GO)[colnames(all_GO) == "name"] = "name_1006"
+                colnames(all_GO)[colnames(all_GO) == "name"] <- "name_1006"
             }
             # else if could allow more headers
             else {
@@ -347,7 +347,7 @@ GO_analyse <- function(
             if ("namespace" %in% colnames(all_GO)){
                 colnames(all_GO)[
                     colnames(all_GO) == "namespace"
-                    ] = "namespace_1006"
+                    ] <- "namespace_1006"
             }
             # else if could allow more headers
             else {
@@ -482,12 +482,12 @@ GO_analyse <- function(
             if ("name" %in% colnames(all_genes)){
                 colnames(all_genes)[
                     colnames(all_genes) == "name"
-                    ] = "external_gene_name"
+                    ] <- "external_gene_name"
             }
             else if ("external_gene_id" %in% colnames(all_genes)){
                 colnames(all_genes)[
                     colnames(all_genes) == "external_gene_id"
-                    ] = "external_gene_name"
+                    ] <- "external_gene_name"
             }
             # "else if" could allow more synonym headers
             else {

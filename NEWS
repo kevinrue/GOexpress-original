@@ -34,6 +34,10 @@ NEW FEATURES:
     which used 'external_gene_id', which was renamed to 'external_gene_name'
     in releases 76 and later.
 
+    o table_genes() function defaults to sorting genes by decreasing score
+    (equivalent to increasing rank). Gene feature name or identifier are
+    supported alternative filters for sorting.
+
 
 UPDATED FEATURES:
 

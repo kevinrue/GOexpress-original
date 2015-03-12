@@ -28,8 +28,8 @@ approach, the random forest framework is used to evaluate the ability of each
 gene feature in the ExpressionSet to cluster groups of samples according
 to a known experimental factor. Notably, genes
 associated with the GO term in the annotations but absent from the dataset
-are assigned a score of 0 and a rank equal to the number of gene features in the
-ExpressionSet plus one. GO terms are scored and ranked on the average rank
+are assigned a score of 0 and a rank equal to the number of gene features in
+the ExpressionSet plus one. GO terms are scored and ranked on the average rank
 (alternatively, score) of all associated genes (including those absent from
 the ExpressionSet).
 

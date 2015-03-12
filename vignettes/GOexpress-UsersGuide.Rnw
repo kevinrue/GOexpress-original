@@ -574,6 +574,9 @@ table_genes(go_id = "GO:0034142", result = BP.5)[,c(1:3)]
 genes is hidden, as its content was very long in some cases, affecting
 the readability of this document.}
 
+The default behaviour of the function is to order the gene features
+by increasing rank (equivalent to decreasing score).
+
 Note that the default behaviour of the above function is to return a table of
 all the genes associated with the GO term based on the annotations retrieved
 from the Ensembl BioMart. For obvious reasons, genes present in the BioMart

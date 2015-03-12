@@ -897,36 +897,36 @@ pValue_GO = function(result, N=1000, ranked.by=result$rank.by, rank.by='P')
         stop('Invalid ranked.by argument. See man page for details.')
     }
     if (ranked.by == 'rank'){
-        ranked.by = 'Rank'
+        ranked.by <- 'Rank'
     }
     if (ranked.by == 'score'){
-        ranked.by = 'Score'
+        ranked.by <- 'Score'
     }
     if (! rank.by %in% c('Rank','Score','rank','score','p','P', 'p.val')){
         stop('Invalid ranked.by argument. See man page for details.')
     }
     if (rank.by == 'rank'){
-        ranked.by = 'Rank'
+        ranked.by <- 'Rank'
     }
     else if (rank.by == 'score'){
-        ranked.by = 'Score'
+        ranked.by <- 'Score'
     }
     else if(rank.by %in% c('p', 'P')){
-        rank.by = 'p.val'
+        rank.by <- 'p.val'
     }
     # Create a reference copy of the ontology scores
-    real.go = result$GO[,c('go_id', 'ave_rank', 'ave_score')]
+    real.go <- result$GO[,c('go_id', 'ave_rank', 'ave_score')]
     # Prepare a counter for p-value
-    real.go$p.count = 0
+    real.go$p.count <- 0
     # Fetch all the genes with expression data and their rank/score
-    random.genes = result$genes[,c('Score', 'Rank')]
+    random.genes <- result$genes[,c('Score', 'Rank')]
     # Add the annotated genes absent from the expression data with 0 score
     # and max rank (just like in GO_analyse)
-    all.annotated.genes = unique(result$mapping$gene_id)
-    NA.genes = all.annotated.genes[
+    all.annotated.genes <- unique(result$mapping$gene_id)
+    NA.genes <- all.annotated.genes[
         ! all.annotated.genes %in% rownames(random.genes)
         ]
-    random.genes = rbind(
+    random.genes <- rbind(
         random.genes,
         data.frame(
             row.names = NA.genes,
@@ -938,12 +938,12 @@ pValue_GO = function(result, N=1000, ranked.by=result$rank.by, rank.by='P')
         progress.bar(x = i, max = N)
         # Randomise the gene order using the latest shuffled copy,
         # alternatively re-use the original copy every time?)
-        rownames(random.genes) = sample(
+        rownames(random.genes) <- sample(
             x = rownames(random.genes),
             size = nrow(random.genes),
             replace = F) # replace = F is default, but let's be clear
         # Merge the randomised genes with the table of ontologies
-        random.genes2GO = merge(
+        random.genes2GO <- merge(
             x = random.genes, y = result[['mapping']],
             by.x = 'row.names', by.y = 'gene_id',
             all.y = T, sort = F)
@@ -951,70 +951,70 @@ pValue_GO = function(result, N=1000, ranked.by=result$rank.by, rank.by='P')
         if(ranked.by == 'Rank'){
             # Replace NAs (annotated genes without expression data)
             # by max rank + 1
-            random.genes2GO$Rank[is.na(random.genes2GO$Rank)] =
+            random.genes2GO$Rank[is.na(random.genes2GO$Rank)] <-
                 max(random.genes2GO$Rank, na.rm = T) + 1
             # Calculate the randomised average rank
-            random.aveRank = aggregate(
+            random.aveRank <- aggregate(
                 Rank ~ go_id, data = random.genes2GO, FUN = mean
                 )
             # Combine the real and randomised results for comparison
             # (ignore ontologies with 0 terms,
             # these will be given p-value of 1 later)
-            compare.aveRanks = merge(
+            compare.aveRanks <- merge(
                 x = real.go, y = random.aveRank,
                 by = 'go_id', sort = F,
                 all = F) # all=F is default, but let's be clear
             # get the list of genes where random is better than real
-            worst.GO = compare.aveRanks$go_id[
+            worst.GO <- compare.aveRanks$go_id[
                 compare.aveRanks$Rank <= compare.aveRanks$ave_rank
                 ]
             # for all the above, add 1 to the p.count
-            real.go$p.count[real.go$go_id %in% worst.GO] =
+            real.go$p.count[real.go$go_id %in% worst.GO] <-
                 real.go$p.count[real.go$go_id %in% worst.GO] + 1     
         } else if(ranked.by == 'Score'){
             # Replace NAs (annotated genes without expression data) by score 0
-            random.genes2GO$Score[is.na(random.genes2GO$Score)] = 0
+            random.genes2GO$Score[is.na(random.genes2GO$Score)] <- 0
             # Calculate the randomised average rank
-            random.aveScore = aggregate(
+            random.aveScore <- aggregate(
                 Score ~ go_id, data = random.genes2GO, FUN = mean
                 )
             # Combine the real and randomised results for comparison
             # (ignore ontologies with 0 terms,
             # these will be given p-value of 1 later)
-            compare.aveScore = merge(
+            compare.aveScore <- merge(
                 x = real.go, y = random.aveScore,
                 by = 'go_id', sort = F,
                 all = F) # all=F is default, but let's be clear
             # get the list of ontologies where random is better than real
-            worst.GO = compare.aveScore$go_id[
+            worst.GO <- compare.aveScore$go_id[
                 compare.aveScore$Score <= random.aveScore$ave_score
                 ]
             # for all the above, add 1 to the p.count
-            real.go$p.count[real.go$go_id %in% worst.GO] =
+            real.go$p.count[real.go$go_id %in% worst.GO] <-
                 real.go$p.count[real.go$go_id %in% worst.GO] + 1     
         }
     }
     # Divide the total p.count by the number of iterations (1)
-    real.go$p.val = real.go$p.count / N
+    real.go$p.val <- real.go$p.count / N
     # Keep only the go_id and p.val columns for merging with the GO table
-    real.go = real.go[,c('go_id', 'p.val')]
+    real.go <- real.go[,c('go_id', 'p.val')]
     # Merge the p.val column with the GO table of the GO_analyse output
-    GO.new = merge(
+    GO.new <- merge(
         x = result$GO, y = real.go,
         by = 'go_id', all.x = T, sort = F)
     # Set the p-value to 1 for ontologies not annotated with any gene
-    GO.new$p.val[!GO.new$go_id %in% unique(result$mapping$go_id)] = 1
+    GO.new$p.val[!GO.new$go_id %in% unique(result$mapping$go_id)] <- 1
     # reorder columns
-    GO.new = GO.new[,c(
+    GO.new <- GO.new[,c(
         "go_id","ave_rank","ave_score","total_count","data_count","p.val",
         "name_1006","namespace_1003")]
     # Replace the GO table in the GO_analyse output
-    result$GO = GO.new
+    result$GO <- GO.new
     # Use the rerank function to reorder according to user choice
-    result = rerank(result=result, rank.by=rank.by)
+    result <- rerank(result=result, rank.by=rank.by)
     # Add/update a slot in the GO_analyse output that states the number of
     # iterations used to compute the p-value
-    result$p.iterations = N
+    result$p.iterations <- N
     # return the update GO_analyse output
     return(result)
 }
@@ -1072,7 +1072,7 @@ rerank <- function(result, rank.by = 'rank'){
         stop("Invalid ranking method: ", rank.by)
     }
     # update the rank.by slot
-    result$rank.by = rank.by
+    result$rank.by <- rank.by
     return(result)
 }
 
@@ -1108,7 +1108,7 @@ subEset <- function(eSet, subset=list()){
             eSet <- eSet[,pData(eSet)[,f_filter] %in% subset[[f_filter]]]
             # Update the factor levels
             if ("factor" %in% class(pData(eSet)[,f_filter])){
-                pData(eSet)[,f_filter] = factor(pData(eSet)[,f_filter])
+                pData(eSet)[,f_filter] <- factor(pData(eSet)[,f_filter])
             }
         }
     }
@@ -1212,7 +1212,7 @@ subset_scores <- function(result, ...){
     return(result)
 }
 
-table_genes <- function(go_id, result, data.only=FALSE){
+table_genes <- function(go_id, result, data.only=FALSE, order.by='rank'){
     # if the result provided does not contain the slots required for this
     # function
     if (! all(c("mapping","genes") %in% names(result))){
@@ -1232,6 +1232,19 @@ table_genes <- function(go_id, result, data.only=FALSE){
     # Those do not have analysis results and therefore return NA
     # Leave NAs for the results, but put their name again as the row name
     rownames(res_table) <- gene_ids
+    # Sorting
+    if (order.by %in% c('rank', 'score')){
+        res_table <- res_table[order(res_table$Rank),]
+    }
+    else if (order.by == 'gene_id'){
+        res_table <- res_table[order(rownames(res_table)),]
+    }
+    else if (
+        order.by %in%
+            c('name', 'external_gene_name','external_gene_id')
+        ){
+        res_table <- res_table[order(res_table$external_gene_name),]
+    }
     # Return the information for all those genes
     return(res_table)
 }

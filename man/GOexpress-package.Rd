@@ -28,7 +28,7 @@ allowing to visualise the statistics on a gene- and ontology-basis.
     Package: \tab GOexpress\cr
     Type: \tab Package\cr
     Version: \tab 1.1.6\cr
-    Date: \tab 2014-03-11\cr
+    Date: \tab 2014-03-12\cr
     License: \tab  GPL (>= 3)\cr
     }
     This package requires only two input variables
