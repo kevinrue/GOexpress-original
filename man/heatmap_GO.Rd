@@ -80,8 +80,10 @@ heatmap_GO(
     Defaults are 1.2 and 1, respectively. See \code{heatmap.2()}.
     }
     \item{labRow}{
-    A character vector of names to label the rows (samples) with. Default are
-    the values of the factor \code{f}. See \code{heatmap.2()}.
+    A character vector of names to re-label the rows (samples).
+    If vector of length 1, it is assumed to be a column name in the
+    \code{phenoData} slot. Default are the values of the factor \code{f}.
+    See \code{heatmap.2()}. 
     }
     \item{cex.main}{
     Scaling factor of the main title font size. Default is 1. We suggest to 

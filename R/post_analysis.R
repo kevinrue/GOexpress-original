@@ -710,8 +710,12 @@ heatmap_GO <- function(
     }
     else{
         # If the user provided row labels, they have to match the number of
-        # samples
-        if (length(labRow) != ncol(eSet)){
+        # sample
+        # except if length is 1, then assume it is a factor from phenoData
+        if (length(labRow) == 1){
+            labRow = pData(eSet)[,labRow]
+        }
+        else if (length(labRow) != ncol(eSet)){
             stop(
                 "The number of custom row labels provided (",
                 length(labRow),

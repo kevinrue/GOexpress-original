@@ -8,8 +8,10 @@ BiocStyle::latex()
 %\VignetteIndexEntry{UsersGuide}
 %\VignetteKeyword{GOexpress}
 
-\bioctitle{GOexpress: identify and visualise robust gene ontology
+\bioctitle[GOexpress: Visualise gene expression data using gene ontology
+annotations]{GOexpress: identify and visualise robust gene ontology
 signatures through supervised clustering of gene expression data}
+
 \author{Kévin Rue-Albrecht, Paul A. McGettigan, Belinda Hernández,\\
 David A. Magee, Nicolas C. Nalpas, Andrew C. Parnell,\\
 Stephen V. Gordon, and David E. MacHugh}
@@ -50,18 +52,20 @@ fields, thanks to the decrease in cost of high-throughput transcriptomics
 platforms and the barcoding/multiplexing of samples on the RNA-seq platform.
 While much effort has been (correctly!) spent on the development of adequate
 statistical frameworks for the processing of raw expression data, much of the
-genewise visualisation is left to the end-user. However, data summarisation
+genewise exploration and visualisation is left to the end-user. However,
+data summarisation
 and visualisation can be a daunting task in multifactorial experiments, or
 require large amounts of copy-pasting to investigate the expression profile of
 a handful or genes and cellular pathways.
 
-Tested on multiple RNA-seq and microarray datasets, \Biocpkg{GOexpress} offers
+Developed and tested on multiple RNA-seq and microarray datasets,
+\Biocpkg{GOexpress} offers
 an extendable set of data-driven plotting functions readily applicable to the
 output of widely used analytic packages estimating (differential) gene
 expression. Once the initial analysis and filtering of \Biocpkg{GOexpress}
 results is complete --- literaly two command lines ---, each gene and gene
 ontology is accessible by a single line of code to produce high-quality
-graphics and summary tables. In short, the \Biocpkg{GOexpress} package is
+graphics and summary tables. In short, \Biocpkg{GOexpress} is
 a software package
 developed based on real experimental datasets to ease the visualisation and
 interpretation of multifactorial transcriptomics data by bioinformaticians and
@@ -116,8 +120,8 @@ maintainer("GOexpress")
 
 Despite our efforts to repeatedly test the package on
 in-house datasets of both microarray and RNA-seq platform, and of human and
-bovine origin, many of the species and microarrays present in the Ensembl
-BioMart have not been tested yet. We welcome feedback!
+bovine origin, many of the model species and gene expression platforms have
+not been tested yet. We welcome feedback!
 
 Interesting suggestions for additional package functions, or improvement of
 existing ones are most welcome and may be implemented when time allows.
@@ -153,7 +157,8 @@ citation(package="GOexpress")
 
 Despite their different underlying technologies, microarray and RNA-seq
 analytic pipelines typically yield a matrix measuring the expression level of
-each gene in each sample. Commonly, this expression matrix is filtered to
+many gene features in each sample. Commonly, this expression matrix is
+filtered to
 retain only genes qualified as ``informative'' (e.g. > 1 cpm in at least N
 replicates; N being the number of replicates for a given set of experimental
 conditions); and genes lowly expressed are removed to limit the False
@@ -175,7 +180,8 @@ does not currently access them. Instructions to create
 objects are detailed in the vignettes of the \Biocpkg{Biobase} package.
 
 To use the analytical part of the \Biocpkg{GOexpress} package, the phenotypic
-data-frame --- \Robject{phenodata} slot of the \Rclass{ExpressionSet} --- must
+data-frame --- \Robject{phenodata} slot of the \Rclass{ExpressionSet} ---
+must
 contain at least one column containing an experimental factor made of two or
 more levels in the strict meaning of ``factor'' and ``levels'' in the \R{}
 programming language. The above \Rclass{ExpressionSet} and the name of the
@@ -189,7 +195,7 @@ provided
 with the package and made of a subset of 100 bovine Ensembl gene identifiers
 (rows) measured in 117 samples (columns), extracted from a larger RNA-seq
 experiment (see help page for the \Robject{AlvMac} object).
-This toy \Rclass{ExpressionSet} also includes a \Rclass{AnnotationDataFrame}
+This toy \Rclass{ExpressionSet} also includes an \Rclass{AnnotationDataFrame}
 detailing a number of phenotypic information fields describing each
 sample.
 
@@ -263,7 +269,13 @@ Running the random forest algorithm using local annotations}
 Now, we use the random forest statistical framework to score each gene
 feature on its
 ability to cluster samples from different treatments separately,
-before summarising this information at the ontology level. In this
+before summarising this information at the ontology level. The 
+ensuing analysis therefore considers the \Robject{Treatment} factor,
+irrespective of the
+\Robject{Time} and \Robject{Animal} factors (we search for time- and
+animal-independent discriminants of infection). Alternatively, a subset of
+samples from the input \Rclass{ExpressionSet} may be specified to address
+more specific hypotheses. In this
 example, we use locally saved copies of gene and gene ontology annotations
 previously downloaded from Ensembl annotation release 75 using the
 \Biocpkg{biomaRt} package (See section \ref{sec:customAnnotations}
@@ -341,7 +353,7 @@ data(microarray2dataset)
 \subsection[Permutation-based P-value for ontologies]{Permutation-based
 P-value for ontologies}
 
-To assess the significance of GO term ranking -- or scoring --, we
+To assess the significance of GO term ranking --- or scoring ---, we
 implemented a permutation-based function randomising the gene feature
 ranking, and counting how many times each GO term is ranked (scored) equal
 or higher than the real rank (score).
@@ -364,6 +376,15 @@ suggested to calculate P-values on the basis of at least 1,000 permutation
 (approximately 50 min on a standard Ubuntu server)
 to obtain reach minimal non-zero P-values as low as 0.001.}
 
+Given that many genes are associated to various gene ontologies due to the
+hierarchical relationships in the three Direct Acyclic Graphs (DAGs), a
+permutation-based approach appears the best suited strategy to assess the
+significance of ontology-related genes to display a specific average rank (or
+score). As further discussed in the next section, this approach also
+addresses the issue
+of the considerable range of gene counts associated with each known gene
+ontology.
+
 \subsection[Filtering of results]{Filtering of results}
 \label{sec:Filtering}
 
@@ -380,13 +401,15 @@ Importantly, an early-identified bias of the scoring function is that GO terms
 associated with fewer genes are favored at the top of the ranking table. This
 is due to the fact that it is much easier for a group of 5 genes (e.g.
 ``\texttt{B cell apoptotic process}'') to have an high average rank
--- and average score -- than it is
+--- and average score --- than it is
 for a group of ~6,000 genes (e.g. ``\texttt{protein binding}''). Indeed, the
 highest possible average rank of 5 genes is 3 while it is 3,000 for a group of
 6,000 genes. The calculation of P-values using the \Rfunction{pValue\_GO}
-partially controls that bias.
+partially controls that bias, as smaller groups of ontology-related genes may
+appear by chance at a higher average rank than observed using the
+ranking based on actual gene expression.
 
-However, in our experience, this bias presents some benefits. First, it
+Furthermore, in our experience, this bias presents some benefits. First, it
 implicitely favors specific and well-defined GO terms (e.g. ``\texttt{negative
 regulation of T cell apoptotic process}'') as opposed to vague and
 uninformative GO terms (e.g. ``\texttt{cytoplasm}''). Secondly, we observed
@@ -415,7 +438,7 @@ CC.15 <- subset_scores(
     p.val=0.05)
 @
 
-Furthermore, the inherent hierarchical structure and ``granularity'' of gene
+Finally, the inherent hierarchical structure and ``granularity'' of gene
 ontology terms can be browsed conveniently by using increasingly large values
 of the
 \Robject{total} filter. Note that this filter retains only GO terms associated
@@ -436,7 +459,7 @@ unfiltered raw results.}
 \subsubsection[Quick filtering of the ontology scoring table]{Quick filtering
 of the ontology scoring table}
 
-An alternative to the above cascade filtering of gene ontologies and gene
+As an alternative to the above cascade-filtering of gene ontologies and gene
 features result tables, users can extract and filter information from either
 the
 gene or the gene ontology scoring tables using the \Rfunction{subset}
@@ -447,11 +470,9 @@ ontologies of the `Biological Process' type, associated with at least 5
 genes, and a P-value lower than 0.05:
 
 <<eval=FALSE>>=
-head(
-    subset(
-        AlvMac_results.pVal$GO,
-        total_count >= 5 & p.val<0.05 & namespace_1003=='biological_process'
-        )
+subset(
+    AlvMac_results.pVal$GO,
+    total_count >= 5 & p.val<0.05 & namespace_1003=='biological_process'
     )
 @
 
@@ -467,7 +488,7 @@ terms}
 
 Once the GO terms are ranked (and filtered), the top-ranking GO
 terms in the filtered object are those most enriched in genes with expression
-levels that best cluster the predefined groups of samples based on the levels
+levels that best cluster the predefined groups of samples, based on the levels
 of the factor considered (\Rcode{raw\_results\$factor}).
 
 In this example, we list the top filtered ``Biological Process'' GO terms
@@ -496,35 +517,31 @@ heatmap_GO(
 @
 \end{center}
 
-Importantly, users should be aware that the highest ranked GO term may not
-cluster samples at all; all GO terms are scored in the process, and even if
-none of them return a suitable clustering, there will still be a higest score.
 In this example, we can observe a group of ``Control'' (i.e. untreated; green
 color) samples clustering together at the bottom of the heatmap.
 
 Re-labelling of samples by \Robject{Group} (i.e. combination of treatment
-and time-point)
-reveals that those samples are mainly 24 and 48 hours-post-infection control
-samples:
+and time-point) reveals that those samples are mainly 24 and 48 hours
+post-infection control samples:
 
 \begin{center}
 <<fig=FALSE>>=
 heatmap_GO(
-    go_id = "GO:0034142", result = BP.5, eSet=AlvMac, f='Group',
-    cexCol=1, cex.main=1, main.Lsplit=30)
+    go_id = "GO:0034142", result = BP.5, eSet=AlvMac, cexRow=0.4,
+    cexCol=1, cex.main=1, main.Lsplit=30,
+    labRow=AlvMac$Group)
 @
 \end{center}
 
-Note that since release 1.1.6 it is also possible to control independently
-the re-labelling of sample names, and the colour-coding factor:
+Subsequently encouraging the generation of a heatmap restricted to samples
+from those time-points (i.e. \Robject{24H} and \Robject{48H}):
 
 \begin{center}
-<<fig=FALSE>>=
-AlvMac$Treatment.Time <- paste(AlvMac$Treatment, AlvMac$Time, sep="_")
+<<fig=TRUE>>=
 heatmap_GO(
-    go_id = "GO:0034142", result = BP.5, eSet=AlvMac,
+    go_id = "GO:0034142", result = BP.5, eSet=AlvMac, cexRow=0.6,
     cexCol=1, cex.main=1, main.Lsplit=30,
-    labRow=AlvMac$Treatment.Time)
+    labRow='Group', subset=list(Time=c('24H','48H')))
 @
 \end{center}
 
@@ -564,12 +581,13 @@ genes is hidden, as its content was very long in some cases, affecting
 the readability of this document.}
 
 Note that the default behaviour of the above function is to return a table of
-all the genes associated with the GO term based on the annotations retrieved
-from the Ensembl BioMart. For obvious reasons, genes present in the BioMart
+all the genes associated with the GO term based on the annotations collected.
+For obvious reasons, genes present in the annotations
 but absent from the expression dataset will be absent from the score table
-and consequently lack data. It is possible to restrict the above table
+and consequently lack data in this result table.
+It is possible to restrict the above table
 to only genes present in the expression dataset using the \Robject{data.only}
-argument.
+argument set to \Robject{TRUE}.
 
 If only the feature identifiers associated with a given GO identifier are
 needed, users may use the function below:
@@ -620,7 +638,8 @@ confidence intervals. In such cases, it is recommended to use the function
 \ref{sec:expressionProfiles}.
 
 Here is another valid example separating samples by the factor
-\Robject{Animal} on the X axis:
+\Robject{Animal} on the X axis and summarising all time-points in a
+confidence 95\% confidence interval on the Y-axis:
 
 \begin{center}
 <<fig=TRUE>>=
@@ -638,7 +657,7 @@ associated gene name if any. This is a more human-friendly version of the
 function presented in the previous subsection:
 
 \begin{center}
-<<fig=FALSE>>=
+<<eval=FALSE>>=
 expression_plot_symbol(
     gene_symbol = "BIKBA", result = BP.5, eSet=AlvMac,
     x_var = "Timepoint", title.size=1.5,
@@ -654,7 +673,16 @@ additional useful feature: a lattice is created, and each of the multiple
 features associated with the given gene symbol are plotted simultaneously in
 the lattice. Subsequently, each of the sub-figures plotted may be re-plotted
 by itself using the \Robject{index} argument as indicated in the accompanying
-message printed in the \R{} console.
+message printed in the \R{} console:
+
+\begin{center}
+<<fig=FALSE>>=
+expression_plot_symbol(
+    gene_symbol = "RPL36A", result = AlvMac_results, eSet=AlvMac,
+    x_var = "Timepoint", title.size=1.5,
+    legend.title.size=10, legend.text.size=10, legend.key.size=15)
+@
+\end{center}
 
 \subsection[Expression profile of a gene by individual sample series]{
 Expression profile of a gene by individual sample series}
@@ -699,7 +727,7 @@ which can be useful for colour-blind people. Alternatively, a single line-type
 can be applied to all groups using the \Robject{lty} argument as follows:
 
 \begin{center}
-<<fig=FALSE>>=
+<<eval=FALSE>>=
 expression_profiles(
     gene_id = "ENSBTAG00000047107", result = AlvMac_results,
     eSet=AlvMac, x_var = "Timepoint",
@@ -716,7 +744,7 @@ Similarly to the \Rfunction{expression\_plot} function, an alternative was
 implemented to use gene names instead of feature identifiers. An example:
 
 \begin{center}
-<<fig=FALSE>>=
+<<eval=FALSE>>=
 expression_profiles_symbol(
     gene_symbol="TNIP3", result = AlvMac_results,
     x_var = "Timepoint", linetypeF="Animal", line.size=1,
@@ -824,6 +852,13 @@ GOgenes.Ensembl = GOgenes.Ensembl[GOgenes.Ensembl$go_id != '',]
 GOgenes.Ensembl = GOgenes.Ensembl[GOgenes.Ensembl$gene_id != '',]
 @
 
+\bioccomment{
+The automated retrieval procedure retrieves all gene ontology annotations
+from the Ensembl server, inclusive of annotations not Inferred from Experiment
+(EXP). Users may consider filtering local annotations for desired GO Evidence
+code(s). 
+}
+
 \subsubsection[Using custom annotations]{Using custom annotations}
 \label{sec:useCustomAnnotations}
 
@@ -855,15 +890,17 @@ data(AlvMac_allGO)
 data(AlvMac_allgenes)
 @
 
-Importantly, it is recommended to provide full genome annotations for the
+\warning{
+Critically, it is highly recommended to provide full genome annotations for
+the
 species of interest, including annotations for feature identifiers that are
 absent from the given \Rclass{ExpressionSet}. As described in section
 \ref{sec:StatsOverview}, all genes present in the annotations will affect the
 scoring of gene ontologies, even if they are absent from the
-\Rclass{ExpressionSet}.
+\Rclass{ExpressionSet}.}
 
 
-\subsection[Using a subset of samples]{Using a subset of samples}
+\subsection[Using subsets of samples]{Using subsets of samples}
 
 \label{sec:subsetArgument}
 
@@ -886,8 +923,8 @@ in the corresponding column of \Rcode{pData(eSet)}. The original
 AlvMac_results <- GO_analyse(
     eSet = AlvMac, f = "Treatment",
     subset=list(
-    Time=c("6H","24H", "48H"),
-    Treatment=c("CN","MB"))
+        Time=c("6H","24H", "48H"),
+        Treatment=c("CN","MB"))
     )
 
 expression_plot(
@@ -963,7 +1000,7 @@ It is however possible to re-order the tables in the output variable according
 to the score metric (or revert back to the original one) as in the example
 below:
 
-<<>>=
+<<eval=FALSE>>=
 BP.5.byScore <- rerank(result = BP.5, rank.by = "score")
 @
 
@@ -973,7 +1010,7 @@ Additionally, it is possible to reorder GO terms by increasing P-value,
 provided those values were were computed using the \Rfunction{pValue\_GO}
 function.
 
-<<>>=
+<<eval=FALSE>>=
 BP.5.byPval <- rerank(result = BP.5, rank.by = "p.val")
 @
 
@@ -983,7 +1020,7 @@ For instance, to rank GO terms by P-value, while breaking ties on their
 \Robject{ave\_rank} value, one needs to first rank the object by
 \Robject{rank}, and rank the resulting object by \Robject{p.val}:
 
-<<>>=
+<<eval=FALSE>>=
 BP.5.pVal_rank <- rerank(result = BP.5, rank.by = "rank")
 BP.5.pVal_rank <- rerank(result = BP.5.pVal_rank, rank.by = "p.val")
 @
@@ -1010,19 +1047,20 @@ subsetted the \Rclass{ExpressionSet}:
 pData(AlvMac) <- droplevels(pData(AlvMac))
 @
 
+\bioccomment{
 Note that this operation preserves the order of ordered factors.
+}
 
 Typically, subsetting an \Rclass{ExpressionSet} by rows and columns does not
 automatically update the known levels of each factor to the remaining levels.
-The function \Rfunction{subEset} takes care of this task, updating 
-
-takes a named list, where item
-names must be column names from the \Robject{phenoData} slots and item values
-must be present in the corresponding columns, to return a subset of the
-original \Rclass{ExpressionSet} and return only the samples which match those
+The function \Rfunction{subEset} performs this additional task. The function
+takes a named list, where names must be column names from the
+\Robject{phenoData} slots and values
+must be present in the corresponding columns, and returns a subset of the
+original \Rclass{ExpressionSet} including only the samples which match those
 values:
 
-<<>>=
+<<eval=FALSE>>=
 subEset(
     eSet=AlvMac, subset=list(
     Time=c("2H","6H","24H"),
@@ -1049,16 +1087,20 @@ A two-fold procedure was implemented:
     ties are resolved by assigning the lowest rank R to all G genes, giving
     the rank G+n to the next gene(s). The genewise scoring functions
     implemented are described in the following subsections, and all were
-    validated on in-house datasets cross-checked with widely validated
+    validated on in-house datasets cross-checked with comparable
     analytic pipelines (e.g. Ingenuity\textregistered Pathway Analysis,
     SIGORA)
-    \item Using the above ranks and scores, each GO term in the Ensembl
-    BioMart is assigned the mean score and the mean rank of all the genes
-    associated with it in the BioMart. Genes present in the BioMart but
-    absent from the given dataset are assigned a score of 0 (minimum valid
+    \item Using the above ranks and scores, each GO term in the
+    gene ontology annotations
+    is assigned the mean score and the mean rank of all the genes
+    associated with it in the gene-GO annotations. Genes present in the
+    annotations but
+    absent from the
+    \Rclass{ExpressioSet} are assigned a score of 0 (minimum valid
     score; indicates no power to discriminates the predefined groups of
-    sample) and a rank equal to the number of genes present in the entire
-    dataset plus one (worst rank, while preserving discrete continuity of
+    sample) and a rank equal to the number of genes present in the
+    \Rclass{ExpressioSet} plus one (worst rank, while preserving discrete
+    continuity of
     the ranking).
 \end{enumerate}
 
@@ -1125,7 +1167,8 @@ function of the package \Rpackage{stats} is used with parameter
 to to \Rcode{FALSE}. While this reduces the sensitivity of the test, all
 genes are affected by this correction based on the relative amount of
 variance in the different predefined groups of samples. Finally, it is once
-again important to note that the ANOVA only evaluates univariate changes,
+again important to note that the one-way ANOVA only evaluates univariate
+changes,
 while the random forest framework implicitely allows for interactions between
 genes.
 
@@ -1135,12 +1178,11 @@ genes.
 
 Shiny is an \R{} package that makes it easy to build interactive web
 applications (apps) straight from \R{}
-
 \incfig{images/shiny_screenshot.png}{\textwidth}{Shiny app.}
 {This simple application allows visualisation of genes using the
 \Biocpkg{GOexpress} \Rfunction{expression\_profiles\_symbol} function.
-We attempt to maintain a running version on a small webserver:
-\url{http://animalgenomics.ucd.ie:3838/AlvMac/}}
+An online interactive version was made available at:
+\url{https://kevinrue.shinyapps.io/alvmac/}}
 as shown in Figure~\ref{images/shiny_screenshot.png}. More information is
 available at \url{http://shiny.rstudio.com/}.
 
@@ -1164,7 +1206,7 @@ all backgrounds who contributed each in their own way to the present version
 and features of the package. 
 Special thanks to Dr. Paul Cormican, Simone Coughland, Dr. Karsten Hokamp,
 and an unknown reviewer for feedback leading to some features. 
-Heartily thanks to Dr. Kate Killick for testing on human data and feedback. 
+Sincere thanks to Dr. Kate Killick for testing on human data and feedback. 
 My thanks to the \Bioconductor{} staff and in particular to Hervé Pagès for
 the helpful feedback which improved the standards of the code and
 documentation.
