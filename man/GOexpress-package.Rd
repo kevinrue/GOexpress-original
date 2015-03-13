@@ -28,22 +28,27 @@ allowing to visualise the statistics on a gene- and ontology-basis.
     Package: \tab GOexpress\cr
     Type: \tab Package\cr
     Version: \tab 1.1.6\cr
-    Date: \tab 2014-03-12\cr
+    Date: \tab 2014-03-13\cr
     License: \tab  GPL (>= 3)\cr
     }
     This package requires only two input variables
     \enumerate{
-    \item An ExpressionSet containing assayData and phenoData. The former
+    \item An \code{ExpressionSet} containing assayData and phenoData.
+    The former
     should be a gene-by-sample matrix providing gene expression values for
-    each gene in each sample. The latter should be an AnnotatedDataFrame from
-    the Biobase package providing phenotypic information and grouping factors
+    each gene in each sample. The latter should be an 
+    \code{AnnotatedDataFrame} from the \code{Biobase} package providing
+    phenotypic information and grouping factors
     with two or more levels.
     \item The name of the grouping factor to investigate, which must be a
-    valid column name in the phenoData.
+    valid column name in the \code{phenoData} slot of the above
+    \code{ExpressionSet}.
     }
     Following analysis, visualisation methods include:
     \itemize{
     \item Histogram and quantiles representations of the scores of GO terms
+    \item Permutation-based P-values to assess the significance of GO term
+    ranking
     \item Filtering of results on various criteria (e.g. number of genes
     annotated to GO term)
     \item Re-ordering of GO terms and gene result tables based on score or
@@ -63,9 +68,7 @@ allowing to visualise the statistics on a gene- and ontology-basis.
 }
 
 \author{
-    Kevin Rue-Albrecht
-    
-    Maintainer: Kevin Rue-Albrecht <kevin.rue@ucdconnect.ie>
+    Maintainer: Kevin Rue-Albrecht <\code{kevin.rue@ucdconnect.ie}>
 }
 
 \examples{
